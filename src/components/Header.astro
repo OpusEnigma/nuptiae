@@ -1,0 +1,23 @@
+---
+import Nav from "./Nav.astro";
+---
+
+<header>
+  <a href="/" class="logo">Nuptiae</a>
+  <Nav />
+</header>
+
+<style>
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-2);
+  }
+
+  .logo {
+    font-weight: 600;
+    text-decoration: none;
+    color: inherit;
+  }
+</style>

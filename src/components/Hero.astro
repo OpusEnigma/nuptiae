@@ -1,0 +1,19 @@
+---
+const { title, subtitle } = Astro.props;
+---
+
+<section class="hero">
+  <h1>{title}</h1>
+  <p>{subtitle}</p>
+</section>
+
+<style>
+  .hero {
+    padding: 6rem 0;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+  }
+</style>
