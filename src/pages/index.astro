@@ -1,11 +1,20 @@
 ---
-import PageLayout from "../layouts/PageLayout.astro";
+import LandingLayout from "../layouts/LandingLayout.astro";
 import Hero from "../components/Hero.astro";
+import Rituals from "../components/Rituals.astro";
+
+import heroImage from "../assets/hero-image.png";
 ---
 
-<PageLayout title="Nuptiae">
-  <Hero
-    title="A beautiful static site"
-    subtitle="Built with care, not frameworks."
-  />
-</PageLayout>
+<LandingLayout title="Nuptiae – Mariage hindou">
+  <div class="scroll-container">
+    <!-- HERO -->
+    <Hero
+      title="Au-delà des océans"
+      image={heroImage}
+    />
+
+    <!-- STORY 1 : EXPLICATION -->
+    <Rituals />
+  </div>
+</LandingLayout>

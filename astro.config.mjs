@@ -5,4 +5,7 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   site: 'https://OpusEnigma.github.io',
   base: '/nuptiae/',   // Le nom du repo
+  devToolbar: {
+    enabled: false,
+  },
 });

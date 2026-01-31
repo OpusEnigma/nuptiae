@@ -1,19 +1,87 @@
 ---
-const { title, subtitle } = Astro.props;
+import { Image } from "astro:assets";
+
+/**
+ * Props :
+ * - title: string
+ * - image: ImageMetadata (astro:assets)
+ * - subtitle?: string
+ */
+const { title, subtitle, image } = Astro.props;
+
+if (!image) {
+  throw new Error("Hero.astro requires an `image` prop imported from astro:assets");
+}
 ---
 
 <section class="hero">
-  <h1>{title}</h1>
-  <p>{subtitle}</p>
+  <!-- Image dimensionnée par la largeur -->
+  <Image
+    src={image}
+    alt="Overseas wedding landscape"
+    class="background"
+    priority
+    sizes="100vw"
+  />
+
+  <!-- Texte discret -->
+  <div class="content">
+    <h1>{title}</h1>
+    {subtitle && <p>{subtitle}</p>}
+  </div>
 </section>
 
 <style>
+  /* ===== HERO ===== */
   .hero {
-    padding: 6rem 0;
+    position: relative;
+    width: 100vw;
+    height: 100vh;          /* fenêtre de visualisation */
+    overflow: hidden;       /* masque le dépassement vertical */
+  }
+
+  /* ===== IMAGE ===== */
+  .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;           /* 👈 clé : jamais coupée horizontalement */
+    height: auto;           /* hauteur naturelle */
+    max-width: none;        /* empêche les contraintes internes */
+  }
+
+  /* ===== TEXTE DISCRET ===== */
+  .content {
+    position: absolute;
+    bottom: 2.5rem;
+    right: 2.5rem;
+    z-index: 2;
+    color: #fff;
+    text-align: right;
+    max-width: 32ch;
   }
 
   h1 {
     font-family: var(--font-display);
-    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-size: clamp(1.4rem, 2vw, 2rem);
+    font-weight: 500;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  p {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    opacity: 0.85;
+  }
+
+  /* ===== MOBILE ===== */
+  @media (max-width: 768px) {
+    .content {
+      bottom: 1.5rem;
+      right: 1.5rem;
+      max-width: 26ch;
+    }
   }
 </style>

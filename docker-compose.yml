@@ -14,7 +14,7 @@ services:
     # N'installe les deps que si node_modules est vide
     command: >
       sh -c "
-      if [ ! -d node_modules ]; then
+      if [ ! -d node_modules/astro ]; then
         echo '📦 Installing dependencies…';
         npm install;
       fi &&
