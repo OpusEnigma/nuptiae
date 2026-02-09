@@ -1,0 +1,172 @@
+---
+import { Image } from "astro:assets";
+
+/**
+ * Props
+ * - title: string (obligatoire)
+ * - image: ImageMetadata (astro:assets)
+ * - side?: "left" | "right"
+ * - time?: string
+ * - meal?: string
+ * - attendees?: string
+ */
+const {
+  title,
+  image,
+  side = "left",
+  time,
+  meal,
+  attendees
+} = Astro.props;
+
+
+if (!title || !image) {
+  throw new Error("Ritual.astro requires `title` and `image` props.");
+}
+
+const sideClass = side === "right" ? "ritual--right" : "ritual--left";
+---
+
+<div class={`ritual ${sideClass}`}>
+  <!-- TITRE : TOUJOURS AU-DESSUS -->
+  <h3 class="ritual-title">{title}</h3>
+
+  <!-- MEDIA + INFOS -->
+  <div class="ritual-media">
+    <Image
+      src={image}
+      alt={title}
+      loading="lazy"
+      sizes="(max-width: 900px) 100vw, 50vw"
+    />
+
+    {(time || meal || attendees) && (
+      <div class="ritual-infos">
+        {time && (
+          <div class="info-line">
+            <span class="label">Heure</span>
+            <span class="value">{time}</span>
+          </div>
+        )}
+        {meal && (
+          <div class="info-line">
+            <span class="label">Repas</span>
+            <span class="value">{meal}</span>
+          </div>
+        )}
+        {attendees && (
+          <div class="info-line">
+            <span class="label">Participants</span>
+            <span class="value">{attendees}</span>
+          </div>
+        )}
+      </div>
+    )}
+
+  </div>
+
+  <!-- TEXTE -->
+  <div class="ritual-content">
+    <slot />
+  </div>
+</div>
+
+<style>
+/* ===== RITUEL (GRID) ===== */
+.ritual {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "title title"
+    "media content";
+  gap: 2rem 4rem;
+  margin-bottom: 6rem;
+}
+
+/* alternance */
+.ritual--right {
+  grid-template-areas:
+    "title title"
+    "content media";
+}
+
+/* ===== TITRE ===== */
+.ritual-title {
+  grid-area: title;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* ===== MEDIA ===== */
+.ritual-media {
+  grid-area: media;
+}
+
+/* ===== IMAGE ===== */
+.ritual-media picture {
+  display: block;
+  width: 100%;
+}
+
+.ritual-media img {
+  display: block;
+  width: 100%;
+  height: auto;          /* 👈 CRUCIAL */
+  max-height: 420px;     /* 👈 limite élégante */
+  object-fit: contain;   /* 👈 aucun recadrage */
+  border-radius: 2px;
+}
+
+/* ===== INFOS ===== */
+.ritual-infos {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e5e5;
+  font-size: 0.9rem;
+}
+
+.info-line {
+  display: flex;
+  justify-content: space-between;
+  line-height: 1.6;
+}
+
+.info-line + .info-line {
+  margin-top: 0.4rem;
+}
+
+.label {
+  font-weight: 500;
+  color: #333;
+}
+
+.value {
+  color: #666;
+}
+
+/* ===== TEXTE ===== */
+.ritual-content {
+  grid-area: content;
+}
+
+.ritual-content p {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: #444;
+  margin-bottom: 1rem;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 900px) {
+  .ritual {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "title"
+      "media"
+      "content";
+    gap: 2rem;
+  }
+}
+</style>

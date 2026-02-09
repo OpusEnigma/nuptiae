@@ -20,16 +20,17 @@ const { title = "Nuptiae", description = "" } = Astro.props;
   :root {
     --font-body: Inter, system-ui, sans-serif;
     --font-display: "Playfair Display", serif;
-    --space-1: 0.5rem;
-    --space-2: 1rem;
-    --space-3: 2rem;
+
+    --color-bg: #f2f2f2;
+    --color-page: #ffffff;
+    --color-text: #111;
   }
 
   body {
-    font-family: var(--font-body);
     margin: 0;
-    background: #fff;
-    color: #111;
+    font-family: var(--font-body);
+    background: var(--color-bg);
+    color: var(--color-text);
     line-height: 1.7;
   }
 </style>
