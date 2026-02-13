@@ -1,12 +1,11 @@
 ---
 import { Image } from "astro:assets";
 
-/**
- * Props:
- * - image: ImageMetadata
- * - side?: "left" | "right"
- */
 const { image, side = "left" } = Astro.props;
+
+if (!image) {
+  throw new Error("RitualBlock requires an image.");
+}
 
 const sideClass = side === "right" ? "block--right" : "block--left";
 ---
@@ -27,45 +26,48 @@ const sideClass = side === "right" ? "block--right" : "block--left";
 </div>
 
 <style>
-.ritual-block {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  align-items: start;
-  margin-bottom: 4rem;
-}
-
-.block--right {
-  direction: rtl;
-}
-
-.block--right .block-content {
-  direction: ltr;
-}
-
-.block--right .block-media {
-  direction: ltr;
-}
-
-.block-media img {
-  width: 100%;
-  height: auto;
-  border-radius: 2px;
-}
-
-.block-content p {
-  font-size: 1.05rem;
-  line-height: 1.75;
-  color: #444;
-}
-
-@media (max-width: 900px) {
   .ritual-block {
-    grid-template-columns: 1fr;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+    margin-bottom: 4rem;
   }
 
   .block--right {
+    direction: rtl;
+  }
+
+  .block--right .block-content,
+  .block--right .block-media {
     direction: ltr;
   }
-}
+
+  .block-media img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    display: block;
+    box-shadow:
+      0 20px 40px rgba(0, 0, 0, 0.08),
+      0 6px 16px rgba(0, 0, 0, 0.06);
+  }
+
+  .block-content p {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: #444;
+    margin-bottom: 1rem;
+  }
+
+  @media (max-width: 900px) {
+    .ritual-block {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .block--right {
+      direction: ltr;
+    }
+  }
 </style>

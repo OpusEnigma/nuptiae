@@ -1,28 +1,59 @@
 ---
 /**
  * Props
+ * - id
  * - title
+ * - date?
  * - time?
  * - meal?
  * - attendees?
  * - dresscode?
  */
-const { title, time, meal, attendees, dresscode } = Astro.props;
+const { id, title, date, time, meal, attendees, dresscode } = Astro.props;
 
+if (!id) {
+  throw new Error("Ritual requires an id.");
+}
 if (!title) {
   throw new Error("Ritual requires a title.");
 }
 ---
 
-<section class="ritual">
+<section id={id} class="ritual" data-ritual>
   <h3 class="ritual-title">{title}</h3>
 
-  {(time || meal || attendees || dresscode) && (
+  {(date || time || meal || attendees || dresscode) && (
     <div class="ritual-infos">
-      {time && <div><strong>Heure :</strong> {time}</div>}
-      {meal && <div><strong>Repas :</strong> {meal}</div>}
-      {attendees && <div><strong>Participants :</strong> {attendees}</div>}
-      {dresscode && <div><strong>Dress Code :</strong> {dresscode}</div>}
+      {date && (
+        <div class="info-row">
+          <span class="label">Date</span>
+          <span class="value">{date}</span>
+        </div>
+      )}
+      {time && (
+        <div class="info-row">
+          <span class="label">Heure</span>
+          <span class="value">{time}</span>
+        </div>
+      )}
+      {meal && (
+        <div class="info-row">
+          <span class="label">Repas</span>
+          <span class="value">{meal}</span>
+        </div>
+      )}
+      {attendees && (
+        <div class="info-row">
+          <span class="label">Participants</span>
+          <span class="value">{attendees}</span>
+        </div>
+      )}
+      {dresscode && (
+        <div class="info-row">
+          <span class="label">Dress Code</span>
+          <span class="value">{dresscode}</span>
+        </div>
+      )}
     </div>
   )}
 
@@ -32,26 +63,157 @@ if (!title) {
 </section>
 
 <style>
-.ritual {
-  margin-bottom: 6rem;
-}
+  /* ============================= */
+  /* CHAPITRE / ANIMATION GLOBALE */
+  /* ============================= */
 
-.ritual-title {
-  font-family: var(--font-display);
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-}
+  .ritual {
+    margin-bottom: 8rem;
 
-.ritual-infos {
-  margin-bottom: 3rem;
-  font-size: 0.95rem;
-  color: #555;
-  display: flex;
-  gap: 2rem;
-  flex-wrap: wrap;
-}
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.9s cubic-bezier(.25,.46,.45,.94),
+      transform 0.9s cubic-bezier(.25,.46,.45,.94);
+  }
 
-.ritual-body {
-  display: block;
-}
+  .ritual.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Animation en cascade élégante */
+
+  .ritual-title {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .ritual.is-visible .ritual-title {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .ritual-infos,
+  .ritual-body {
+    opacity: 0;
+    transition: opacity 1s ease 0.15s;
+  }
+
+  .ritual.is-visible .ritual-infos,
+  .ritual.is-visible .ritual-body {
+    opacity: 1;
+  }
+
+
+  /* ============================= */
+  /* TITRE */
+  /* ============================= */
+
+  .ritual-title {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+    letter-spacing: -0.02em;
+  }
+
+  /* ============================= */
+  /* INFOS */
+  /* ============================= */
+
+  .ritual-infos {
+    margin-bottom: 3rem;
+    border-top: 1px solid #e5e5e5;
+    padding-top: 1.5rem;
+    background: #fafafa;
+    padding: 1.5rem;
+    border-radius: 8px;
+  }
+
+  .info-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 1rem;
+    padding: 0.6rem 0;
+  }
+
+  .info-row + .info-row {
+    border-top: 1px solid #f1f1f1;
+  }
+
+  .label {
+    font-weight: 500;
+    color: #333;
+  }
+
+  .value {
+    color: #555;
+  }
+
+  /* ============================= */
+  /* TEXTE */
+  /* ============================= */
+
+  .ritual-body p {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: #444;
+    margin-bottom: 1rem;
+  }
+
+  /* ============================= */
+  /* MOBILE */
+  /* ============================= */
+
+  @media (max-width: 768px) {
+    .info-row {
+      grid-template-columns: 1fr;
+    }
+
+    .label {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.2rem;
+    }
+
+    .ritual {
+      transform: translateY(60px) scale(0.98);
+    }
+  }
 </style>
+
+<script>
+  const rituals = document.querySelectorAll("[data-ritual]");
+  const timelineItems = document.querySelectorAll(".timeline-item");
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const ritual = entry.target;
+        const id = ritual.id;
+        const timelineLink = document.querySelector(
+          `.timeline-item[data-id="${id}"]`
+        );
+
+        if (entry.isIntersecting) {
+          // Animation du chapitre
+          ritual.classList.add("is-visible");
+
+          // Activation timeline synchronisée
+          timelineItems.forEach(item => item.classList.remove("active"));
+          timelineLink?.classList.add("active");
+        }
+      });
+    },
+    {
+      rootMargin: "-40% 0px -55% 0px",
+      threshold: 0
+    }
+  );
+
+  rituals.forEach((ritual) => observer.observe(ritual));
+</script>
+

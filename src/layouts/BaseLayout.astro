@@ -3,12 +3,19 @@ const { title = "Nuptiae", description = "" } = Astro.props;
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>{title}</title>
     <meta name="description" content={description} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
   </head>
 
   <body>
@@ -24,6 +31,10 @@ const { title = "Nuptiae", description = "" } = Astro.props;
     --color-bg: #f2f2f2;
     --color-page: #ffffff;
     --color-text: #111;
+  }
+
+  html {
+    scroll-behavior: smooth;
   }
 
   body {

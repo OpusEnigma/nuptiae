@@ -1,0 +1,212 @@
+---
+export interface TimelineItem {
+  id: string;
+  date: string;
+  title: string;
+}
+
+interface Props {
+  items: TimelineItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<nav class="timeline" id="timeline">
+  <div class="timeline-line"></div>
+
+  {items.map((item, index) => (
+    <a
+      href={`#${item.id}`}
+      class={`timeline-item ${index === 0 ? "active" : ""}`}
+      data-id={item.id}
+    >
+      <span class="timeline-dot"></span>
+      <div class="timeline-text">
+        <span class="timeline-date">{item.date}</span>
+        <span class="timeline-title">{item.title}</span>
+      </div>
+    </a>
+  ))}
+</nav>
+
+<script>
+  const timeline = document.getElementById("timeline");
+  const ritualsSection = document.getElementById("rituals");
+  const items = document.querySelectorAll(".timeline-item");
+
+  if (timeline && ritualsSection) {
+
+    // === Affichage seulement dans la section Rituals ===
+    const sectionObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            timeline.classList.add("visible");
+          } else {
+            timeline.classList.remove("visible");
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    sectionObserver.observe(ritualsSection);
+
+    // === Activation progressive des sections ===
+    const ritualSections = Array.from(items).map(item =>
+      document.getElementById(item.dataset.id)
+    );
+
+    const ritualObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          const id = entry.target.id;
+          const link = document.querySelector(
+            `.timeline-item[data-id="${id}"]`
+          );
+
+          if (!link) return;
+
+          items.forEach(i => i.classList.remove("active"));
+          link.classList.add("active");
+        });
+      },
+      {
+        rootMargin: "-40% 0px -55% 0px",
+        threshold: 0
+      }
+    );
+
+    ritualSections.forEach(section => {
+      if (section) ritualObserver.observe(section);
+    });
+  }
+</script>
+
+<style>
+  .timeline {
+    position: fixed;
+    left: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease;
+  }
+
+  .timeline.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Ligne verticale */
+  .timeline-line {
+    position: absolute;
+    left: 7px;
+    top: -260px;
+    bottom: -260px;
+    width: 1px;
+    background: linear-gradient(
+      to bottom,
+      rgba(0,0,0,0.15),
+      rgba(0,0,0,0.25),
+      rgba(0,0,0,0.15)
+    );
+  }
+
+  /* Items */
+  .timeline-item {
+    position: relative;
+    display: block;
+    margin-bottom: 44px;
+    text-decoration: none;
+    color: #9a9a9a;
+    transition: color 0.4s ease;
+  }
+
+  /* DOT */
+  .timeline-dot {
+    position: absolute;
+    left: 0;
+    top: 5px;
+    width: 12px;
+    height: 12px;
+    background: #cfcfcf;
+    border-radius: 50%;
+    transition: all 0.4s ease;
+  }
+
+  /* Halo subtil */
+  .timeline-dot::after {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    background: radial-gradient(
+      rgba(0,0,0,0.12),
+      rgba(0,0,0,0.05),
+      transparent 70%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  /* Texte */
+  .timeline-text {
+    margin-left: 30px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .timeline-date {
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+
+  .timeline-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: transform 0.35s ease;
+  }
+
+  /* ================= */
+  /*     ACTIF         */
+  /* ================= */
+
+  .timeline-item.active {
+    color: #111;
+  }
+
+  .timeline-item.active .timeline-dot {
+    background: #111;
+    transform: scale(1.3);
+  }
+
+  .timeline-item.active .timeline-dot::after {
+    opacity: 1;
+  }
+
+  .timeline-item.active .timeline-title {
+    transform: translateX(2px);
+  }
+
+  /* Hover très subtil */
+  .timeline-item:hover .timeline-dot {
+    transform: scale(1.15);
+  }
+
+  /* Responsive */
+  @media (max-width: 1000px) {
+    .timeline {
+      display: none;
+    }
+  }
+
+</style>

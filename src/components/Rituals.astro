@@ -5,6 +5,7 @@
  */
 import Ritual from "./Ritual.astro";
 import RitualBlock from "./RitualBlock.astro";
+import Timeline from "./Timeline.astro";
 
 import khataImage1 from "../assets/rituals/khata-image-1.png";
 import khataImage2 from "../assets/rituals/khata-image-2.png";
@@ -12,26 +13,38 @@ import khataImage3 from "../assets/rituals/khata-image-3.png";
 import geetImage1 from "../assets/rituals/geet-image-1.png";
 import geetImage2 from "../assets/rituals/geet-image-2.png";
 import geetImage3 from "../assets/rituals/geet-image-3.png";
+
 // import haldiImage from "../assets/rituals/haldi.png";
 // import mariageImage from "../assets/rituals/mariage.png";
 ---
 
-<section id="story" class="story">
+<section id="rituals" class="rituals">
   <div class="container">
     <h2>Cérémonies</h2>
 
-    <p class="intro">
-      Un mariage hindou est un processus rituel structuré en plusieurs étapes,
-      réparties entre les cérémonies pré-nuptiales, la cérémonie de mariage
-      et les rites post-nuptiaux. Chaque rituel prépare progressivement
-      les futurs époux et leurs familles à l’union.
-    </p>
+    <section id="intro">
+      <p class="intro">
+        Un mariage hindou est un processus rituel structuré en plusieurs étapes,
+        réparties entre les cérémonies pré-nuptiales, la cérémonie de mariage
+        et les rites post-nuptiaux. Chaque rituel prépare progressivement
+        les futurs époux et leurs proches à l’union.
+      </p>
+    </section>
 
-    <!-- ===================== -->
+    <!-- TIMELINE --> 
+    <Timeline
+      items={[
+        { id: "intro", date: "", title: "Intro" },
+        { id: "khata", date: "20 Août", title: "Khata" },
+        { id: "geet", date: "21 Août", title: "Geet Gawai" }
+      ]}
+    />
+
     <!-- KHATA -->
-    <!-- ===================== -->
     <Ritual
+      id="khata"
       title="Khata — Satyanarayan Katha"
+      date="20 Août"
       time="16h00"
       meal="Diner"
       attendees="Famille et amis (facultatif)"
@@ -122,11 +135,11 @@ import geetImage3 from "../assets/rituals/geet-image-3.png";
       </RitualBlock>
     </Ritual>
 
-    <!-- ===================== -->
     <!-- GEET GAWAI -->
-    <!-- ===================== -->
     <Ritual
+      id="geet"
       title="Geet Gawai — Sangeet et Mehndi"
+      date="21 Août"
       time="20h00"
       meal="Thé & Snacks"
       attendees="Famille et amis"
@@ -223,7 +236,7 @@ import geetImage3 from "../assets/rituals/geet-image-3.png";
 </section>
 
 <style>
-  .story {
+  .rituals {
     background: #ffffff;
     padding: 6rem 2rem 8rem;
     box-shadow: 0 -30px 40px rgba(0, 0, 0, 0.03);
@@ -251,4 +264,5 @@ import geetImage3 from "../assets/rituals/geet-image-3.png";
     max-width: 60ch;
     margin: 0 auto 6rem;
   }
+
 </style>
