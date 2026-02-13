@@ -1,0 +1,71 @@
+---
+import { Image } from "astro:assets";
+
+/**
+ * Props:
+ * - image: ImageMetadata
+ * - side?: "left" | "right"
+ */
+const { image, side = "left" } = Astro.props;
+
+const sideClass = side === "right" ? "block--right" : "block--left";
+---
+
+<div class={`ritual-block ${sideClass}`}>
+  <div class="block-media">
+    <Image
+      src={image}
+      alt=""
+      loading="lazy"
+      sizes="(max-width: 900px) 100vw, 50vw"
+    />
+  </div>
+
+  <div class="block-content">
+    <slot />
+  </div>
+</div>
+
+<style>
+.ritual-block {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+  margin-bottom: 4rem;
+}
+
+.block--right {
+  direction: rtl;
+}
+
+.block--right .block-content {
+  direction: ltr;
+}
+
+.block--right .block-media {
+  direction: ltr;
+}
+
+.block-media img {
+  width: 100%;
+  height: auto;
+  border-radius: 2px;
+}
+
+.block-content p {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: #444;
+}
+
+@media (max-width: 900px) {
+  .ritual-block {
+    grid-template-columns: 1fr;
+  }
+
+  .block--right {
+    direction: ltr;
+  }
+}
+</style>

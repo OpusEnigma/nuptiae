@@ -4,9 +4,14 @@
  * Texte factuel, structuré pour lecture web
  */
 import Ritual from "./Ritual.astro";
+import RitualBlock from "./RitualBlock.astro";
 
-import khataImage from "../assets/rituals/khata-image.png";
-import geetImage from "../assets/rituals/geet-image.png";
+import khataImage1 from "../assets/rituals/khata-image-1.png";
+import khataImage2 from "../assets/rituals/khata-image-2.png";
+import khataImage3 from "../assets/rituals/khata-image-3.png";
+import geetImage1 from "../assets/rituals/geet-image-1.png";
+import geetImage2 from "../assets/rituals/geet-image-2.png";
+import geetImage3 from "../assets/rituals/geet-image-3.png";
 // import haldiImage from "../assets/rituals/haldi.png";
 // import mariageImage from "../assets/rituals/mariage.png";
 ---
@@ -27,88 +32,94 @@ import geetImage from "../assets/rituals/geet-image.png";
     <!-- ===================== -->
     <Ritual
       title="Khata — Satyanarayan Katha"
-      image={khataImage}
-      side="left"
       time="16h00"
       meal="Diner"
-      attendees="Famille obligatoire et amis recommandés"
+      attendees="Famille et amis (facultatif)"
+      dresscode="Traditionnel"
     >
-      <p>
-        La toute première cérémonie de la série est la
-        <strong>Satyanarayan Katha</strong>, également appelée
-        <em>Narayan Katha</em>.
-      </p>
+      
+      <RitualBlock image={khataImage1} side="left">
+        <p>
+          La toute première cérémonie de la série est la
+          <strong>Satyanarayan Katha</strong>, également appelée
+          <em>Narayan Katha</em>.
+        </p>
 
-      <p>
-        Autrefois organisée environ un mois avant le mariage, elle est
-        aujourd’hui célébrée quelques jours seulement avant la cérémonie
-        principale.
-      </p>
+        <p>
+          Autrefois organisée environ un mois avant le mariage, elle est
+          aujourd’hui célébrée quelques jours seulement avant la cérémonie
+          principale.
+        </p>
 
-      <p>
-        Cette célébration marque le début des rites pré-nuptiaux. Elle prend
-        la forme d’une réunion de prière organisée dans la maison de la
-        mariée, en présence des membres proches des deux familles et de
-        quelques amis intimes. Traditionnellement, la cérémonie est organisée
-        par les parents de la mariée.
-      </p>
+        <p>
+          Cette célébration marque le début des rites pré-nuptiaux. Elle prend
+          la forme d’une réunion de prière organisée dans la maison de la
+          mariée, en présence des membres proches des deux familles et de
+          quelques amis intimes. Traditionnellement, la cérémonie est organisée
+          par les parents de la mariée.
+        </p>
 
-      <p>
-        La puja est conduite par un prêtre hindou. La récitation de la Katha
-        dure généralement entre deux et trois heures. Durant toute la
-        cérémonie, un <strong>Havan Kund</strong> (feu sacré) est allumé et
-        une lampe reste allumée sans interruption. Les participants restent
-        assis avec foi, sincérité et recueillement.
-      </p>
+        <p>
+          La puja est conduite par un prêtre hindou. La récitation de la Katha
+          dure généralement entre deux et trois heures. Durant toute la
+          cérémonie, un <strong>Havan Kund</strong> (feu sacré) est allumé et
+          une lampe reste allumée sans interruption. Les participants restent
+          assis avec foi, sincérité et recueillement.
+        </p>
+      </RitualBlock>
 
-      <p>
-        La maison est décorée de feuilles d’Ashoka, de feuilles de bananier
-        et de fleurs fraîches. Un espace orienté vers le nord-est est aménagé
-        pour la puja. Une image ou une statue du Seigneur Satyanarayan est
-        placée sur une feuille de bétel, accompagnée de fleurs fraîches et
-        d’une diya allumée.
-      </p>
+      <RitualBlock image={khataImage2} side="right">
+        <p>
+          La maison est décorée de feuilles d’Ashoka, de feuilles de bananier
+          et de fleurs fraîches. Un espace orienté vers le nord-est est aménagé
+          pour la puja. Une image ou une statue du Seigneur Satyanarayan est
+          placée sur une feuille de bétel, accompagnée de fleurs fraîches et
+          d’une diya allumée.
+        </p>
 
-      <p>
-        Les offrandes (<em>puja samagri</em>) comprennent notamment le lait,
-        le yaourt, le ghee pur, le miel, le sucre, des fruits, des sucreries,
-        des feuilles de bétel, des feuilles de tulsi, des pétales de fleurs,
-        une noix de coco ainsi que du <em>suji ka halwa</em>. Ces offrandes
-        sont disposées devant le <strong>kalash</strong>, un pot d’eau décoré
-        de feuilles de manguier et surmonté d’une noix de coco.
-      </p>
+        <p>
+          Les offrandes (<em>puja samagri</em>) comprennent notamment le lait,
+          le yaourt, le ghee pur, le miel, le sucre, des fruits, des sucreries,
+          des feuilles de bétel, des feuilles de tulsi, des pétales de fleurs,
+          une noix de coco ainsi que du <em>suji ka halwa</em>. Ces offrandes
+          sont disposées devant le <strong>kalash</strong>, un pot d’eau décoré
+          de feuilles de manguier et surmonté d’une noix de coco.
+        </p>
 
-      <p>
-        La cérémonie débute par le <strong>Sankalp</strong>, une intention
-        formulée par le prêtre afin d’invoquer les bénédictions du Seigneur
-        Satyanarayan pour le couple. Le feu sacré est ensuite allumé et la
-        lecture de la Katha commence. Une <strong>Ganesh Puja</strong> est
-        également réalisée afin d’éliminer les obstacles et d’assurer le bon
-        déroulement des festivités.
-      </p>
+        <p>
+          La cérémonie débute par le <strong>Sankalp</strong>, une intention
+          formulée par le prêtre afin d’invoquer les bénédictions du Seigneur
+          Satyanarayan pour le couple. Le feu sacré est ensuite allumé et la
+          lecture de la Katha commence. Une <strong>Ganesh Puja</strong> est
+          également réalisée afin d’éliminer les obstacles et d’assurer le bon
+          déroulement des festivités.
+        </p>
+      </RitualBlock>
 
-      <p>
-        Une <strong>Aarti</strong> collective est ensuite chantée par
-        l’ensemble des participants. La cérémonie se conclut par la
-        distribution du <strong>Prasad</strong>, préparé durant la Katha,
-        avant qu’un repas ne soit partagé entre la famille, les amis et les
-        voisins.
-      </p>
+      <RitualBlock image={khataImage3} side="left">
+        <p>
+          Une <strong>Aarti</strong> collective est ensuite chantée par
+          l’ensemble des participants. La cérémonie se conclut par la
+          distribution du <strong>Prasad</strong>, préparé durant la Katha,
+          avant qu’un repas ne soit partagé entre la famille, les amis et les
+          voisins.
+        </p>
 
-      <p>
-        Lors de la Satyanarayan Katha, les futurs époux et leurs proches
-        portent des tenues traditionnelles. La mariée revêt généralement un
-        sari en soie ou en coton dans des couleurs vives telles que le rouge,
-        le jaune ou le vert, symboles de prospérité et de fertilité. Le futur
-        marié porte quant à lui un kurta-pyjama ou un dhoti-kurta dans des
-        tons clairs, exprimant simplicité et pureté.
-      </p>
+        <p>
+          Lors de la Satyanarayan Katha, les futurs époux et leurs proches
+          portent des tenues traditionnelles. La mariée revêt généralement un
+          sari en soie ou en coton dans des couleurs vives telles que le rouge,
+          le jaune ou le vert, symboles de prospérité et de fertilité. Le futur
+          marié porte quant à lui un kurta-pyjama ou un dhoti-kurta dans des
+          tons clairs, exprimant simplicité et pureté.
+        </p>
 
-      <p>
-        Les invités privilégient également des vêtements traditionnels, avec
-        des accessoires sobres, afin de respecter le caractère sacré et
-        solennel de la cérémonie.
-      </p>
+        <p>
+          Les invités privilégient également des vêtements traditionnels, avec
+          des accessoires sobres, afin de respecter le caractère sacré et
+          solennel de la cérémonie.
+        </p>
+      </RitualBlock>
     </Ritual>
 
     <!-- ===================== -->
@@ -116,73 +127,79 @@ import geetImage from "../assets/rituals/geet-image.png";
     <!-- ===================== -->
     <Ritual
       title="Geet Gawai — Sangeet et Mehndi"
-      image={geetImage}
-      side="right"
       time="20h00"
       meal="Thé & Snacks"
       attendees="Famille et amis"
+      dresscode="Traditionnel"
     >
-      <p>
-        Le <strong>Geet Gawai</strong> regroupe deux cérémonies importantes du
-        mariage hindou&nbsp;: le <strong>Sangeet</strong> et le
-        <strong>Mehndi</strong>. Elles sont généralement organisées deux jours
-        avant la cérémonie de mariage.
-      </p>
 
-      <p>
-        Le <strong>Mehndi</strong> est un rituel durant lequel les mains et parfois
-        les pieds de la mariée et du marié sont décorés de motifs traditionnels au
-        henné. La pâte utilisée est préparée à partir de feuilles de mehndi
-        fraîches broyées ou de poudre de mehndi prête à l’emploi.
-      </p>
+      <RitualBlock image={geetImage1} side="right">
+        <p>
+          Le <strong>Geet Gawai</strong> regroupe deux cérémonies importantes du
+          mariage hindou&nbsp;: le <strong>Sangeet</strong> et le
+          <strong>Mehndi</strong>. Elles sont généralement organisées deux jours
+          avant la cérémonie de mariage.
+        </p>
 
-      <p>
-        Les motifs au henné ne sont pas réservés uniquement aux futurs époux.
-        Les femmes de la famille ainsi que les amies participent également au
-        rituel en se faisant orner les mains de dessins décoratifs.
-      </p>
+        <p>
+          Le <strong>Mehndi</strong> est un rituel durant lequel les mains et parfois
+          les pieds de la mariée et du marié sont décorés de motifs traditionnels au
+          henné. La pâte utilisée est préparée à partir de feuilles de mehndi
+          fraîches broyées ou de poudre de mehndi prête à l’emploi.
+        </p>
 
-      <p>
-        Le mot <strong>Sangeet</strong> signifie littéralement chants, musique et
-        danse. Il s’agit de l’une des cérémonies les plus festives du mariage
-        hindou. Les invités y présentent des performances de danse, souvent sur
-        des musiques issues de films de Bollywood ou de Bhojpuri.
-      </p>
+        <p>
+          Les motifs au henné ne sont pas réservés uniquement aux futurs époux.
+          Les femmes de la famille ainsi que les amies participent également au
+          rituel en se faisant orner les mains de dessins décoratifs.
+        </p>
+      </RitualBlock>
 
-      <p>
-        Cette tradition, dont les origines se trouvent dans les mariages
-        pendjabis, est toujours associée au Mehndi. Pendant que le henné est
-        appliqué, les membres de la famille et les amis chantent, dansent ou
-        participent à des animations musicales.
-      </p>
+      <RitualBlock image={geetImage2} side="left">
+        <p>
+          Le mot <strong>Sangeet</strong> signifie littéralement chants, musique et
+          danse. Il s’agit de l’une des cérémonies les plus festives du mariage
+          hindou. Les invités y présentent des performances de danse, souvent sur
+          des musiques issues de films de Bollywood ou de Bhojpuri.
+        </p>
 
-      <p>
-        Selon les familles, les chants peuvent être interprétés sur des pistes
-        karaoké ou animés par des chanteurs professionnels invités pour
-        l’occasion.
-      </p>
+        <p>
+          Cette tradition, dont les origines se trouvent dans les mariages
+          pendjabis, est toujours associée au Mehndi. Pendant que le henné est
+          appliqué, les membres de la famille et les amis chantent, dansent ou
+          participent à des animations musicales.
+        </p>
 
-      <p>
-        Les participants qui le souhaitent peuvent se faire appliquer du mehndi
-        sur les mains ou les pieds. Il est recommandé de porter des vêtements
-        confortables, idéalement à manches courtes, afin de faciliter
-        l’application et le séchage des motifs.
-      </p>
+        <p>
+          Selon les familles, les chants peuvent être interprétés sur des pistes
+          karaoké ou animés par des chanteurs professionnels invités pour
+          l’occasion.
+        </p>
+      </RitualBlock>
 
-      <p>
-        Le port de tenues traditionnelles telles que le lehenga ou le sari n’est
-        pas obligatoire. Toute tenue habillée et colorée, accompagnée
-        d’accessoires, est appropriée. Le confort reste toutefois un élément
-        essentiel, car l’application du mehndi peut être longue et nécessite
-        parfois de rester immobile.
-      </p>
+      <RitualBlock image={geetImage3} side="right">
+        <p>
+          Les participants qui le souhaitent peuvent se faire appliquer du mehndi
+          sur les mains ou les pieds. Il est recommandé de porter des vêtements
+          confortables, idéalement à manches courtes, afin de faciliter
+          l’application et le séchage des motifs.
+        </p>
 
-      <p>
-        Plus que la tenue, l’essentiel du Geet Gawai réside dans l’esprit de
-        célébration. Cette cérémonie est avant tout un moment de partage,
-        de joie et de convivialité, placé sous le signe de l’amour et de la
-        communauté.
-      </p>
+        <p>
+          Le port de tenues traditionnelles telles que le lehenga ou le sari n’est
+          pas obligatoire. Toute tenue habillée et colorée, accompagnée
+          d’accessoires, est appropriée. Le confort reste toutefois un élément
+          essentiel, car l’application du mehndi peut être longue et nécessite
+          parfois de rester immobile.
+        </p>
+
+        <p>
+          Plus que la tenue, l’essentiel du Geet Gawai réside dans l’esprit de
+          célébration. Cette cérémonie est avant tout un moment de partage,
+          de joie et de convivialité, placé sous le signe de l’amour et de la
+          communauté.
+        </p>
+      </RitualBlock>
     </Ritual>
 
     <!-- ===================== -->
