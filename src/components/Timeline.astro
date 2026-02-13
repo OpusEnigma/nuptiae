@@ -30,62 +30,6 @@ const { items } = Astro.props;
   ))}
 </nav>
 
-<script>
-  const timeline = document.getElementById("timeline");
-  const ritualsSection = document.getElementById("rituals");
-  const items = document.querySelectorAll(".timeline-item");
-
-  if (timeline && ritualsSection) {
-
-    // === Affichage seulement dans la section Rituals ===
-    const sectionObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            timeline.classList.add("visible");
-          } else {
-            timeline.classList.remove("visible");
-          }
-        });
-      },
-      { threshold: 0.15 }
-    );
-
-    sectionObserver.observe(ritualsSection);
-
-    // === Activation progressive des sections ===
-    const ritualSections = Array.from(items).map(item =>
-      document.getElementById(item.dataset.id)
-    );
-
-    const ritualObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-
-          const id = entry.target.id;
-          const link = document.querySelector(
-            `.timeline-item[data-id="${id}"]`
-          );
-
-          if (!link) return;
-
-          items.forEach(i => i.classList.remove("active"));
-          link.classList.add("active");
-        });
-      },
-      {
-        rootMargin: "-40% 0px -55% 0px",
-        threshold: 0
-      }
-    );
-
-    ritualSections.forEach(section => {
-      if (section) ritualObserver.observe(section);
-    });
-  }
-</script>
-
 <style>
   .timeline {
     position: fixed;
