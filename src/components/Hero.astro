@@ -1,15 +1,8 @@
 ---
 import { Image } from "astro:assets";
 
-/**
- * Props :
- * - image: ImageMetadata (astro:assets)
- */
-const { image } = Astro.props;
+import heroImage from "../assets/hero-image.png";
 
-if (!image) {
-  throw new Error("Hero.astro requires an `image` prop imported from astro:assets");
-}
 ---
 
 <section id="hero" class="hero">
@@ -17,7 +10,7 @@ if (!image) {
 
     <!-- IMAGE -->
     <Image
-      src={image}
+      src={heroImage}
       alt="Paysage du lieu du mariage"
       class="image"
       priority

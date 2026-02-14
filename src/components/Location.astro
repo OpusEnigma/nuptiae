@@ -1,0 +1,132 @@
+---
+import Map from "../components/Map";
+---
+
+<section id="location" class="location">
+
+  <div class="location-inner">
+
+    <!-- HEADER -->
+    <header class="location-header">
+      <h2>Lieu</h2>
+      <p class="location-name">Carreau Laliane Road, Vacoas, Mauritius</p>
+    </header>
+
+    <!-- MAP -->
+    <div class="map-wrapper">
+      <Map
+        client:only="react"
+        lat={-20.2847984}
+        lng={57.4871965}
+        name="Carreau Laliane Road, Vacoas, Mauritius"
+      />
+    </div>
+
+  </div>
+
+</section>
+
+<style>
+
+/* ========================= */
+/* SECTION */
+/* ========================= */
+
+.location {
+  min-height: 100vh;
+  background: #ffffff;
+
+  display: flex;
+  justify-content: center;
+
+  position: relative;
+  z-index: 1; /* évite conflit timeline */
+}
+
+/* ========================= */
+/* INNER LAYOUT */
+/* ========================= */
+
+.location-inner {
+  width: 100%;
+  max-width: 1300px;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  transform: translateY(4vh); /* 👈 plus élégant */
+}
+
+/* ========================= */
+/* HEADER */
+/* ========================= */
+
+.location-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.location-header h2 {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  font-weight: 500;
+  margin: 0 0 0.5rem 0;
+}
+
+.location-name {
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #777;
+}
+
+/* ========================= */
+/* MAP WRAPPER */
+/* ========================= */
+
+.map-wrapper {
+  width: 100%;
+  height: 65vh; /* hauteur contrôlée */
+  min-height: 420px; /* sécurité */
+
+  border-radius: 14px;
+  overflow: hidden;
+
+  position: relative;
+
+  box-shadow:
+    0 30px 60px rgba(0,0,0,0.08),
+    0 10px 20px rgba(0,0,0,0.05);
+}
+
+/* 🔥 IMPORTANT POUR LEAFLET */
+:global(#leaflet-map),
+:global(.leaflet-container) {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* évite conflit stacking */
+:global(.leaflet-pane),
+:global(.leaflet-top),
+:global(.leaflet-bottom) {
+  z-index: 1;
+}
+
+/* ========================= */
+/* MOBILE */
+/* ========================= */
+
+@media (max-width: 768px) {
+  .map-wrapper {
+    height: 55vh;
+  }
+
+  .location-header h2 {
+    font-size: 2rem;
+  }
+}
+
+</style>

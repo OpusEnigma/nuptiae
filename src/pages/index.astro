@@ -2,12 +2,16 @@
 import LandingLayout from "../layouts/LandingLayout.astro";
 import Hero from "../components/Hero.astro";
 import Rituals from "../components/Rituals.astro";
-
-import heroImage from "../assets/hero-image.png";
+import Location from "../components/Location.astro";
 ---
 
 <LandingLayout title="Nuptiae – Mariage hindou">
-  <Hero image={heroImage} />
-  
+  <Hero/>
+
   <Rituals />
+  <Location
+    lat={48.8566}
+    lng={2.3522}
+    name="Paris, France"
+  />
 </LandingLayout>
