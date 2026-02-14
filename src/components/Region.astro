@@ -1,0 +1,182 @@
+---
+import Map from "../components/Map";
+import Place from "../components/Place.astro";
+
+import vacoasImage from "../assets/region/vacoas-image.png";
+import flicenflacImage from "../assets/region/flicenflac-image.png";
+
+const markers = [
+  {
+    lat: -20.284981,
+    lng: 57.486647,
+    name: "Vacoas",
+    primary: true
+  },
+  {
+    lat: -20.2847458,
+    lng: 57.3721284,
+    name: "Flic-en-Flac"
+  }
+];
+---
+
+<section id="region" class="region">
+  <div class="region-inner">
+
+    <!-- HEADER -->
+    <header class="region-header">
+      <h2>Région</h2>
+    </header>
+
+    <!-- MAP -->
+    <div class="map-wrapper">
+      <Map
+        client:only="react"
+        markers={markers}
+        zoom={10}
+        variant="region"
+      />
+    </div>
+
+    <!-- PLACES -->
+    <div class="places-section">
+      <div class="places-grid">
+
+        <Place
+          title="Vacoas"
+          location="Vacoas, Maurice"
+          image={vacoasImage}
+        >
+          <p>
+            Vacoas-Phoenix est l’une des principales agglomérations situées sur le plateau central de Maurice. Bénéficiant d’un climat plus frais que les régions côtières, la ville se distingue par son environnement verdoyant et son atmosphère résidentielle paisible. Elle constitue un pôle urbain important, à la fois dynamique et ancré dans la vie locale mauricienne.
+          </p>
+          <p>
+            Vacoas-Phoenix offre un cadre de vie agréable, marqué par la présence de quartiers résidentiels, de centres commerciaux et d’établissements scolaires réputés. À proximité se trouve le célèbre Trou aux Cerfs, ancien cratère volcanique offrant un panorama spectaculaire sur l’île.
+          </p>
+          <p>
+            Alliant accessibilité, modernité et proximité avec la nature, Vacoas incarne une ville équilibrée, où développement urbain et qualité de vie coexistent harmonieusement au cœur de l’île Maurice.
+          </p>
+        </Place>
+
+        <Place
+          title="Flic-en-Flac"
+          location="Flic-en-Flac, Maurice"
+          image={flicenflacImage}
+        >
+          <p>
+            Flic-en-Flac est l’une des principales stations balnéaires de Maurice, située sur la côte ouest de l’île. Réputée pour sa plage qui s’étend sur plusieurs kilomètres, elle offre un sable blanc bordé de filaos et un lagon aux eaux calmes, protégé par une barrière de corail. 
+          </p>
+          <p>
+            Son emplacement privilégié lui permet de bénéficier d’un climat ensoleillé et de spectaculaires couchers de soleil sur l’océan Indien.
+          </p>
+          <p>
+            La localité séduit par son équilibre entre dynamisme touristique et atmosphère détendue. Elle propose une offre variée d’hébergements, de restaurants et d’activités nautiques, tout en conservant un cadre naturel préservé. La plongée sous-marine y est particulièrement appréciée grâce à la richesse des fonds marins environnants.
+          </p>
+          <p>
+            Flic-en-Flac incarne ainsi l’image d’une destination balnéaire élégante et accessible, où se conjuguent douceur de vivre, hospitalité mauricienne et paysages tropicaux d’exception.
+          </p>
+      </Place>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* ========================= */
+  /* SECTION */
+  /* ========================= */
+
+  .region {
+    padding: var(--space-8) 2rem;
+    background: var(--color-page);
+  }
+
+  /* ========================= */
+  /* INNER LAYOUT */
+  /* ========================= */
+
+  .region-inner {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: var(--space-8);
+  }
+
+  /* ========================= */
+  /* HEADER */
+  /* ========================= */
+
+  .region-header {
+    text-align: center;
+  }
+
+  .region-header h2 {
+    margin-bottom: var(--space-2);
+  }
+
+  /* ========================= */
+  /* MAP */
+  /* ========================= */
+
+  .map-wrapper {
+    width: 100%;
+    height: 60vh;
+    min-height: 420px;
+    overflow: hidden;
+  }
+
+  /* ========================= */
+  /* PLACES */
+  /* ========================= */
+
+  .places-section {
+    width: 100%;
+  }
+
+  .places-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: var(--space-7);
+  }
+
+  /* ========================= */
+  /* LEAFLET FIX */
+  /* ========================= */
+
+  :global(.leaflet-container) {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  /* ========================= */
+  /* MOBILE */
+  /* ========================= */
+
+  @media (max-width: 768px) {
+
+    .region {
+      padding: var(--space-7) 1.5rem;
+    }
+
+    .region-inner {
+      gap: var(--space-7);
+    }
+
+    .map-wrapper {
+      height: 55vh;
+      min-height: 360px;
+    }
+
+    .places-grid {
+      gap: var(--space-6);
+    }
+
+  }
+</style>

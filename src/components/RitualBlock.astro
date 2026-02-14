@@ -26,14 +26,19 @@ const sideClass = side === "right" ? "block--right" : "block--left";
 </div>
 
 <style>
+  /* ============================= */
+  /* LAYOUT */
+  /* ============================= */
+
   .ritual-block {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 3rem;
+    gap: var(--space-7);
     align-items: start;
-    margin-bottom: 4rem;
+    margin-bottom: var(--space-7);
   }
 
+  /* Alternance */
   .block--right {
     direction: rtl;
   }
@@ -43,31 +48,50 @@ const sideClass = side === "right" ? "block--right" : "block--left";
     direction: ltr;
   }
 
+  /* ============================= */
+  /* IMAGE */
+  /* ============================= */
+
   .block-media img {
     width: 100%;
     height: auto;
-    border-radius: 8px;
     display: block;
-    box-shadow:
-      0 20px 40px rgba(0, 0, 0, 0.08),
-      0 6px 16px rgba(0, 0, 0, 0.06);
   }
 
-  .block-content p {
-    font-size: 1.05rem;
-    line-height: 1.75;
-    color: #444;
-    margin-bottom: 1rem;
+  /* ============================= */
+  /* TEXTE */
+  /* ============================= */
+
+  .block-content {
+    max-width: 52ch;
   }
+
+  /* Le texte est déjà défini globalement via p {} */
+  .block-content p {
+    margin-bottom: var(--space-3);
+  }
+
+  .block-content p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ============================= */
+  /* MOBILE */
+  /* ============================= */
 
   @media (max-width: 900px) {
     .ritual-block {
       grid-template-columns: 1fr;
-      gap: 2rem;
+      gap: var(--space-5);
+      margin-bottom: var(--space-6);
     }
 
     .block--right {
       direction: ltr;
+    }
+
+    .block-content {
+      max-width: 100%;
     }
   }
 </style>

@@ -25,13 +25,57 @@ const { title = "Nuptiae", description = "" } = Astro.props;
 
 <style is:global>
   :root {
+
     --font-body: Inter, system-ui, sans-serif;
     --font-display: "Playfair Display", serif;
 
-    --color-bg: #f2f2f2;
+    /* ========================= */
+    /* TYPO SCALE */
+    /* ========================= */
+
+    --fs-display: 3.2rem;
+    --fs-h1: 2.6rem;
+    --fs-h2: 2.2rem;
+    --fs-h3: 1.6rem;
+    --fs-body-lg: 1.2rem;
+    --fs-body: 1.05rem;
+    --fs-small: 0.8rem;
+
+    /* ========================= */
+    /* LINE HEIGHT */
+    /* ========================= */
+
+    --lh-tight: 1.15;
+    --lh-normal: 1.85;
+    --lh-loose: 2;
+
+    /* ========================= */
+    /* COLORS */
+    /* ========================= */
+
+    --color-text: #2e2e2e;
+    --color-muted: #777;
+    --color-subtle: #9a9a9a;
+    --color-bg: #f6f6f6;
     --color-page: #ffffff;
-    --color-text: #111;
+
+    /* ========================= */
+    /* SPACING SYSTEM (8pt base) */
+    /* ========================= */
+
+    --space-1: 0.5rem;
+    --space-2: 1rem;
+    --space-3: 1.5rem;
+    --space-4: 2rem;
+    --space-5: 3rem;
+    --space-6: 4rem;
+    --space-7: 6rem;
+    --space-8: 8rem;
   }
+
+  /* ========================= */
+  /* RESET STRUCTURE */
+  /* ========================= */
 
   html {
     scroll-behavior: smooth;
@@ -42,6 +86,95 @@ const { title = "Nuptiae", description = "" } = Astro.props;
     font-family: var(--font-body);
     background: var(--color-bg);
     color: var(--color-text);
-    line-height: 1.7;
+    line-height: var(--lh-normal);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* ========================= */
+  /* GLOBAL TYPOGRAPHY */
+  /* ========================= */
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin: 0;
+    line-height: var(--lh-tight);
+  }
+
+  h1 {
+    font-size: var(--fs-display);
+  }
+
+  h2 {
+    font-size: var(--fs-h1);
+  }
+
+  h3 {
+    font-size: var(--fs-h2);
+  }
+
+  p {
+    font-size: var(--fs-body);
+    line-height: var(--lh-loose);
+    margin-top: 0;
+    margin-bottom: var(--space-3);
+  }
+
+  small {
+    font-size: var(--fs-small);
+    color: var(--color-muted);
+  }
+
+  /* ========================= */
+  /* SECTIONS RHYTHM */
+  /* ========================= */
+
+  section {
+    background: var(--color-page);
+  }
+
+  section + section {
+    margin-top: var(--space-8);
+  }
+
+  /* ========================= */
+  /* IMAGES */
+  /* ========================= */
+
+  img {
+    display: block;
+    max-width: 100%;
+  }
+
+  /* ========================= */
+  /* LINKS (minimal) */
+  /* ========================= */
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  /* ========================= */
+  /* RESPONSIVE TYPO */
+  /* ========================= */
+
+  @media (max-width: 768px) {
+
+    :root {
+      --fs-display: 2.4rem;
+      --fs-h1: 2rem;
+      --fs-h2: 1.7rem;
+      --fs-h3: 1.4rem;
+      --fs-body-lg: 1.1rem;
+      --fs-body: 1rem;
+    }
+
   }
 </style>

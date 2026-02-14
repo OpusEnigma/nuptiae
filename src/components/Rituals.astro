@@ -1,8 +1,4 @@
 ---
-/**
- * Section explicative : déroulement d’un mariage hindou
- * Texte factuel, structuré pour lecture web
- */
 import Ritual from "./Ritual.astro";
 import RitualBlock from "./RitualBlock.astro";
 import Timeline from "./Timeline.astro";
@@ -19,10 +15,11 @@ import geetImage3 from "../assets/rituals/geet-image-3.png";
 ---
 
 <section id="rituals" class="rituals">
+
   <div class="container">
-    <h2>Cérémonies</h2>
 
     <section id="intro">
+      <h2>Cérémonies</h2>
       <p class="intro">
         Un mariage hindou est un processus rituel structuré en plusieurs étapes,
         réparties entre les cérémonies pré-nuptiales, la cérémonie de mariage
@@ -235,10 +232,13 @@ import geetImage3 from "../assets/rituals/geet-image-3.png";
 </section>
 
 <style>
+  /* ========================= */
+  /* SECTION */
+  /* ========================= */
+
   .rituals {
-    background: #ffffff;
-    padding: 6rem 2rem 8rem;
-    box-shadow: 0 -30px 40px rgba(0, 0, 0, 0.03);
+    padding: var(--space-8) 2rem;
+    background: var(--color-page);
   }
 
   .container {
@@ -246,22 +246,38 @@ import geetImage3 from "../assets/rituals/geet-image-3.png";
     margin: 0 auto;
   }
 
-  h2 {
-    font-family: var(--font-display);
-    font-size: 2.6rem;
-    font-weight: 500;
-    margin-bottom: 2rem;
+  /* ========================= */
+  /* INTRO */
+  /* ========================= */
+
+  #intro {
     text-align: center;
-    letter-spacing: -0.02em;
+    margin-bottom: var(--space-7);
+  }
+
+  #intro h2 {
+    margin-bottom: var(--space-4);
   }
 
   .intro {
-    font-size: 1.15rem;
-    line-height: 1.8;
-    color: #444;
-    text-align: center;
+    font-size: var(--fs-body-lg);
+    line-height: var(--lh-loose);
+    color: var(--color-text);
     max-width: 60ch;
-    margin: 0 auto 6rem;
+    margin: 0 auto;
   }
 
+  /* ========================= */
+  /* MOBILE */
+  /* ========================= */
+
+  @media (max-width: 768px) {
+    .rituals {
+      padding: var(--space-7) 1.5rem;
+    }
+
+    #intro {
+      margin-bottom: var(--space-6);
+    }
+  }
 </style>

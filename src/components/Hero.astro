@@ -1,14 +1,10 @@
 ---
 import { Image } from "astro:assets";
-
 import heroImage from "../assets/hero-image.png";
-
 ---
 
 <section id="hero" class="hero">
   <div class="stage">
-
-    <!-- IMAGE -->
     <Image
       src={heroImage}
       alt="Paysage du lieu du mariage"
@@ -16,59 +12,50 @@ import heroImage from "../assets/hero-image.png";
       priority
       sizes="(max-width: 1200px) 100vw, 1200px"
     />
-
-    <!-- TITRE 
-    <div class="panel panel-title">
-      <h1>Un mariage au-delà des océans</h1>
-    </div>
-    -->
-
-    <!-- DATE 
-    <div class="panel panel-date">
-      <p>Du 20 au 24 août 2026</p>
-    </div>
-    -->
-
-    <!-- SCROLL CUE 
-    <div class="scroll-cue" aria-hidden="true">
-
-    </div>
-    -->
-
   </div>
 </section>
 
 <style>
+  /* ========================= */
+  /* HERO */
+  /* ========================= */
 
-  /* ===== HERO (FOND / BANDES) ===== */
   .hero {
     height: 100vh;
-    min-height: 600px;
-    background: #f6f6f6;
+    min-height: 640px;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     overflow: hidden;
+
+    /* Utilise les variables globales */
+    background: linear-gradient(
+      to bottom,
+      var(--color-bg) 82%,
+      var(--color-page) 100%
+    );
   }
 
-  /* ===== SCÈNE CENTRALE ===== */
+  /* ========================= */
+  /* STAGE */
+  /* ========================= */
+
   .stage {
     position: relative;
-
-    /* la scène est CENTRÉE */
     margin-inline: auto;
 
-    /* contrainte par la hauteur */
     height: 100%;
-
-    /* ratio exact de l’image */
     aspect-ratio: 3 / 2;
 
-    /* sécurité */
     max-width: 100%;
   }
 
-  /* ===== IMAGE ===== */
+  /* ========================= */
+  /* IMAGE */
+  /* ========================= */
+
   .image {
     width: 100%;
     height: 100%;
@@ -76,105 +63,24 @@ import heroImage from "../assets/hero-image.png";
     display: block;
   }
 
-  /* ===== PANELS ===== */
-  .panel {
-    position: absolute;
-    background: #ffffff;
-    padding: 1.4rem 2rem;
-    box-shadow:
-      0 10px 30px rgba(0, 0, 0, 0.12),
-      0 2px 8px rgba(0, 0, 0, 0.08);
-    z-index: 2;
-  }
+  /* ========================= */
+  /* MOBILE */
+  /* ========================= */
 
-  /* TITRE */
-  .panel-title {
-    top: 2.5rem;
-    left: -10rem;
-  }
-
-  .panel-title h1 {
-    font-family: var(--font-display);
-    font-size: 1.8rem;
-    font-weight: 500;
-    margin: 0;
-    white-space: nowrap;
-    letter-spacing: -0.015em;
-  }
-
-  /* DATE */
-  .panel-date {
-    bottom: 2.5rem;
-    right: -10rem;
-  }
-
-  .panel-date p {
-    margin: 0;
-    font-size: 1.2rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #444;
-  }
-
-  /* ===== SCROLL CUE ===== */
-  .scroll-cue {
-    position: absolute;
-    bottom: 1.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 1px;
-    height: 48px;
-    background: rgba(0, 0, 0, 0.35);
-    z-index: 2;
-  }
-
-  /* ===== MOBILE ===== */
   @media (max-width: 768px) {
-
     .hero {
-      height: 100vh;
       min-height: 100vh;
     }
 
     .stage {
       width: 100%;
       height: 100%;
-      aspect-ratio: auto; /* supprime le ratio 3/2 */
+      aspect-ratio: auto;
     }
 
     .image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover; /* 👈 plein écran, crop latéral */
-    }
-
-    /* 👇 On enlève la date */
-    .panel-date {
-      display: none;
-    }
-
-  }
-
-  /* Animation très douce (optionnelle mais élégante) */
-  @media (prefers-reduced-motion: no-preference) {
-    .scroll-cue {
-      animation: scrollHint 2.8s ease-in-out infinite;
-    }
-
-    @keyframes scrollHint {
-      0% {
-        opacity: 0.2;
-        transform: translate(-50%, 0);
-      }
-      50% {
-        opacity: 0.6;
-        transform: translate(-50%, 10px);
-      }
-      100% {
-        opacity: 0.2;
-        transform: translate(-50%, 0);
-      }
+      object-fit: cover;
     }
   }
-
 </style>
+

@@ -61,20 +61,19 @@ if (!title) {
     <slot />
   </div>
 </section>
-
 <style>
   /* ============================= */
-  /* CHAPITRE / ANIMATION GLOBALE */
+  /* SECTION */
   /* ============================= */
 
   .ritual {
-    margin-bottom: 8rem;
+    margin-bottom: var(--space-8);
 
     opacity: 0;
-    transform: translateY(24px);
+    transform: translateY(30px);
     transition:
-      opacity 0.9s cubic-bezier(.25,.46,.45,.94),
-      transform 0.9s cubic-bezier(.25,.46,.45,.94);
+      opacity 1s ease,
+      transform 1s ease;
   }
 
   .ritual.is-visible {
@@ -82,85 +81,63 @@ if (!title) {
     transform: translateY(0);
   }
 
-  /* Animation en cascade élégante */
-
-  .ritual-title {
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-  }
-
-  .ritual.is-visible .ritual-title {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .ritual-infos,
-  .ritual-body {
-    opacity: 0;
-    transition: opacity 1s ease 0.15s;
-  }
-
-  .ritual.is-visible .ritual-infos,
-  .ritual.is-visible .ritual-body {
-    opacity: 1;
-  }
-
-
   /* ============================= */
   /* TITRE */
   /* ============================= */
 
   .ritual-title {
-    font-family: var(--font-display);
-    font-size: 2rem;
-    font-weight: 500;
-    margin-bottom: 2rem;
-    letter-spacing: -0.02em;
+    font-size: var(--fs-h2);
+    line-height: var(--lh-tight);
+    margin-bottom: var(--space-4);
   }
 
   /* ============================= */
-  /* INFOS */
+  /* MÉTADONNÉES */
   /* ============================= */
 
   .ritual-infos {
-    margin-bottom: 3rem;
-    border-top: 1px solid #e5e5e5;
-    padding-top: 1.5rem;
-    background: #fafafa;
-    padding: 1.5rem;
-    border-radius: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-5);
+
+    font-size: var(--fs-small);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+
+    color: var(--color-muted);
+
+    margin-bottom: var(--space-6);
   }
 
   .info-row {
-    display: grid;
-    grid-template-columns: 160px 1fr;
-    gap: 1rem;
-    padding: 0.6rem 0;
-  }
-
-  .info-row + .info-row {
-    border-top: 1px solid #f1f1f1;
+    display: inline-flex;
+    gap: var(--space-1);
   }
 
   .label {
-    font-weight: 500;
-    color: #333;
+    color: var(--color-subtle);
   }
 
   .value {
-    color: #555;
+    color: var(--color-text);
   }
 
   /* ============================= */
-  /* TEXTE */
+  /* CORPS */
   /* ============================= */
 
+  .ritual-body {
+    opacity: 0;
+    transition: opacity 1.2s ease 0.2s;
+  }
+
+  .ritual.is-visible .ritual-body {
+    opacity: 1;
+  }
+
+  /* Le texte est déjà défini globalement via p {} */
   .ritual-body p {
-    font-size: 1.05rem;
-    line-height: 1.75;
-    color: #444;
-    //margin-bottom: 1rem;
+    margin-bottom: var(--space-3);
   }
 
   /* ============================= */
@@ -168,19 +145,18 @@ if (!title) {
   /* ============================= */
 
   @media (max-width: 768px) {
-    .info-row {
-      grid-template-columns: 1fr;
-    }
-
-    .label {
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      margin-bottom: 0.2rem;
-    }
 
     .ritual {
-      transform: translateY(60px) scale(0.98);
+      margin-bottom: var(--space-7);
+    }
+
+    .ritual-title {
+      margin-bottom: var(--space-3);
+    }
+
+    .ritual-infos {
+      gap: var(--space-1) var(--space-3);
+      margin-bottom: var(--space-5);
     }
   }
 </style>
@@ -256,6 +232,3 @@ if (!title) {
 
   updateActiveRitual();
 </script>
-
-
-
