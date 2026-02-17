@@ -1,283 +1,423 @@
----
-import Ritual from "./Ritual.astro";
-import RitualBlock from "./RitualBlock.astro";
-import Timeline from "./Timeline.astro";
+  ---
 
-import khataImage1 from "../assets/rituals/khata-image-1.png";
-import khataImage2 from "../assets/rituals/khata-image-2.png";
-import khataImage3 from "../assets/rituals/khata-image-3.png";
-import geetImage1 from "../assets/rituals/geet-image-1.png";
-import geetImage2 from "../assets/rituals/geet-image-2.png";
-import geetImage3 from "../assets/rituals/geet-image-3.png";
+  import TopGarland from "./TopGarland.astro";
 
-// import haldiImage from "../assets/rituals/haldi.png";
-// import mariageImage from "../assets/rituals/mariage.png";
----
+  import RitualHero from "./RitualHero.astro";
+  import Timeline from "./Timeline.astro";
 
-<section id="rituals" class="rituals">
+  import RitualHeader from "./RitualHeader.astro";
+  import Ritual from "./Ritual.astro";
+  import RitualBlock from "./RitualBlock.astro";
+  import RitualFooter from "./RitualFooter.astro";
 
-  <div class="container">
+  import khataHeaderImage from "../assets/rituals/khata-header-image.png";
+  import khataImage1 from "../assets/rituals/khata-image-1.png";
+  import khataImage2 from "../assets/rituals/khata-image-2.png";
+  import khataImage3 from "../assets/rituals/khata-image-3.png";
 
-    <section id="intro">
-      <h2>Cérémonies</h2>
-      <p class="intro">
-        Un mariage hindou est un processus rituel structuré en plusieurs étapes,
-        réparties entre les cérémonies pré-nuptiales, la cérémonie de mariage
-        et les rites post-nuptiaux. Chaque rituel prépare progressivement
-        les futurs époux et leurs proches à l’union.
-      </p>
-    </section>
+  import geetHeaderImage from "../assets/rituals/geet-header-image.png";
+  import geetImage1 from "../assets/rituals/geet-image-1.png";
+  import geetImage2 from "../assets/rituals/geet-image-2.png";
+  import geetImage3 from "../assets/rituals/geet-image-3.png";
+  import geetFooterImage1 from "../assets/rituals/geet-footer-image-1.png";
+  import geetFooterImage2 from "../assets/rituals/geet-footer-image-2.png";
+  import geetFooterImage3 from "../assets/rituals/geet-footer-image-3.png";
+  import geetFooterImage4 from "../assets/rituals/geet-footer-image-4.png";
+  import geetFooterImage5 from "../assets/rituals/geet-footer-image-5.png";
 
-    <!-- TIMELINE --> 
-    <Timeline
-      items={[
-        { id: "khata", date: "20 Août", title: "Khata" },
-        { id: "geet", date: "21 Août", title: "Geet Gawai" }
-      ]}
-    />
+  import haldiHeaderImage from "../assets/rituals/haldi-header-image.png";
+  import haldiImage1 from "../assets/rituals/haldi-image-1.png";
+  import haldiImage2 from "../assets/rituals/haldi-image-2.png";
+  import haldiImage3 from "../assets/rituals/haldi-image-3.png";
+  import haldiImage4 from "../assets/rituals/haldi-image-4.png";
+  
+  // import mariageImage from "../assets/rituals/mariage.png";
+  ---
 
-    <!-- KHATA -->
-    <Ritual
-      id="khata"
-      title="Khata — Satyanarayan Katha"
-      date="20 Août"
-      time="16h00"
-      meal="Diner"
-      attendees="Famille et amis (facultatif)"
-      dresscode="Confortable et coloré (Habit traditionnel facultatif)"
-    >
-      
-      <RitualBlock image={khataImage1} side="left">
-        <p>
-          La toute première cérémonie de la série est la
-          <strong>Satyanarayan Katha</strong>, également appelée
-          <em>Narayan Katha</em>.
-        </p>
+  <section id="rituals" class="rituals">
+    
+    <!-- FRAME -->
+    <div class="temple-frame">
 
-        <p>
-          Autrefois organisée environ un mois avant le mariage, elle est
-          aujourd’hui célébrée quelques jours seulement avant la cérémonie
-          principale.
-        </p>
+      <TopGarland />
 
-        <p>
-          Cette célébration marque le début des rites pré-nuptiaux. Elle prend
-          la forme d’une réunion de prière organisée dans la maison de la
-          mariée, en présence des membres proches des deux familles et de
-          quelques amis intimes. Traditionnellement, la cérémonie est organisée
-          par les parents de la mariée.
-        </p>
+      <!-- CONTENT -->
+      <div class="temple-content">
 
-        <p>
-          La puja est conduite par un prêtre hindou. La récitation de la Katha
-          dure généralement entre deux et trois heures. Durant toute la
-          cérémonie, un <strong>Havan Kund</strong> (feu sacré) est allumé et
-          une lampe reste allumée sans interruption. Les participants restent
-          assis avec foi, sincérité et recueillement.
-        </p>
-      </RitualBlock>
+        <RitualHero />
 
-      <RitualBlock image={khataImage2} side="right">
-        <p>
-          La maison est décorée de feuilles d’Ashoka, de feuilles de bananier
-          et de fleurs fraîches. Un espace orienté vers le nord-est est aménagé
-          pour la puja. Une image ou une statue du Seigneur Satyanarayan est
-          placée sur une feuille de bétel, accompagnée de fleurs fraîches et
-          d’une diya allumée.
-        </p>
+        <section class="ritual-content">
+          <div class="container">
 
-        <p>
-          Les offrandes (<em>puja samagri</em>) comprennent notamment le lait,
-          le yaourt, le ghee pur, le miel, le sucre, des fruits, des sucreries,
-          des feuilles de bétel, des feuilles de tulsi, des pétales de fleurs,
-          une noix de coco ainsi que du <em>suji ka halwa</em>. Ces offrandes
-          sont disposées devant le <strong>kalash</strong>, un pot d’eau décoré
-          de feuilles de manguier et surmonté d’une noix de coco.
-        </p>
+            <!-- TIMELINE --> 
+            <Timeline
+              items={[
+                { id: "khata", date: "20 Août", title: "Khata" },
+                { id: "geet", date: "21 Août", title: "Geet Gawai" },
+                { id: "haldi", date: "22 Août", title: "Haldi" },
+                { id: "shaadi", date: "23 Août", title: "Shaadi" }
+              ]}
+            />
 
-        <p>
-          La cérémonie débute par le <strong>Sankalp</strong>, une intention
-          formulée par le prêtre afin d’invoquer les bénédictions du Seigneur
-          Satyanarayan pour le couple. Le feu sacré est ensuite allumé et la
-          lecture de la Katha commence. Une <strong>Ganesh Puja</strong> est
-          également réalisée afin d’éliminer les obstacles et d’assurer le bon
-          déroulement des festivités.
-        </p>
-      </RitualBlock>
+            <!-- KHATA -->
+            <Ritual id="khata">
 
-      <RitualBlock image={khataImage3} side="left">
-        <p>
-          Une <strong>Aarti</strong> collective est ensuite chantée par
-          l’ensemble des participants. La cérémonie se conclut par la
-          distribution du <strong>Prasad</strong>, préparé durant la Katha,
-          avant qu’un repas ne soit partagé entre la famille, les amis et les
-          voisins.
-        </p>
+              <RitualHeader
+                title="Satyanarayan Katha"
+                image={khataHeaderImage}
+                date="20 Août"
+                time="16h00"
+                meal="Diner"
+                veggie={true}
+                attendees="Famille et amis (facultatif)"
+                dresscode="Confortable et coloré (Habit traditionnel facultatif)"
+              />
+            
+              <RitualBlock image={khataImage1} side="right">
+                <p>
+                  La toute première cérémonie de la série est la <strong>Satyanarayan Katha</strong>
+                </p>
 
-        <p>
-          Lors de la Satyanarayan Katha, les futurs époux et leurs proches
-          portent des tenues traditionnelles. La mariée revêt généralement un
-          sari en soie ou en coton dans des couleurs vives telles que le rouge,
-          le jaune ou le vert, symboles de prospérité et de fertilité. Le futur
-          marié porte quant à lui un kurta-pyjama ou un dhoti-kurta dans des
-          tons clairs, exprimant simplicité et pureté.
-        </p>
+                <p>
+                  Autrefois, cette cérémonie avait lieu un mois avant le mariage, car les festivités nuptiales duraient tout un mois. 
+                  Mais de nos jours, la plupart des familles accomplissent la <strong>Katha</strong> quelques jours avant le mariage proprement dit.
+                </p>
 
-        <p>
-          Les invités privilégient également des vêtements traditionnels, avec
-          des accessoires sobres, afin de respecter le caractère sacré et
-          solennel de la cérémonie.
-        </p>
-      </RitualBlock>
-    </Ritual>
+                <p>
+                  La <strong>Satyanarayan Katha</strong>, ou <strong>Narayan Katha</strong>, est traditionnellement organisée par les parents de la mariée, dans leur maison. 
+                  Seuls les membres de la famille de la mariée et du marié ainsi que quelques amis proches sont invités à cette cérémonie religieuse. 
+                </p>
 
-    <!-- GEET GAWAI -->
-    <Ritual
-      id="geet"
-      title="Geet Gawai — Sangeet et Mehndi"
-      date="21 Août"
-      time="20h00"
-      meal="Thé & Snacks"
-      attendees="Famille et amis"
-      dresscode="Confortable et coloré (Habit traditionnel facultatif)"
-    >
+                <p>
+                  La maison est décorée avec des feuilles d’<strong>ashoka</strong>, des feuilles de bananier et des fleurs fraîches. 
+                  Une zone orientée au nord-est est préparée pour la <strong>puja</strong>, avec une photo encadrée ou une idole du Seigneur <strong>Satyanarayan</strong> placée sur une feuille de bétel. 
+                  Des fleurs fraîches et un beau <strong>diya</strong> <i>(lampe à huile)</i> allumé sont disposés devant l’image ou l’idole.
+                </p>
+              </RitualBlock>
 
-      <RitualBlock image={geetImage1} side="right">
-        <p>
-          Le <strong>Geet Gawai</strong> regroupe deux cérémonies importantes du
-          mariage hindou&nbsp;: le <strong>Sangeet</strong> et le
-          <strong>Mehndi</strong>. Elles sont généralement organisées deux jours
-          avant la cérémonie de mariage.
-        </p>
+              <RitualBlock image={khataImage2} side="left">
+                <p>
+                  La <strong>puja</strong> <i>(prière)</i>, qui dure entre deux et trois heures, est élaborée et célébrée par un prêtre hindou.
+                  Pendant la récitation, un <strong>Havan Kund</strong> <i>(feu sacré)</i> est allumé et une lampe est maintenue allumée pendant toute la durée de la cérémonie. 
+                  Tous les participants restent assis pendant l’ensemble de la cérémonie.
+                </p>
 
-        <p>
-          Le <strong>Mehndi</strong> est un rituel durant lequel les mains et parfois
-          les pieds de la mariée et du marié sont décorés de motifs traditionnels au
-          henné. La pâte utilisée est préparée à partir de feuilles de mehndi
-          fraîches broyées ou de poudre de mehndi prête à l’emploi.
-        </p>
+                <p>
+                  Le prêtre commence la cérémonie par un <strong>Sankalp</strong> <i>(résolution ou intention)</i> en invoquant les bénédictions du Seigneur <strong>Satyanarayan</strong> pour le couple sur le point de se marier. 
+                </p>
 
-        <p>
-          Les motifs au henné ne sont pas réservés uniquement aux futurs époux.
-          Les femmes de la famille ainsi que les amies participent également au
-          rituel en se faisant orner les mains de dessins décoratifs.
-        </p>
-      </RitualBlock>
+                <p>
+                  Il allume ensuite le <strong>havan</strong> et commence la lecture de la <strong>katha</strong>.
+                  Pendant cette récitation, des fleurs, des fruits et des sucreries sont offerts à la divinité.
+                </p>
 
-      <RitualBlock image={geetImage2} side="left">
-        <p>
-          Le mot <strong>Sangeet</strong> signifie littéralement chants, musique et
-          danse. Il s’agit de l’une des cérémonies les plus festives du mariage
-          hindou. Les invités y présentent des performances de danse, souvent sur
-          des musiques issues de films de Bollywood ou de Bhojpuri.
-        </p>
+                <p>
+                  Il accomplit ensuite une <strong>puja</strong> de <strong>Ganesh</strong> afin d’écarter les obstacles et d’assurer le bon déroulement des festivités du mariage.
+                  Ainsi qu'un <strong>Aarti</strong> auquel toutes les personnes présentes se joignent pour chanter des louanges au Seigneur. 
+                </p>
 
-        <p>
-          Cette tradition, dont les origines se trouvent dans les mariages
-          pendjabis, est toujours associée au Mehndi. Pendant que le henné est
-          appliqué, les membres de la famille et les amis chantent, dansent ou
-          participent à des animations musicales.
-        </p>
+                <p>
+                  Enfin, le <strong>Prasad</strong>, préparé pendant la <strong>katha</strong>, est distribué aux participants. 
+                  Une fois la <strong>puja</strong> terminée, la famille, les amis et les voisins s’assoient pour partager un repas ensemble.
+                </p>  
+              </RitualBlock>
 
-        <p>
-          Selon les familles, les chants peuvent être interprétés sur des pistes
-          karaoké ou animés par des chanteurs professionnels invités pour
-          l’occasion.
-        </p>
-      </RitualBlock>
+              <RitualBlock image={khataImage3} side="right">
+                <p>
+                  Les <strong>puja samagri</strong> <i>(offrandes)</i> sont placées devant le <strong>kalash</strong> (un pot rempli d’eau, garni de feuilles de manguier et surmonté d’une noix de coco).
+                  Il y a :
+                </p>
 
-      <RitualBlock image={geetImage3} side="right">
-        <p>
-          Les participants qui le souhaitent peuvent se faire appliquer du mehndi
-          sur les mains ou les pieds. Il est recommandé de porter des vêtements
-          confortables, idéalement à manches courtes, afin de faciliter
-          l’application et le séchage des motifs.
-        </p>
+                <ul class="ritual-list">
+                  <li>le lait</li>
+                  <li>le yaourt</li>
+                  <li>le ghee pur</li>
+                  <li>le miel</li>
+                  <li>le sucre</li>
+                  <li>les fruits</li>
+                  <li>les sucreries</li>
+                  <li>les feuilles de bétel</li>
+                  <li>les feuilles de tulsi</li>
+                  <li>les pétales de fleurs</li>
+                  <li>la noix de coco</li>
+                  <li>le <strong>halwa</strong>, ou gréau (dessert mauricien)</li>
+                </ul>
+              </RitualBlock>
 
-        <p>
-          Le port de tenues traditionnelles telles que le lehenga ou le sari n’est
-          pas obligatoire. Toute tenue habillée et colorée, accompagnée
-          d’accessoires, est appropriée. Le confort reste toutefois un élément
-          essentiel, car l’application du mehndi peut être longue et nécessite
-          parfois de rester immobile.
-        </p>
+            </Ritual>
 
-        <p>
-          Plus que la tenue, l’essentiel du Geet Gawai réside dans l’esprit de
-          célébration. Cette cérémonie est avant tout un moment de partage,
-          de joie et de convivialité, placé sous le signe de l’amour et de la
-          communauté.
-        </p>
-      </RitualBlock>
-    </Ritual>
+            <!-- GEET GAWAI -->
+            <Ritual id="geet">
 
-    <!-- ===================== -->
-    <!-- LES AUTRES RITUELS -->
-    <!-- (à activer plus tard) -->
-    <!-- ===================== -->
+              <RitualHeader
+                title="Geet Gawai — Sangeet et Mehndi"
+                image={geetHeaderImage}
+                date="21 Août"
+                time="20h00"
+                meal="Thé & Snacks"
+                veggie={true}
+                attendees="Famille et amis"
+                dresscode="Confortable et coloré (Habit traditionnel facultatif)"
+              />
 
-    {/*
-    <Ritual
-      title="Geet Gawai — Sangeet et Mehndi"
-      image={geetGawaiImage}
-      side="right"
-      time="Soirée"
-      meal="Dîner festif"
-    >
-      <p>…</p>
-    </Ritual>
-    */}
+              <RitualBlock image={geetImage1} side="right">
+                <p>
+                  Le <strong>Sangeet</strong> et le <strong>Mehndi</strong> sont deux cérémonies de mariage hindoues qui sont organisées deux jours avant le jour du mariage.
+                </p>
 
-  </div>
-</section>
+                <p>
+                  Le <strong>Mehndi</strong> désigne ici un rituel au cours duquel les mains et les pieds de la mariée et du marié sont décorés de motifs élégants au henné. 
+                  On utilise soit une pâte obtenue à partir de feuilles fraîches de henné écrasées, soit une pâte préparée à partir de poudre de henné conditionnée achetée sur le marché.
+                </p>
 
-<style>
-  /* ========================= */
-  /* SECTION */
-  /* ========================= */
+                <p>
+                  Les motifs de henné ne sont pas réalisés uniquement sur la mariée ou le marié ; les membres féminins de la famille et les amies font également décorer leurs mains avec d’élégants motifs au henné.
+                </p>
+              </RitualBlock>
+
+              <RitualBlock image={geetImage2} side="left">
+                <p>
+                  Le <strong>Sangeet</strong> signifie chants, musique et danse. 
+                  Elle est l’une des cérémonies de mariage les plus animées, au cours de laquelle les participants présentent des performances de danse.
+                </p>
+
+                <p>
+                  Cette cérémonie de mariage hindoue trouve ses racines dans le mariage <strong>pendjabi</strong>. 
+                  Le <strong>Sangeet</strong> est toujours associé à la cérémonie du <strong>Mehndi</strong>.
+                </p>
+
+                <p>
+                 Lors de la cérémonie du <strong>Sangeet</strong>, qui se déroule en parallèle de l’application du <strong>Mehndi</strong>, les membres de la famille et les amis dansent sur des morceaux célèbres, généralement issus de films de Bollywood ou de Bhojpuri.
+                </p>
+
+                <p>
+                  Dans certains cas, les membres de la famille chantent également sur des pistes de karaoké. Et dans certains milieux, des chanteurs sont aussi engagés pour cette occasion.
+                </p>
+              </RitualBlock>
+
+              <RitualBlock image={geetImage3} side="right">
+                <p>
+                  Attention mesdames et mesdemoiselles ...
+                </p>
+
+                <p>
+                  Si vous le souhaitez, vous pouvez faire appliquer du <strong>mehndi</strong> sur vos mains (et vos pieds). 
+                  Portez donc une tenue à manches courtes afin que vos mains et vos bras soient dégagés (ainsi que vos pieds). 
+                  Une tenue traditionnelle comme un <strong>lehenga</strong> ou un <strong>saree</strong> n’est pas obligatoire — mais si vous souhaitez en porter un, n’hésitez pas !
+                </p>
+
+                <p>
+                  Une chose à prendre en compte, toutefois, est le confort.
+                </p>
+
+                <p>
+                  L’application du <strong>mehndi</strong> n’est pas un processus rapide (et les motifs complexes ont besoin de temps pour sécher), vous devrez donc peut-être rester immobile pour éviter les bavures. 
+                  Assurez-vous que votre tenue soit confortable à porter pendant une longue durée.
+                </p>
+
+                <p>
+                  Ce qui compte le plus, toutefois, ce n’est pas ce que vous portez. 
+                  Soyez plutôt prêtes à profiter d’une soirée dédiée à la célébration de l’amour et de la convivialité. 
+                  Après tout, ce sont là les valeurs les plus importantes du mariage.
+                </p>
+              
+                <p>
+                  A savoir que le <strong>mehndi</strong> reste su les mains pendant une semaine.
+                </p>
+              </RitualBlock>
+
+              <RitualFooter images={[
+                geetFooterImage1, 
+                geetFooterImage2, 
+                geetFooterImage3, 
+                geetFooterImage4, 
+                geetFooterImage5
+              ]} />
+
+            </Ritual>
+
+            <!-- HALDI -->
+            <!--(Tipuri, Gros pois masala, Rougai, Songes, Sousou, Curry-bari, Kutcha, Ashar, Cari Banane, Giromon, Takar(Confiture Tamarin)) -->
+            <Ritual id="haldi">
+
+              <RitualHeader
+                title="Haldi"
+                image={haldiHeaderImage}
+                date="22 Août"
+                time="???"
+                meal="7 Cari - Gros pois masala, Cari Banane, Curry-bari, Taro, Chayote, Potiron"
+                veggie={true}
+                attendees="Famille et amis"
+                dresscode="Confortable et coloré (Habit traditionnel recommandé)"
+              />
+
+              <RitualBlock image={haldiImage1} side="right">
+                <p>
+                  Dans la culture indienne, le haldi / curcuma occupe une place d’honneur particulière. 
+                  Il est connu pour ses propriétés anti-inflammatoires et autres vertus curatives, ce qui explique qu’il soit également populaire comme remède.
+                </p>
+
+                <p>
+                  Et l’un des domaines où il occupe la place la plus importante est celui des traditions indiennes. 
+                  Dans les mariages indiens, cet ingrédient remarquable possède même une cérémonie qui lui est dédiée.
+                </p>
+
+                <p>
+                  Vous l’avez deviné ! Nous faisons référence à la vibrante cérémonie du haldi.
+                </p>
+
+                <p>
+                  
+                  La cérémonie du haldi consiste à appliquer une pâte de haldi sur le corps de la mariée et du marié avant leur mariage. 
+                  Cette cérémonie se tient chez la mariée et chez le marié, la veille du mariage, après le rituel du mehndi.
+                </p>
+
+                <p>
+                  Traditionnellement, on prépare une pâte à base de haldi et de différents ingrédients selon les coutumes familiales propres à chacun. 
+                  Certains la mélangent avec de la poudre de santal et du lait, d’autres avec de l’eau de rose. 
+                  Cette pâte est ensuite appliquée sur le visage, le cou, les mains et les pieds de la mariée et du marié par leurs proches.
+                </p>
+              </RitualBlock>
+
+              <RitualBlock image={haldiImage2} side="left">
+                <p>
+                  Cette cérémonie est aussi parfois accompagnée de chants et de danses traditionnels.
+                </p>
+
+                <p>
+                  On croit que la raison de l’application du haldi est d’éloigner les mauvais esprits afin qu’ils n’affectent pas la mariée et le marié. 
+                  C’est pourquoi ils ne sont généralement pas autorisés à quitter leur maison après la cérémonie du haldi, jusqu’au <strong>muhurat</strong> <i>(moment propice)</i> du mariage. Certains se voient aussi attacher un fil sacré rouge ou reçoivent de petites amulettes et autres objets pour se protéger du mauvais œil.
+                </p>
+
+                <p>
+                  Aucune autre personne, en dehors des membres de la famille, n’est autorisée à toucher la mariée et le marié après l’application du haldi.
+                </p>
+              </RitualBlock>
+
+              <RitualBlock image={haldiImage3} side="right">
+                <p>
+                  La couleur jaune du curcuma est considérée comme très auspicious (de bon augure) dans les traditions hindoues. 
+                  Le caractère bénéfique de cet ingrédient et de sa couleur annonce une vie de prospérité pour le couple qui commence une nouvelle vie ensemble. 
+                  C’est pourquoi la mariée et le marié portent des vêtements jaunes le jour du haldi.
+                </p>
+
+                <p>
+                  Autrefois, lorsque les soins esthétiques et les instituts de beauté n’étaient pas disponibles, les Indiens avaient leurs propres secrets de beauté naturels pour que le couple paraisse radieux et magnifique le jour du mariage. 
+                  D’où cette tradition hindoue. 
+                  Le haldi est connu pour ses propriétés qui rendent la peau éclatante et purifient le corps.
+                </p>
+
+                <p>
+                  Après la cérémonie du haldi, le lendemain (ou avant le jour du mariage), la pâte est rincée ; elle aide à éliminer les cellules mortes grâce à son action exfoliante efficace et détoxifie la peau — il n’y a pas de douche / bain immédiatement après l’application du haldi.
+                </p>
+
+                <p>
+                  La mariée et le marié dorment avec la pâte sur leur corps.
+                </p>
+              </RitualBlock>
+
+              <RitualBlock image={haldiImage4} side="left">
+                <p>
+                  La cérémonie en elle-même signifie que la mariée et le marié sont préparés pour leur grand jour. Le jaune est une couleur associée au printemps, au bonheur et aux nouveaux départs.
+                </p>
+
+                <p>
+                  Dans les rituels de mariage hindous, le jaune est la deuxième couleur la plus auspicieuse (de bon augure) après le rouge. 
+                  L’une des raisons de l’application du haldi est de baigner la mariée et le marié d’amour et de prospérité. 
+                  Pendant l’application de la pâte, on comble la future mariée et le futur marié de vœux de bonheur et d’unité pour une vie conjugale heureuse.
+                </p>
+              </RitualBlock>
+            </Ritual>
+
+            <!-- ===================== -->
+            <!-- LES AUTRES RITUELS -->
+            <!-- (à activer plus tard) -->
+            <!-- ===================== -->
+
+            {/*
+            <Ritual
+              title="Geet Gawai — Sangeet et Mehndi"
+              image={geetGawaiImage}
+              side="right"
+              time="Soirée"
+              meal="Dîner festif"
+            >
+              <p>…</p>
+            </Ritual>
+            */}
+
+          </div>
+        </section>
+      </div>
+
+    </div>
+
+  </section>
+
+  <style>
+
+  /* ============================= */
+  /* GLOBAL */
+  /* ============================= */
 
   .rituals {
-    padding: var(--space-8) 2rem;
-    background: var(--color-page);
+    background: #ffffff;
+    position: relative;
+
+    /* Taille unifiée */
+    --garland-size: 110px; /* hauteur exacte de la fleur */
+    --garland-width: 72px; /* largeur réelle de la fleur */
+    --garland-gap: 2rem;
   }
 
-  .container {
+  /* ============================= */
+  /* FRAME WRAPPER */
+  /* ============================= */
+
+  .temple-frame {
+    position: relative;
+    padding: 0 var(--garland-size);
+  }
+
+  /* ============================= */
+  /* CONTENT */
+  /* ============================= */
+
+  .temple-content {
+    position: relative;
+    z-index: 1;
     max-width: 1100px;
     margin: 0 auto;
   }
 
-  /* ========================= */
-  /* INTRO */
-  /* ========================= */
-
-  #intro {
-    text-align: center;
-    margin-bottom: var(--space-7);
+  .ritual-list {
+    margin: 0.8rem 0 1.2rem 1.2rem;
+    padding: 0;
   }
 
-  #intro h2 {
-    margin-bottom: var(--space-4);
+  .ritual-list li {
+    margin: 0.25rem 0;
   }
 
-  .intro {
-    font-size: var(--fs-body-lg);
-    line-height: var(--lh-loose);
-    color: var(--color-text);
-    max-width: 60ch;
-    margin: 0 auto;
-  }
+  /* ============================= */
+  /* RESPONSIVE */
+  /* ============================= */
 
-  /* ========================= */
-  /* MOBILE */
-  /* ========================= */
+  @media (max-width: 1024px) {
+    .temple-frame {
+      padding: 0 70px;
+    }
+  }
 
   @media (max-width: 768px) {
-    .rituals {
-      padding: var(--space-7) 1.5rem;
+    .temple-frame {
+      padding: 0 1.5rem;
     }
 
-    #intro {
-      margin-bottom: var(--space-6);
+    .rituals {
+      --garland-size: 60px;
     }
   }
-</style>
+
+
+  </style>

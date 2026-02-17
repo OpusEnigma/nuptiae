@@ -1,174 +1,75 @@
 ---
-/**
- * Props
- * - id
- * - title
- * - date?
- * - time?
- * - meal?
- * - attendees?
- * - dresscode?
- */
-const { id, title, date, time, meal, attendees, dresscode } = Astro.props;
+import RitualHeader from "./RitualHeader.astro";
+
+const { 
+  id
+} = Astro.props;
 
 if (!id) {
   throw new Error("Ritual requires an id.");
 }
-if (!title) {
-  throw new Error("Ritual requires a title.");
-}
 ---
 
 <section id={id} class="ritual" data-ritual>
-  <h3 class="ritual-title">{title}</h3>
-
-  {(date || time || meal || attendees || dresscode) && (
-    <div class="ritual-infos">
-      {date && (
-        <div class="info-row">
-          <span class="label">Date</span>
-          <span class="value">{date}</span>
-        </div>
-      )}
-      {time && (
-        <div class="info-row">
-          <span class="label">Heure</span>
-          <span class="value">{time}</span>
-        </div>
-      )}
-      {meal && (
-        <div class="info-row">
-          <span class="label">Repas</span>
-          <span class="value">{meal}</span>
-        </div>
-      )}
-      {attendees && (
-        <div class="info-row">
-          <span class="label">Participants</span>
-          <span class="value">{attendees}</span>
-        </div>
-      )}
-      {dresscode && (
-        <div class="info-row">
-          <span class="label">Dress Code</span>
-          <span class="value">{dresscode}</span>
-        </div>
-      )}
-    </div>
-  )}
-
   <div class="ritual-body">
     <slot />
   </div>
 </section>
+
 <style>
-  /* ============================= */
-  /* SECTION */
-  /* ============================= */
 
+/* ================================================= */
+/* SECTION ROOT                                      */
+/* ================================================= */
+
+.ritual {
+  margin-bottom: var(--space-8);
+
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 1s ease,
+    transform 1s ease;
+}
+
+.ritual.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ================================================= */
+/* BODY                                              */
+/* ================================================= */
+
+.ritual-body {
+  opacity: 0;
+  transition: opacity 1.2s ease 0.2s;
+}
+
+.ritual.is-visible .ritual-body {
+  opacity: 1;
+}
+
+.ritual-body p {
+  margin-bottom: var(--space-3);
+}
+
+/* ================================================= */
+/* RESPONSIVE                                        */
+/* ================================================= */
+
+@media (max-width: 768px) {
   .ritual {
-    margin-bottom: var(--space-8);
-
-    opacity: 0;
-    transform: translateY(30px);
-    transition:
-      opacity 1s ease,
-      transform 1s ease;
+    margin-bottom: var(--space-7);
   }
+}
 
-  .ritual.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* ============================= */
-  /* TITRE */
-  /* ============================= */
-
-  .ritual-title {
-    font-size: var(--fs-h2);
-    line-height: var(--lh-tight);
-    margin-bottom: var(--space-4);
-  }
-
-  /* ============================= */
-  /* MÉTADONNÉES */
-  /* ============================= */
-
-  .ritual-infos {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2) var(--space-5);
-
-    font-size: var(--fs-small);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-
-    color: var(--color-muted);
-
-    margin-bottom: var(--space-6);
-  }
-
-  .info-row {
-    display: inline-flex;
-    gap: var(--space-1);
-  }
-
-  .label {
-    color: var(--color-subtle);
-  }
-
-  .value {
-    color: var(--color-text);
-  }
-
-  /* ============================= */
-  /* CORPS */
-  /* ============================= */
-
-  .ritual-body {
-    opacity: 0;
-    transition: opacity 1.2s ease 0.2s;
-  }
-
-  .ritual.is-visible .ritual-body {
-    opacity: 1;
-  }
-
-  /* Le texte est déjà défini globalement via p {} */
-  .ritual-body p {
-    margin-bottom: var(--space-3);
-  }
-
-  /* ============================= */
-  /* MOBILE */
-  /* ============================= */
-
-  @media (max-width: 768px) {
-
-    .ritual {
-      margin-bottom: var(--space-7);
-    }
-
-    .ritual-title {
-      margin-bottom: var(--space-3);
-    }
-
-    .ritual-infos {
-      gap: var(--space-1) var(--space-3);
-      margin-bottom: var(--space-5);
-    }
-  }
 </style>
 
 <script>
   const rituals = document.querySelectorAll("[data-ritual]");
   const timeline = document.getElementById("timeline");
   const timelineItems = document.querySelectorAll(".timeline-item");
-
-  // ----------------------------
-  // 1️⃣ Animation d'apparition (simple et stable)
-  // ----------------------------
 
   const animationObserver = new IntersectionObserver(
     (entries) => {
@@ -185,10 +86,6 @@ if (!title) {
   );
 
   rituals.forEach((ritual) => animationObserver.observe(ritual));
-
-  // ----------------------------
-  // 2️⃣ Logique timeline ≥ 50% du viewport
-  // ----------------------------
 
   function updateActiveRitual() {
     let activeFound = false;
@@ -219,11 +116,7 @@ if (!title) {
     });
 
     if (timeline) {
-      if (activeFound) {
-        timeline.classList.add("visible");
-      } else {
-        timeline.classList.remove("visible");
-      }
+      timeline.classList.toggle("visible", activeFound);
     }
   }
 

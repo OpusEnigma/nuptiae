@@ -1,0 +1,112 @@
+---
+import { Image } from "astro:assets";
+
+import heroImage from "../assets/rituals/hero-image.png";
+---
+
+<section id="ritual-hero" class="ritual-hero">
+
+  <div class="ritual-hero-inner">
+    <Image
+      src={heroImage}
+      alt=""
+      class="ritual-hero-icon"
+      priority
+    />
+
+    <h1 class="ritual-hero-title">
+      Cérémonies
+    </h1>
+
+    <p class="ritual-hero-intro">
+      Un mariage hindou est un processus rituel structuré en plusieurs étapes,
+      réparties entre les cérémonies pré-nuptiales, la cérémonie de mariage
+      et les rites post-nuptiaux. Chaque rituel prépare progressivement
+      les futurs époux et leurs proches à l’union.
+    </p>
+  </div>
+
+  <div class="scroll-indicator">↓</div>
+
+</section>
+
+<style>
+
+/* ========================= */
+/* HERO */
+/* ========================= */
+
+.ritual-hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 80px; 
+}
+
+/* ========================= */
+/* HERO CONTENT */
+/* ========================= */
+
+.ritual-hero-inner {
+  max-width: 900px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+}
+
+.ritual-hero-icon {
+  display: block;
+  height: 200px;
+  width: auto;
+  margin-bottom: var(--space-6);
+}
+
+.ritual-hero-title {
+  font-family: var(--font-display);
+  font-size: 4.8rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-4);
+}
+
+.ritual-hero-intro {
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-loose);
+  max-width: 65ch;
+  margin: 0 auto;
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  font-size: 1.6rem;
+  opacity: 0.6;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .ritual-hero-icon {
+    height: 130px;
+  }
+
+  .ritual-hero-title {
+    font-size: 3rem;
+  }
+
+  .ritual-hero {
+    padding: 0 1.5rem;
+  }
+}
+
+</style>

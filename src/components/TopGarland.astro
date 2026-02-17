@@ -1,0 +1,40 @@
+---
+import { Image } from "astro:assets";
+import topGarlandImage from "../assets/rituals/top-garland-image.png";
+---
+
+<div class="top-garland">
+  <Image src={topGarlandImage} alt="" class="left" />
+  <Image src={topGarlandImage} alt="" class="right" />
+  <Image src={topGarlandImage} alt="" class="left" />
+  <Image src={topGarlandImage} alt="" class="right" />
+</div>
+
+<style>
+.top-garland {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  z-index: 100;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* chaque moitié */
+.top-garland :global(img) {
+  display: block;
+  width: 25vw;
+  height: auto;
+}
+
+/* miroir horizontal */
+.top-garland :global(img.right) {
+  transform: scaleX(-1);
+}
+</style>
