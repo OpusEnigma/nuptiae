@@ -237,23 +237,62 @@ const hero = await getImage({
 }
 
 @media (max-width: 900px) {
-  .hero-card {
-    position: static;
-    width: min(92%, 420px);
+
+  .hero {
+    height: auto;
+    min-height: 100svh; /* ← garantit assez d’espace */
+    padding: 18px 0 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background:
+      linear-gradient(
+        to bottom,
+        #0b0b0d 0%,
+        #1a1410 40%,
+        #22160f 100%
+      );
   }
 
+  .hero-bg,
+  .hero::before,
+  .hero::after {
+    display: none; /* ← supprime le fond flou plein écran */
+  }
+
+  .hero-fg {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero-fg img {
+    width: 92vw;
+    max-height: none;
+    border-radius: 18px; /* ← carte image luxe */
+  }
+
+
   .hero-cards {
-    position: absolute;
-    left: 50%;
-    bottom: 6%;
-    transform: translateX(-50%);
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+
+    width: 100%;
+    margin-top: 18px;
 
     display: flex;
     flex-direction: column;
     gap: 14px;
     align-items: center;
+    margin-bottom: 12px; /* ← espace sous dernière carte */
+  }
+
+  .hero-card {
+    width: min(92vw, 420px);
+    margin: 0 12px;   /* ← espace latéral luxe */
   }
 }
-
 
 </style>
