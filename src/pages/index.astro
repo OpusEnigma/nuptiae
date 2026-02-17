@@ -1,230 +1,43 @@
 ---
 import LandingLayout from "../layouts/LandingLayout.astro";
 import Hero from "../components/Hero.astro";
+import PreviewCard from "../components/PreviewCard.astro";
 ---
 
 <LandingLayout title="Nuptiae">
   <Hero/>
 
-  <section class="ritual-preview">
-    <a href="/nuptiae/rituals" class="ritual-card">
-      <div class="ritual-card-content">
-        <h2>Les cérémonies</h2>
-        <span class="ritual-link">Découvrir →</span>
-      </div>
-    </a>
+  
+    <!--
+  <section class="preview">
+    <PreviewCard 
+      id="ritual-preview"
+      link="/nuptiae/rituals"
+      title="Les cérémonies"
+      subtitle="Découvrir →"
+    />
+
+    <PreviewCard 
+      id="location-preview"
+      link="/nuptiae/location"
+      title="Le lieu"
+      subtitle="Explorer →"
+    />
+
+    <PreviewCard 
+      id="region-preview"
+      link="/nuptiae/region"
+      title="La région"
+      subtitle="Explorer →"
+    />
   </section>
 
-  <section class="location-preview">
-    <a href="/nuptiae/location" class="location-card">
-      <div class="location-card-content">
-        <h2>Le lieu</h2>
-        <span class="location-link">Explorer →</span>
-      </div>
-    </a>
-  </section>
-
-  <section class="region-preview">
-    <a href="/nuptiae/region" class="region-card">
-      <div class="region-card-content">
-        <h2>La région</h2>
-        <span class="region-link">Explorer →</span>
-      </div>
-    </a>
-  </section>
-
+   -->
+  
 </LandingLayout>
 
 <style>
+.preview {
 
-  /* ============================= */
-  /* RITUALS CARD */
-  /* ============================= */
-  .ritual-preview {
-    display: flex;
-    justify-content: center;
-    margin-top: var(--space-6);
-  }
-
-  .ritual-card {
-    width: 100%;
-    max-width: 900px;
-    padding: var(--space-6);
-    border-radius: 18px;
-
-    background: #111;
-    color: white;
-
-    text-decoration: none;
-
-    transition: all 0.35s ease;
-
-    box-shadow:
-      0 40px 80px rgba(0,0,0,0.12),
-      0 12px 28px rgba(0,0,0,0.08);
-  }
-
-  .ritual-card:hover {
-    transform: translateY(-8px);
-    box-shadow:
-      0 50px 100px rgba(0,0,0,0.18),
-      0 16px 40px rgba(0,0,0,0.12);
-  }
-
-  .ritual-card small {
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    opacity: 0.7;
-  }
-
-  .ritual-card h2 {
-    margin: var(--space-2) 0;
-  }
-
-  .ritual-card p {
-    color: rgba(255,255,255,0.8);
-    max-width: 600px;
-  }
-
-  .ritual-link {
-    display: inline-block;
-    margin-top: var(--space-3);
-    font-size: var(--fs-small);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  @media (max-width: 768px) {
-    .ritual-card {
-      padding: var(--space-4);
-    }
-  }
-
-  /* ============================= */
-  /* LOCATION CARD */
-  /* ============================= */
-
-  .location-preview {
-    display: flex;
-    justify-content: center;
-    margin-top: var(--space-6);
-  }
-
-  .location-card {
-    width: 100%;
-    max-width: 900px;
-    padding: var(--space-6);
-    border-radius: 18px;
-
-    background: #ffffff;
-    color: var(--color-text);
-
-    text-decoration: none;
-
-    transition: all 0.35s ease;
-
-    box-shadow:
-      0 40px 80px rgba(0,0,0,0.08),
-      0 12px 28px rgba(0,0,0,0.05);
-  }
-
-  .location-card:hover {
-    transform: translateY(-8px);
-    box-shadow:
-      0 50px 100px rgba(0,0,0,0.12),
-      0 16px 40px rgba(0,0,0,0.08);
-  }
-
-  .location-card small {
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: var(--color-muted);
-  }
-
-  .location-card h2 {
-    margin: var(--space-2) 0;
-  }
-
-  .location-card p {
-    max-width: 600px;
-  }
-
-  .location-link {
-    display: inline-block;
-    margin-top: var(--space-3);
-    font-size: var(--fs-small);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  @media (max-width: 768px) {
-    .location-card {
-      padding: var(--space-4);
-    }
-  }
-
-  /* ============================= */
-  /* REGION CARD */
-  /* ============================= */
-
-  .region-preview {
-    display: flex;
-    justify-content: center;
-    margin-top: var(--space-6);
-  }
-
-  .region-card {
-    width: 100%;
-    max-width: 900px;
-    padding: var(--space-6);
-    border-radius: 18px;
-
-    background: #f8f8f8;
-    color: var(--color-text);
-
-    text-decoration: none;
-
-    transition: all 0.35s ease;
-
-    box-shadow:
-      0 40px 80px rgba(0,0,0,0.06),
-      0 12px 28px rgba(0,0,0,0.04);
-  }
-
-  .region-card:hover {
-    transform: translateY(-8px);
-    box-shadow:
-      0 50px 100px rgba(0,0,0,0.10),
-      0 16px 40px rgba(0,0,0,0.08);
-  }
-
-  .region-card small {
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: var(--color-muted);
-  }
-
-  .region-card h2 {
-    margin: var(--space-2) 0;
-  }
-
-  .region-card p {
-    max-width: 600px;
-  }
-
-  .region-link {
-    display: inline-block;
-    margin-top: var(--space-3);
-    font-size: var(--fs-small);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  @media (max-width: 768px) {
-    .region-card {
-      padding: var(--space-4);
-    }
-  }
-
+}
 </style>
-
