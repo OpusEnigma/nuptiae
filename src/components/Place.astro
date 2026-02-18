@@ -2,13 +2,14 @@
 import { Image } from "astro:assets";
 
 const {
+  id,
   title,
   location,
   image
 } = Astro.props;
 ---
 
-<article class="place">
+<article id={id} class="place">
 
   <div class="place-image">
     <Image
@@ -54,6 +55,11 @@ const {
 
   .place:hover {
     transform: translateY(-6px);
+  }
+
+  .place.active {
+    outline: 2px solid var(--color-accent);
+    transform: translateY(-2px);
   }
 
   /* ============================= */

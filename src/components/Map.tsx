@@ -10,12 +10,21 @@ interface MarkerData {
 interface Props {
   markers: MarkerData[];
   zoom?: number;
+  activePlace?: string | null;
+  onSelect?: (name: string) => void;
 }
 
-export default function Map({ markers, zoom = 15 }: Props) {
+export default function Map({
+  markers,
+  zoom = 10,
+  activePlace,
+  onSelect,
+}: Props) {
   const mapRef = useRef<any>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const markerRefs = useRef<Record<string, any>>({});
 
+  // Create map
   useEffect(() => {
     if (!containerRef.current) return;
 
@@ -41,56 +50,30 @@ export default function Map({ markers, zoom = 15 }: Props) {
         { attribution: "&copy; OpenStreetMap contributors" }
       ).addTo(map);
 
-      if (!markers || markers.length === 0) {
-        map.setView([-20.28, 57.48], zoom);
-        return;
-      }
-
       const bounds: any[] = [];
+      markerRefs.current = {};
 
       markers.forEach((marker) => {
         bounds.push([marker.lat, marker.lng]);
 
         const size = marker.primary ? 42 : 30;
+
         const icon = L.divIcon({
           className: "google-marker",
-          html: `
-            <div style="
-              position: relative;
-              width: ${size}px;
-              height: ${size}px;
-              transform: translate(-50%, -100%);
-            ">
-              <div style="
-                width: 100%;
-                height: 100%;
-                background: #EA4335;
-                border-radius: 50% 50% 50% 0;
-                transform: rotate(-45deg);
-                box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-              "></div>
-              <div style="
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                width: ${size / 3}px;
-                height: ${size / 3}px;
-                background: white;
-                border-radius: 50%;
-                transform: translate(-50%, -50%);
-              "></div>
-            </div>
-          `,
+          html: markerHTML(size, false),
           iconSize: [size, size],
           iconAnchor: [size / 2, size],
         });
 
-        L.marker([marker.lat, marker.lng], { icon })
+        const leafletMarker = L.marker([marker.lat, marker.lng], { icon })
           .addTo(map)
-          .bindPopup(marker.name);
+          .bindPopup(marker.name)
+          .on("click", () => onSelect?.(marker.name));
+
+        markerRefs.current[marker.name] = leafletMarker;
       });
 
-      if (markers.length === 1) {
+      if (bounds.length === 1) {
         map.setView(bounds[0], zoom);
       } else {
         map.fitBounds(bounds, { padding: [60, 60] });
@@ -107,7 +90,34 @@ export default function Map({ markers, zoom = 15 }: Props) {
         mapRef.current = null;
       }
     };
-  }, [markers, zoom]);
+  }, [markers, zoom, onSelect]);
+
+  // Highlight active marker
+  useEffect(() => {
+    if (!markerRefs.current) return;
+
+    import("leaflet").then((L) => {
+      Object.entries(markerRefs.current).forEach(([name, marker]) => {
+        const isActive = name === activePlace;
+
+        const baseSize =
+          markers.find((m) => m.name === name)?.primary ? 42 : 30;
+
+        const size = isActive ? 50 : baseSize;
+
+        const icon = L.divIcon({
+          className: "google-marker",
+          html: markerHTML(size, isActive),
+          iconSize: [size, size],
+          iconAnchor: [size / 2, size],
+        });
+
+        marker.setIcon(icon);
+
+        if (isActive) marker.openPopup();
+      });
+    });
+  }, [activePlace, markers]);
 
   return (
     <div
@@ -120,4 +130,39 @@ export default function Map({ markers, zoom = 15 }: Props) {
     />
   );
 }
- 
+
+// Marker SVG/HTML
+function markerHTML(size: number, active: boolean) {
+  const color = active ? "#FF6B5A" : "#EA4335";
+  const shadow = active
+    ? "0 8px 20px rgba(0,0,0,0.45)"
+    : "0 4px 10px rgba(0,0,0,0.3)";
+
+  return `
+    <div style="
+      position: relative;
+      width: ${size}px;
+      height: ${size}px;
+      transform: translate(-50%, -100%);
+    ">
+      <div style="
+        width: 100%;
+        height: 100%;
+        background: ${color};
+        border-radius: 50% 50% 50% 0;
+        transform: rotate(-45deg);
+        box-shadow: ${shadow};
+      "></div>
+      <div style="
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: ${size / 3}px;
+        height: ${size / 3}px;
+        background: white;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+      "></div>
+    </div>
+  `;
+}

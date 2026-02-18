@@ -1,182 +1,194 @@
 ---
-import Map from "../components/Map";
+import RegionReact from "../components/Region.tsx";
+
 import Place from "../components/Place.astro";
 
-import vacoasImage from "../assets/region/vacoas-image.png";
 import flicenflacImage from "../assets/region/flicenflac-image.png";
+import tamarinImage from "../assets/region/tamarin-image.png";
+import rivierenoireImage from "../assets/region/rivierenoire-image.png";
+import chamarelImage from "../assets/region/chamarel-image.png";
+import lemorneImage from "../assets/region/lemorne-image.png";
+import albionImage from "../assets/region/albion-image.png";
+import portlouisImage from "../assets/region/portlouis-image.png";
+import centreImage from "../assets/region/centre-image.png";
+import ileauxbenitiersImage from "../assets/region/ileauxbenitiers-image.png";
 
 const markers = [
-  {
-    lat: -20.284981,
-    lng: 57.486647,
-    name: "Vacoas",
-    primary: true
-  },
-  {
-    lat: -20.2847458,
-    lng: 57.3721284,
-    name: "Flic-en-Flac"
-  }
+  { lat: -20.285, lng: 57.487, name: "Vacoas" },
+  { lat: -20.285, lng: 57.372, name: "Flic-en-Flac & Wolmar" },
+  { lat: -20.325, lng: 57.370, name: "Tamarin & Rivière Noire" },
+  { lat: -20.401, lng: 57.430, name: "Parc National des Gorges de Rivière Noire" },
+  { lat: -20.425, lng: 57.407, name: "Chamarel" },
+  { lat: -20.459, lng: 57.329, name: "Le Morne" },
+  { lat: -20.472, lng: 57.342, name: "Île aux Bénitiers" },
+  { lat: -20.229, lng: 57.409, name: "La Preneuse & Albion" },
+  { lat: -20.160, lng: 57.501, name: "Port-Louis" }
 ];
+
 ---
 
 <section id="region" class="region">
-  <div class="region-inner">
 
-    <!-- HEADER -->
-    <header class="region-header">
-      <h2>Région</h2>
-    </header>
+  <header class="region-header">
+    <h2>Région</h2>
+  </header>
 
-    <!-- MAP -->
-    <div class="map-wrapper">
-      <Map
-        client:only="react"
-        markers={markers}
-        zoom={10}
-        variant="region"
-      />
-    </div>
+  <div class="map-wrapper">
+    <RegionReact client:load markers={markers} />
+  </div>
 
-    <!-- PLACES -->
-    <div class="places-section">
-      <div class="places-grid">
+  <div class="places-grid">
 
-        <Place
-          title="Vacoas"
-          location="Vacoas, Maurice"
-          image={vacoasImage}
-        >
-          <p>
-            Vacoas-Phoenix est l’une des principales agglomérations situées sur le plateau central de Maurice. Bénéficiant d’un climat plus frais que les régions côtières, la ville se distingue par son environnement verdoyant et son atmosphère résidentielle paisible. Elle constitue un pôle urbain important, à la fois dynamique et ancré dans la vie locale mauricienne.
-          </p>
-          <p>
-            Vacoas-Phoenix offre un cadre de vie agréable, marqué par la présence de quartiers résidentiels, de centres commerciaux et d’établissements scolaires réputés. À proximité se trouve le célèbre Trou aux Cerfs, ancien cratère volcanique offrant un panorama spectaculaire sur l’île.
-          </p>
-          <p>
-            Alliant accessibilité, modernité et proximité avec la nature, Vacoas incarne une ville équilibrée, où développement urbain et qualité de vie coexistent harmonieusement au cœur de l’île Maurice.
-          </p>
-        </Place>
+    <Place id="Port-Louis" title="Port-Louis" location="Port-Louis, Maurice" image={portlouisImage}>
+      <p>Capitale vibrante de Maurice, Port-Louis concentre l’histoire, le commerce et la diversité culturelle de l’île dans un décor de port tropical encerclé de montagnes. 
+      Le front de mer moderne du Caudan Waterfront côtoie les ruelles animées du marché central, les temples tamouls, mosquées et bâtiments coloniaux. 
+      Sur les hauteurs, la Citadelle offre une vue panoramique sur la baie et les docks. 
+      Entre street-food créole, boutiques, musées et vie urbaine dense, l’atmosphère y est énergique et cosmopolite — un contraste marqué avec les régions balnéaires.</p>
+      <p>Mots-clés : capitale · marché · patrimoine · port · cosmopolite</p>
+    </Place>
 
-        <Place
-          title="Flic-en-Flac"
-          location="Flic-en-Flac, Maurice"
-          image={flicenflacImage}
-        >
-          <p>
-            Flic-en-Flac est l’une des principales stations balnéaires de Maurice, située sur la côte ouest de l’île. Réputée pour sa plage qui s’étend sur plusieurs kilomètres, elle offre un sable blanc bordé de filaos et un lagon aux eaux calmes, protégé par une barrière de corail. 
-          </p>
-          <p>
-            Son emplacement privilégié lui permet de bénéficier d’un climat ensoleillé et de spectaculaires couchers de soleil sur l’océan Indien.
-          </p>
-          <p>
-            La localité séduit par son équilibre entre dynamisme touristique et atmosphère détendue. Elle propose une offre variée d’hébergements, de restaurants et d’activités nautiques, tout en conservant un cadre naturel préservé. La plongée sous-marine y est particulièrement appréciée grâce à la richesse des fonds marins environnants.
-          </p>
-          <p>
-            Flic-en-Flac incarne ainsi l’image d’une destination balnéaire élégante et accessible, où se conjuguent douceur de vivre, hospitalité mauricienne et paysages tropicaux d’exception.
-          </p>
-      </Place>
+    <Place id="Vacoas" title="Plateau central" location="Vacoas, Maurice" image={centreImage}>
+      <p>Cœur géographique de Maurice, le plateau central s’étend sur les hauteurs volcaniques intérieures où l’air est plus frais et les paysages souvent enveloppés de brume. 
+      À Curepipe, ville historique aux maisons coloniales et jardins soignés, le cratère du Trou-aux-Cerfs rappelle l’origine volcanique de l’île avec son vaste anneau boisé. 
+      Plus au sud, le lac sacré de Grand Bassin (Ganga Talao), niché dans la forêt, constitue le principal lieu de pèlerinage hindou de l’océan Indien, tandis que les forêts humides de Mare-Longue préservent une biodiversité rare. 
+      Vers l’ouest, la vallée de Moka dévoile les anciennes demeures sucrières comme le Domaine de Moka et la Maison Eureka, au pied des montagnes spectaculaires de Pieter Both et du Pouce. 
+      Les villes de Quatre-Bornes et Vacoas, animées par leurs marchés, avenues et jardins, complètent ce territoire intérieur à l’atmosphère résidentielle, culturelle et spirituelle, loin du littoral touristique.</p>
+      <p>Mots-clés : hauteurs · spirituel · volcans · villes · patrimoine</p>
+    </Place>
 
-      </div>
-    </div>
+    <Place id="Flic-en-Flac & Wolmar" title="Flic-en-Flac & Wolmar" location="Flic-en-Flac, Maurice" image={flicenflacImage}>
+      <p>Station balnéaire emblématique de la côte ouest, Flic-en-Flac s’étire le long d’une des plus longues plages de sable blanc de l’île. 
+      Le lagon y est calme et peu profond, protégé par la barrière de corail, ce qui en fait un lieu privilégié pour la baignade et le snorkeling. 
+      L’ambiance est à la fois détendue et animée : familles mauriciennes en pique-nique sous les filaos, hôtels et villas en bord de mer, bars de plage et couchers de soleil spectaculaires sur l’océan. 
+      Wolmar, à l’extrémité sud, offre une atmosphère plus exclusive et paisible, avec de larges étendues de sable bordées de resorts.</p>
+      <p>Mots-clés : plage · resorts · snorkeling · coucher de soleil · animation</p>
+    </Place>
+
+    <Place id="Tamarin & Rivière Noire" title="Tamarin & Rivière Noire" location="Tamarin, Maurice" image={tamarinImage}>
+      <p>Entre mer et montagne, Tamarin et Rivière Noire offrent une facette plus authentique et naturelle de l’Ouest. 
+      La baie de Tamarin, ancienne zone sucrière devenue village côtier prisé des surfeurs, est célèbre pour ses dauphins visibles au lever du jour. 
+      L’ambiance y est bohème et locale, avec marchés, pêcheurs, cafés et écoles de surf. 
+      À quelques minutes, Rivière Noire marque l’entrée des reliefs : marinas, mangroves, rivières et départs d’excursions en mer ou en montagne. 
+      C’est une région où l’on alterne facilement entre navigation, randonnée et vie de village.</p>
+      <p>Mots-clés : dauphins · surf · village · nature · baie</p>
+    </Place>
+
+    <Place id="Chamarel" title="Chamarel" location="Chamarel, Maurice" image={chamarelImage}>
+      <p>Perché sur les hauteurs volcaniques de l’ouest, Chamarel déploie des paysages parmi les plus singuliers de Maurice. 
+      La route sinueuse traverse plantations, forêts et panoramas avant d’atteindre le plateau, où se trouvent la spectaculaire cascade de Chamarel et la célèbre Terre des 7 couleurs. 
+      L’atmosphère y est rurale et créole, avec villages dispersés, rhumerie artisanale et points de vue sur le lagon sud-ouest. 
+      Les reliefs ondulés, la brume matinale et la lumière changeante donnent à la région un caractère presque mystique, propice à l’exploration et à la contemplation.</p>
+      <p>Mots-clés : géologie · cascade · panoramas · rhumerie · nature</p>
+    </Place>
+
+    <Place id="Le Morne" title="Le Morne" location="Le Morne, Maurice" image={lemorneImage}>
+      <p>Dominé par l’imposant Morne Brabant, montagne classée à l’UNESCO, le sud-ouest mauricien offre un décor iconique où lagon turquoise, plages sauvages et relief monumental se rencontrent. 
+      Le site, chargé d’histoire liée aux esclaves marrons, dégage une atmosphère puissante et paisible. 
+      Les vents constants en font l’un des meilleurs spots de kitesurf au monde, tandis que la randonnée vers le sommet révèle des vues spectaculaires sur la « cascade sous-marine ». 
+      Entre luxe discret des hôtels, nature intacte et immensité du paysage, Le Morne incarne l’image la plus emblématique de Maurice.</p>
+      <p>Mots-clés : UNESCO · lagon · montagne · kitesurf · iconique</p>
+    </Place>
+
+    <Place id="La Preneuse & Albion" title="La Preneuse & Albion" location="Albion, Maurice" image={albionImage}>
+      <p>Entre Flic-en-Flac et Port-Louis, cette portion de côte ouest dévoile un visage plus sauvage et historique de Maurice. 
+      Les falaises volcaniques d’Albion dominent l’océan, couronnées par le phare blanc emblématique, tandis que La Preneuse abrite l’une des rares tours Martello de l’île et une petite plage protégée. 
+      L’atmosphère y est tranquille, résidentielle et locale, loin des grands flux touristiques. 
+      Entre patrimoine colonial, panoramas marins et littoral rocheux battu par les vagues, la zone offre une découverte plus intime de l’ouest mauricien.</p>
+      <p>Mots-clés : falaises · phare · historique · côte sauvage · patrimoine</p>
+    </Place>
+
+    <Place id="Parc National des Gorges de Rivière Noire" title="Parc National des Gorges de Rivière Noire" location="Rivière Noire, Maurice" image={rivierenoireImage}>
+      <p>Cœur sauvage de Maurice, le parc national des Gorges de Rivière Noire protège les dernières grandes forêts indigènes de l’île. 
+      Le relief y est escarpé : vallées profondes couvertes de végétation dense, crêtes panoramiques et cascades cachées. 
+      Les sentiers traversent une nature préservée où vivent oiseaux endémiques et plantes rares. 
+      Les points de vue comme Macchabée ou Black River Peak offrent des perspectives spectaculaires jusqu’au lagon ouest. 
+      L’ambiance est fraîche, humide et silencieuse : un contraste total avec la côte, idéal pour randonneurs et amoureux de nature.</p>
+      <p>Mots-clés : randonnée · forêt · panoramas · cascades · endémique</p>
+    </Place>
+
+    <Place id="Île aux Bénitiers" title="Île aux Bénitiers" location="Île aux Bénitiers Maurice" image={ileauxbenitiersImage}>
+      <p>Posée dans le lagon au large du Morne, l’île aux Bénitiers évoque l’archétype de l’îlot tropical : sable blanc, eau translucide et horizon infini. 
+      On y accède en bateau depuis La Gaulette ou Tamarin pour des excursions à la journée mêlant observation des dauphins, snorkeling autour de Crystal Rock et barbecue sur la plage. 
+      L’ambiance est simple et insulaire, presque hors du temps, avec cabanes de pêcheurs et cocotiers battus par les alizés. 
+      C’est une expérience lagon pure, faite de baignade, soleil et mer calme.</p>
+      <p>Mots-clés : îlot · lagon · snorkeling · excursion · tropical</p>
+    </Place>
 
   </div>
+
 </section>
 
 <style>
-  /* ========================= */
-  /* SECTION */
-  /* ========================= */
 
+.region {
+  --map-w: clamp(420px, 55vw, 1100px);
+  --pad: 1.5rem;
+
+  height: 100dvh;                 /* viewport réel (mobile safe) */
+  box-sizing: border-box;         /* inclut padding dans hauteur */
+
+  display: grid;
+  grid-template-columns: var(--map-w) 1fr;
+  grid-template-rows: auto 1fr;
+
+  padding: var(--pad);
+  gap: var(--pad);
+
+  overflow: hidden;               /* ← empêche tout scroll */
+}
+
+.region-header {
+  grid-column: 1 / -1;
+  align-self: start;
+  margin: 0;
+}
+
+.region-header h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.map-wrapper {
+  position: sticky;
+  top: 0;
+  height: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.places-grid {
+  height: 100%;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+
+  align-items: center;
+  scrollbar-width: none;
+}
+
+.places-grid::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 1024px) {
   .region {
-    padding: var(--space-8) 2rem;
-    background: var(--color-page);
+    height: auto;
+    grid-template-columns: 1fr;
   }
-
-  /* ========================= */
-  /* INNER LAYOUT */
-  /* ========================= */
-
-  .region-inner {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    gap: var(--space-8);
-  }
-
-  /* ========================= */
-  /* HEADER */
-  /* ========================= */
-
-  .region-header {
-    text-align: center;
-  }
-
-  .region-header h2 {
-    margin-bottom: var(--space-2);
-  }
-
-  /* ========================= */
-  /* MAP */
-  /* ========================= */
 
   .map-wrapper {
-    width: 100%;
-    height: 60vh;
-    min-height: 420px;
-    overflow: hidden;
-  }
-
-  /* ========================= */
-  /* PLACES */
-  /* ========================= */
-
-  .places-section {
-    width: 100%;
+    height: 55vh;
   }
 
   .places-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-    gap: var(--space-7);
+    height: auto;
   }
+}
 
-  /* ========================= */
-  /* LEAFLET FIX */
-  /* ========================= */
-
-  :global(.leaflet-container) {
-    width: 100% !important;
-    height: 100% !important;
-  }
-
-  /* ========================= */
-  /* MOBILE */
-  /* ========================= */
-
-  @media (max-width: 768px) {
-
-    .region {
-      padding: var(--space-7) 1.5rem;
-    }
-
-    .region-inner {
-      gap: var(--space-7);
-    }
-
-    .map-wrapper {
-      height: 55vh;
-      min-height: 360px;
-    }
-
-    .places-grid {
-      gap: var(--space-6);
-    }
-
-  }
 </style>
