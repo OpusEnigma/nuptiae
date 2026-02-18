@@ -51,6 +51,8 @@ const {
     display: flex;
     flex-direction: column;
     transition: transform 0.35s ease;
+    height: 100%;
+    max-width: 720px;   /* largeur éditoriale */
   }
 
   .place:hover {
@@ -68,9 +70,10 @@ const {
 
   .place-image {
     width: 100%;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: auto;
     overflow: hidden;
     margin-bottom: var(--space-4);
+    height: 100%; 
   }
 
   .place-image img {
