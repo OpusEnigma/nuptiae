@@ -1,0 +1,72 @@
+---
+const {
+  id
+} = Astro.props;
+
+if (!id) {
+  throw new Error("Ritual requires an id.");
+}
+---
+
+<section id={id} class="ritual" data-visible>
+  <div class="ritual-body">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .ritual {
+    --transition-duration: 0.9s;
+    --transition-easing: ease;
+
+    margin-bottom: var(--space-8);
+
+    opacity: 0;
+    transform: translateY(30px);
+
+    transition:
+      opacity var(--transition-duration) var(--transition-easing),
+      transform var(--transition-duration) var(--transition-easing);
+  }
+
+  .ritual.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Mobile spacing */
+  @media (max-width: 768px) {
+    .ritual {
+      margin-bottom: var(--space-7);
+    }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .ritual {
+      --transition-duration: 0.01ms;
+    }
+
+    .ritual {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Disable motion on touch devices */
+  @media (hover: none), (pointer: coarse) {
+    .ritual {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  import { initializeVisibility } from "../../utils/visibility";
+  import { initializeTimelineSync } from "../../utils/timeline";
+
+  initializeVisibility();
+  initializeTimelineSync();
+</script>

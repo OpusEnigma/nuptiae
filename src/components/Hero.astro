@@ -1,5 +1,8 @@
 ---
-import { Image, getImage } from "astro:assets";
+import { getImage } from "astro:assets";
+import { getRitualPath, getLocationPath, getRegionPath } from "../utils/paths";
+import HeroCard from "./HeroCard.astro";
+
 import heroImage from "../assets/hero-image.png";
 
 const hero = await getImage({
@@ -10,7 +13,7 @@ const hero = await getImage({
 ---
 
 <section class="hero">
-  <!-- fond flou -->
+  <!-- blurred background -->
   <div class="hero-bg">
     <img
       src={hero.src}
@@ -23,7 +26,7 @@ const hero = await getImage({
     />
   </div>
 
-  <!-- image nette -->
+  <!-- sharp foreground -->
   <div class="hero-fg">
     <img
       src={hero.src}
@@ -36,224 +39,201 @@ const hero = await getImage({
     />
   </div>
 
-  <!-- cartes -->
+  <!-- cards -->
   <div class="hero-cards">
-    <a href="/nuptiae/rituals" class="hero-card">
-      <span class="eyebrow">Découvrir →</span>
-      <h3>Les cérémonies</h3>
-    </a>
+    <HeroCard
+      href={getRitualPath()}
+      eyebrow="Découvrir →"
+      title="Les cérémonies"
+      offset="48px"
+      subcards={[
+        { label: "Khata", href: `${getRitualPath()}#khata` },
+        { label: "Geet Gawai",  href: `${getRitualPath()}#geet` },
+        { label: "Haldi", href: `${getRitualPath()}#haldi` },
+      ]}
+    />
 
-    <a href="/nuptiae/location" class="hero-card">
-      <span class="eyebrow">Explorer →</span>
-      <h3>Le lieu</h3>
-    </a>
-
-    <a href="/nuptiae/region" class="hero-card">
-      <span class="eyebrow">Explorer →</span>
-      <h3>La région</h3>
-    </a>
+    <HeroCard
+      href={getLocationPath()}
+      eyebrow="Explorer →"
+      title="Le lieu"
+      offset="24px"
+      subcards={[
+        { label: "Carte",         href: `${getLocationPath()}#location-map` },
+        { label: "Région",        href: `${getLocationPath()}#location-region` },
+        { label: "Hébergements",  href: `${getLocationPath()}#location-accommodation` },
+      ]}
+    />
   </div>
 </section>
 
 <style>
-
-.hero {
-  position: relative;
-  min-height: 640px;
-  height: 100vh;
-  overflow: hidden;
-  background: #0b0b0d;
-}
-
-/* ---------- BACKGROUND ---------- */
-
-.hero-bg {
-  position: absolute;
-  inset: 0;
-}
-
-.hero-bg img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: scale(1.28);
-  filter: blur(34px) brightness(0.38) saturate(1.12);
-}
-
-.hero::before,
-.hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.hero::before {
-  background:
-    radial-gradient(ellipse at center,
-      rgba(0,0,0,0) 55%,
-      rgba(0,0,0,.35) 78%,
-      rgba(0,0,0,.65) 100%);
-}
-
-.hero::after {
-  background:
-    radial-gradient(circle at 50% 55%,
-      rgba(255,200,120,.18) 0%,
-      rgba(255,200,120,.10) 18%,
-      rgba(255,200,120,.04) 32%,
-      rgba(0,0,0,0) 55%);
-}
-
-/* ---------- FOREGROUND IMAGE ---------- */
-
-.hero-fg {
-  position: relative;
-  height: 100%;
-  display: grid;
-  place-items: center;
-}
-
-.hero-fg img {
-  width: min(96vw, 1600px);
-  max-height: 94vh;
-  object-fit: contain;
-
-  -webkit-mask-image: linear-gradient(to right,
-    transparent 0%,
-    black 1.5%,
-    black 98.5%,
-    transparent 100%);
-  mask-image: linear-gradient(to right,
-    transparent 0%,
-    black 1.5%,
-    black 98.5%,
-    transparent 100%);
-
-  filter:
-    drop-shadow(0 22px 60px rgba(0,0,0,.65))
-    contrast(1.06)
-    saturate(1.08);
-}
-
-/* ---------- CARDS ---------- */
-
-.hero-cards {
-  position: absolute;
-  top: 50%;
-  left: 4%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  pointer-events: none;
-}
-
-.hero-card {
-  pointer-events: auto;
-  width: 280px;
-  padding: 22px 24px;
-  border-radius: 18px;
-  text-decoration: none;
-  color: #f4efe6;
-
-  background: rgba(20,18,16,.55);
-  backdrop-filter: blur(14px) saturate(1.2);
-  -webkit-backdrop-filter: blur(14px) saturate(1.2);
-
-  border: 1px solid rgba(255,220,150,.18);
-
-  box-shadow:
-    0 12px 34px rgba(0,0,0,.5),
-    inset 0 1px 0 rgba(255,255,255,.06);
-
-  --x: 0px;
-  --offset: 0px;
-  transform: translateX(calc(var(--x) + var(--offset)));
-
-  transition:
-    transform .35s ease,
-    box-shadow .35s ease,
-    border-color .35s ease;
-}
-
-.hero-card:nth-child(1) { --offset: 48px; }
-.hero-card:nth-child(2) { --offset: 24px; }
-.hero-card:nth-child(3) { --offset: 0px; }
-
-.hero-card:hover {
-  --x: 6px;
-  border-color: rgba(255,220,150,.35);
-  box-shadow:
-    0 20px 48px rgba(0,0,0,.6),
-    inset 0 1px 0 rgba(255,255,255,.08);
-}
-
-/* ---------- TYPO ---------- */
-
-.hero-card .eyebrow {
-  display: block;
-  margin-bottom: 6px;
-  font-size: 11px;
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  color: rgba(255,220,150,.85);
-}
-
-.hero-card h3 {
-  margin: 0;
-  font-size: 20px;
-  font-weight: 500;
-}
-
-/* ---------- MOBILE ---------- */
-
-@media (max-width: 900px) {
+  /* Hero layout */
   .hero {
-    height: auto;
-    min-height: 100svh;
-    padding: 18px 0 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background:
-      linear-gradient(to bottom,
-        #0b0b0d 0%,
-        #1a1410 40%,
-        #22160f 100%);
+    position: relative;
+    height: 100vh;
+    min-height: clamp(640px, 100svh, 100vh);
+    overflow: hidden;
+    background: #0b0b0d;
   }
 
-  .hero-bg,
+  /* Background layers */
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+  }
+
+  .hero-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.28);
+    filter: blur(34px) brightness(.38) saturate(1.12);
+  }
+
   .hero::before,
   .hero::after {
-    display: none;
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .hero::before {
+    background:
+      radial-gradient(ellipse at center,
+        rgba(0,0,0,0) 55%,
+        rgba(0,0,0,.35) 78%,
+        rgba(0,0,0,.65) 100%);
+  }
+
+  .hero::after {
+    background:
+      radial-gradient(circle at 50% 55%,
+        rgba(255,200,120,.18) 0%,
+        rgba(255,200,120,.10) 18%,
+        rgba(255,200,120,.04) 32%,
+        rgba(0,0,0,0) 55%);
+  }
+
+  /* Foreground image */
+
+  .hero-fg {
+    position: relative;
+    height: 100%;
+    display: grid;
+    place-items: center;
   }
 
   .hero-fg img {
-    width: 92vw;
-    max-height: none;
-    border-radius: 18px;
+    width: min(96vw, 1600px);
+    max-height: 94vh;
+    object-fit: contain;
+
+    mask-image: linear-gradient(to right,
+      transparent 0%,
+      black 1.5%,
+      black 98.5%,
+      transparent 100%);
+    -webkit-mask-image: linear-gradient(to right,
+      transparent 0%,
+      black 1.5%,
+      black 98.5%,
+      transparent 100%);
+
+    filter:
+      drop-shadow(0 22px 60px rgba(0,0,0,.65))
+      contrast(1.06)
+      saturate(1.08);
   }
+
+  /* Cards */
 
   .hero-cards {
-    position: relative;
-    inset: auto;
-    transform: none;
-    width: 100%;
-    margin-top: 18px;
-    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 4%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    pointer-events: none;
   }
 
-  .hero-card {
-    width: min(92vw, 420px);
-    margin: 0 12px;
-    --x: 0px;
-    --offset: 0px;
+  /* Mobile small */
+  @media (max-width: 480px) {
+    .hero {
+      height: auto;
+      min-height: 100svh;
+      padding: var(--space-3) 0 var(--space-6);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background:
+        linear-gradient(to bottom,
+          #0b0b0d 0%,
+          #1a1410 40%,
+          #22160f 100%);
+    }
+
+    .hero-bg,
+    .hero::before,
+    .hero::after {
+      display: none;
+    }
+
+    .hero-fg img {
+      width: 92vw;
+      max-height: none;
+      border-radius: var(--space-4);
+    }
+
+    .hero-cards {
+      position: relative;
+      inset: auto;
+      transform: none;
+      width: 100%;
+      margin-top: var(--space-3);
+      align-items: center;
+    }
   }
 
-  .hero-card:nth-child(1) { --offset: 0px; }
-  .hero-card:nth-child(2) { --offset: 0px; }
-  .hero-card:nth-child(3) { --offset: 0px; }
-}
+  /* Mobile large & tablet */
+  @media (min-width: 481px) and (max-width: 900px) {
+    .hero {
+      height: auto;
+      min-height: 100svh;
+      padding: var(--space-3) 0 var(--space-6);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background:
+        linear-gradient(to bottom,
+          #0b0b0d 0%,
+          #1a1410 40%,
+          #22160f 100%);
+    }
 
+    .hero-bg,
+    .hero::before,
+    .hero::after {
+      display: none;
+    }
+
+    .hero-fg img {
+      width: 92vw;
+      max-height: none;
+      border-radius: var(--space-4);
+    }
+
+    .hero-cards {
+      position: relative;
+      inset: auto;
+      transform: none;
+      width: 100%;
+      margin-top: var(--space-3);
+      align-items: center;
+    }
+  }
 </style>

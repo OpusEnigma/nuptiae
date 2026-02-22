@@ -1,0 +1,120 @@
+---
+import { Image } from "astro:assets";
+
+const { image, title } = Astro.props;
+
+if (!image) {
+  throw new Error("LocationHero requires an image.");
+}
+if (!title) {
+  throw new Error("LocationHero requires a title.");
+}
+---
+
+<section id="location-hero" class="location-hero">
+  <div class="location-hero-inner">
+    <Image
+      src={image}
+      alt=""
+      class="location-hero-icon"
+      priority
+    />
+
+    <h2 class="location-hero-title">
+      {title}
+    </h2>
+
+    <p class="location-hero-intro">
+      Le mariage aura lieu à Vacoas, au cœur du plateau central de Maurice.
+      Cette région historique et spirituelle offre une atmosphère sereine,
+      idéale pour célébrer l'union de deux familles.
+    </p>
+  </div>
+
+  <div class="scroll-indicator">↓</div>
+</section>
+
+<style>
+  /* Hero section */
+  .location-hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-inline: clamp(1.5rem, 8vw, 5rem);
+  }
+
+  /* Hero content */
+  .location-hero-inner {
+    max-width: 900px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+  }
+
+  .location-hero-icon {
+    display: block;
+    height: clamp(100px, 20vw, 200px);
+    width: auto;
+    margin-bottom: var(--space-6);
+  }
+
+  .location-hero-title {
+    font-size: clamp(2.4rem, 6vw, 4.8rem);
+    margin-bottom: var(--space-4);
+  }
+
+  .location-hero-intro {
+    font-size: var(--fs-body-lg);
+    line-height: var(--lh-loose);
+    max-width: 65ch;
+    margin: 0 auto;
+  }
+
+  /* Scroll indicator */
+  .scroll-indicator {
+    position: absolute;
+    bottom: clamp(20px, 4vw, 40px);
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: clamp(1.2rem, 3vw, 1.6rem);
+    opacity: 0.6;
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translate(-50%, 0); }
+    50% { transform: translate(-50%, 10px); }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-indicator {
+      animation: none;
+      opacity: 0.4;
+    }
+  }
+
+  /* Mobile layout */
+  @media (max-width: 768px) {
+    .location-hero {
+      padding-inline: var(--container-pad);
+    }
+  }
+
+  /* Dark mode */
+  @media (prefers-color-scheme: dark) {
+    .location-hero {
+      background: linear-gradient(135deg, var(--color-page) 0%, rgba(26, 26, 26, 0.8) 100%);
+      color: var(--color-text);
+    }
+
+    .scroll-indicator {
+      opacity: 0.5;
+    }
+  }
+</style>

@@ -31,13 +31,10 @@ const { items } = Astro.props;
 </nav>
 
 <style>
-  /* ============================= */
-  /* CONTAINER */
-  /* ============================= */
-
+  /* Timeline container */
   .timeline {
     position: fixed;
-    left: 48px;
+    left: clamp(20px, 4vw, 48px);
     top: 50%;
     transform: translateY(-50%);
     z-index: 2;
@@ -52,55 +49,44 @@ const { items } = Astro.props;
     pointer-events: auto;
   }
 
-  /* ============================= */
-  /* LIGNE */
-  /* ============================= */
-
+  /* Timeline line */
   .timeline-line {
     position: absolute;
-    left: 5px;
+    left: clamp(1px, 0.5vw, 5px);
     top: -220px;
     bottom: -220px;
     width: 1px;
-    background: var(--color-subtle);
+    background: var(--color-muted);
     opacity: 0.3;
   }
 
-  /* ============================= */
-  /* ITEM */
-  /* ============================= */
-
+  /* Timeline items */
   .timeline-item {
     position: relative;
     display: block;
     margin-bottom: var(--space-5);
     text-decoration: none;
 
-    color: var(--color-subtle);
+    color: var(--color-muted);
     transition: color 0.4s ease;
   }
 
-  /* ============================= */
-  /* DOT */
-  /* ============================= */
-
+  /* Timeline dot */
   .timeline-dot {
     position: absolute;
     left: 0;
-    top: 4px;
-    width: 8px;
-    height: 8px;
-    background: var(--color-subtle);
+    top: clamp(2px, 0.5vw, 4px);
+    width: clamp(6px, 1vw, 8px);
+    height: clamp(6px, 1vw, 8px);
     border-radius: 50%;
+
+    background: var(--color-muted);
     transition: background 0.4s ease;
   }
 
-  /* ============================= */
-  /* TEXTE */
-  /* ============================= */
-
+  /* Timeline text */
   .timeline-text {
-    margin-left: 24px;
+    margin-left: var(--space-4);
     display: flex;
     flex-direction: column;
   }
@@ -119,30 +105,56 @@ const { items } = Astro.props;
     font-weight: 400;
   }
 
-  /* ============================= */
-  /* ACTIF */
-  /* ============================= */
-
-  .timeline-item.active {
-    color: var(--color-text);
-  }
-
-  .timeline-item.active .timeline-dot {
-    background: var(--color-text);
-  }
-
-  /* Hover très subtil */
+  /* Active & hover states */
+  .timeline-item.active,
   .timeline-item:hover {
     color: var(--color-text);
   }
 
-  /* ============================= */
-  /* RESPONSIVE */
-  /* ============================= */
+  .timeline-item.active .timeline-dot,
+  .timeline-item:hover .timeline-dot {
+    background: var(--color-text);
+  }
 
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .timeline,
+    .timeline-item,
+    .timeline-dot {
+      transition: none;
+    }
+  }
+
+  /* Responsive */
   @media (max-width: 1000px) {
     .timeline {
       display: none;
+    }
+  }
+
+  /* Dark mode */
+  @media (prefers-color-scheme: dark) {
+    .timeline-line {
+      background: var(--color-muted);
+      opacity: 0.2;
+    }
+
+    .timeline-item {
+      color: var(--color-muted);
+    }
+
+    .timeline-dot {
+      background: var(--color-muted);
+    }
+
+    .timeline-item.active,
+    .timeline-item:hover {
+      color: var(--color-text);
+    }
+
+    .timeline-item.active .timeline-dot,
+    .timeline-item:hover .timeline-dot {
+      background: var(--color-text);
     }
   }
 </style>

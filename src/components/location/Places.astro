@@ -1,0 +1,40 @@
+---
+---
+
+<div class="places">
+  <slot />
+</div>
+
+<style>
+  .places {
+    height: 100%;
+    overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+
+    align-items: center;
+
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .places::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .places {
+      -webkit-overflow-scrolling: auto;
+    }
+  }
+
+  /* Mobile layout */
+  @media (max-width: 1024px) {
+    .places {
+      height: auto;
+    }
+  }
+</style>

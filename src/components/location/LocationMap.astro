@@ -1,0 +1,50 @@
+---
+import LocationBlock from "./LocationBlock.astro";
+import Place from "./Place.astro"
+
+import jumboImage from "../../assets/location/jumbo-image.png";
+import ritualLocationImage from "../../assets/location/ritual-location-image.png";
+
+const markers = [
+  {
+    lat: -20.284981,
+    lng: 57.486647,
+    name: "Lieu de cérémonie"
+  },
+  {
+    lat: -20.2785593,
+    lng: 57.4953983,
+    name: "Phoenix Mall (Jumbo)"
+  }
+];
+---
+
+<LocationBlock id="location-map" title="Carte" markers={markers} zoom={15}>
+
+  <Place
+    id="Lieu de cérémonie"
+    title="Lieu de cérémonie"
+    image={ritualLocationImage}
+  >
+    <p>
+      Le lieu de cérémonie, qui sera également la future maison des mariés, occupe une place centrale dans les célébrations du mariage hindou. 
+      Pensé à la fois comme espace sacré et cadre de vie à venir, il accueillera l’ensemble des rituels traditionnels — du haldi et du mehndi jusqu’à la cérémonie de mariage et aux bénédictions familiales — ainsi que la réception. 
+      Aménagé pour l’occasion avec autel, mandap, espaces de prière et zones de convivialité, ce lieu symbolise le passage vers la vie commune : les rites y prennent une dimension particulièrement intime, puisqu’ils sont célébrés dans le foyer même que le couple s’apprête à habiter. 
+      Réunissant spiritualité, famille et fête en un seul espace, cette maison devient le cœur vivant du mariage, où se mêlent traditions, émotions et premiers souvenirs du nouveau foyer.
+    </p>
+  </Place>
+
+  <Place
+    id="Phoenix Mall (Jumbo)"
+    title="Centre Commercial Phoenix Mall (Jumbo)"
+    image={jumboImage}
+  >
+    <p>
+      Le Phoenix Mall, situé à Vacoas-Phoenix au cœur de l’île Maurice, est un centre commercial moderne qui se distingue par sa forte dimension utilitaire et sa grande accessibilité. 
+      Directement relié à la station du Metro Express, il constitue un véritable pôle de vie quotidienne où l’on peut facilement combiner déplacements, courses et services en un seul lieu. 
+      Le mall abrite un supermarché, une pharmacie, des distributeurs bancaires, des boutiques de téléphonie et d’électronique, ainsi que de nombreux commerces essentiels. Son food court et ses cafés offrent une pause pratique aux voyageurs, employés et habitants de la région. 
+      Grâce à cette concentration de services et à sa connexion immédiate au tramway et aux transports publics, le Phoenix Mall fonctionne comme un hub urbain central, facilitant les tâches du quotidien dans un environnement accessible et convivial.
+    </p>
+  </Place>
+
+</LocationBlock>

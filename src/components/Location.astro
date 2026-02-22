@@ -1,150 +1,49 @@
 ---
-import Map from "../components/Map";
+import TopGarland from "./TopGarland.astro";
+import LocationHero from "./location/LocationHero.astro";
+import LocationMap from "./location/LocationMap.astro";
+import LocationRegion from "./location/LocationRegion.astro";
+import LocationAccommodation from "./location/LocationAccommodation.astro";
 
-const markers = [
-  {
-    lat: -20.284981,
-    lng: 57.486647,
-    name: "Lieu de cérémonie",
-    primary: true
-  },
-  {
-    lat: -20.2785593,
-    lng: 57.4953983,
-    name: "Centre commercial & Metro"
-  }
-];
-
+import hero from "../assets/location/hero-image.png";
 ---
 
 <section id="location" class="location">
-  <div class="location-inner">
 
-    <!-- HEADER -->
-    <header class="location-header">
-      <h2>Lieu</h2>
-      <p class="location-name">
-        Carreau Laliane Road<br />
-        <span>Vacoas, Mauritius</span>
-      </p>
-    </header>
+  <TopGarland />
+  
+  <LocationHero image={hero} title="Lieu" />
 
-    <!-- MAP -->
-    <div class="map-wrapper">
-      <Map
-        client:only="react"
-        markers={markers}
-        zoom={16}
-        variant="location"
-      />
-    </div>
+  <LocationMap />
 
-  </div>
+  <LocationRegion />
+
+  <LocationAccommodation />
+
 </section>
 
 <style>
-  /* ========================= */
-  /* SECTION */
-  /* ========================= */
 
   .location {
-    padding: var(--space-8) 2rem;
-    background: var(--color-page);
+    position: relative;
+    background: #fff;
   }
 
-  /* ========================= */
-  /* INNER LAYOUT */
-  /* ========================= */
-
-  .location-inner {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    gap: var(--space-7);
+  .location section + section {
+    margin-top: 0;
   }
 
-  /* ========================= */
-  /* HEADER */
-  /* ========================= */
-
-  .location-header {
-    text-align: center;
-  }
-
-  .location-header h2 {
-    margin-bottom: var(--space-2);
-  }
-
-  .location-name {
-    font-size: var(--fs-small);
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--color-muted);
-    line-height: var(--lh-normal);
-  }
-
-  .location-name span {
-    color: var(--color-text);
-  }
-
-  /* ========================= */
-  /* MAP */
-  /* ========================= */
-
-  .map-wrapper {
-    width: 100%;
-    height: 60vh;
-    min-height: 420px;
-    overflow: hidden;
-  }
-
-  /* ========================= */
-  /* MARKERS */
-  /* ========================= */
-
-  :global(.custom-marker) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  :global(.marker-primary) {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: var(--color-text);
-  }
-
-  /* ========================= */
-  /* LEAFLET FIX */
-  /* ========================= */
-
-  :global(.leaflet-container) {
-    width: 100% !important;
-    height: 100% !important;
-  }
-
-  /* ========================= */
-  /* MOBILE */
-  /* ========================= */
-
-  @media (max-width: 768px) {
+  /* Dark mode */
+  @media (prefers-color-scheme: dark) {
     .location {
-      padding: var(--space-7) 1.5rem;
-    }
-
-    .location-inner {
-      gap: var(--space-6);
-    }
-
-    .map-wrapper {
-      height: 55vh;
-      min-height: 360px;
+      background: var(--color-page);
+      color: var(--color-text);
     }
   }
 </style>
+
+<script>
+  import { hideElementOnSectionVisible } from "../utils/visibility";
+
+  hideElementOnSectionVisible(".top-garland", "[data-hide-garland]");
+</script>

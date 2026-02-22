@@ -1,19 +1,18 @@
 ---
-import RegionReact from "../components/Region.tsx";
+import LocationBlock from "./LocationBlock.astro";
+import Place from "./Place.astro";
 
-import Place from "../components/Place.astro";
+import flicenflacImage from "../../assets/region/flicenflac-image.png";
+import tamarinImage from "../../assets/region/tamarin-image.png";
+import rivierenoireImage from "../../assets/region/rivierenoire-image.png";
+import chamarelImage from "../../assets/region/chamarel-image.png";
+import lemorneImage from "../../assets/region/lemorne-image.png";
+import albionImage from "../../assets/region/albion-image.png";
+import portlouisImage from "../../assets/region/portlouis-image.png";
+import centreImage from "../../assets/region/centre-image.png";
+import ileauxbenitiersImage from "../../assets/region/ileauxbenitiers-image.png";
 
-import flicenflacImage from "../assets/region/flicenflac-image.png";
-import tamarinImage from "../assets/region/tamarin-image.png";
-import rivierenoireImage from "../assets/region/rivierenoire-image.png";
-import chamarelImage from "../assets/region/chamarel-image.png";
-import lemorneImage from "../assets/region/lemorne-image.png";
-import albionImage from "../assets/region/albion-image.png";
-import portlouisImage from "../assets/region/portlouis-image.png";
-import centreImage from "../assets/region/centre-image.png";
-import ileauxbenitiersImage from "../assets/region/ileauxbenitiers-image.png";
-
-const markers = [
+const mapItems = [
   { lat: -20.285, lng: 57.487, name: "Vacoas" },
   { lat: -20.285, lng: 57.372, name: "Flic-en-Flac & Wolmar" },
   { lat: -20.325, lng: 57.370, name: "Tamarin & Rivière Noire" },
@@ -24,20 +23,10 @@ const markers = [
   { lat: -20.229, lng: 57.409, name: "La Preneuse & Albion" },
   { lat: -20.160, lng: 57.501, name: "Port-Louis" }
 ];
-
+const zoom = 10;
 ---
 
-<section id="region" class="region">
-
-  <header class="region-header">
-    <h2>Région</h2>
-  </header>
-
-  <div class="map-wrapper">
-    <RegionReact client:load markers={markers} />
-  </div>
-
-  <div class="places-grid">
+<LocationBlock id="location-region" title="Région" markers={mapItems} zoom={zoom}>
 
     <Place id="Port-Louis" title="Port-Louis" location="Port-Louis, Maurice" image={portlouisImage}>
       <p>Capitale vibrante de Maurice, Port-Louis concentre l’histoire, le commerce et la diversité culturelle de l’île dans un décor de port tropical encerclé de montagnes. 
@@ -114,81 +103,4 @@ const markers = [
       <p>Mots-clés : îlot · lagon · snorkeling · excursion · tropical</p>
     </Place>
 
-  </div>
-
-</section>
-
-<style>
-
-.region {
-  --map-w: clamp(420px, 55vw, 1100px);
-  --pad: 1.5rem;
-
-  height: 100dvh;                 /* viewport réel (mobile safe) */
-  box-sizing: border-box;         /* inclut padding dans hauteur */
-
-  display: grid;
-  grid-template-columns: var(--map-w) 1fr;
-  grid-template-rows: auto 1fr;
-
-  padding: var(--pad);
-  gap: var(--pad);
-
-  overflow: hidden;               /* ← empêche tout scroll */
-}
-
-.region-header {
-  grid-column: 1 / -1;
-  align-self: start;
-  margin: 0;
-}
-
-.region-header h2 {
-  margin: 0;
-  font-size: 1.4rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--color-muted);
-}
-
-.map-wrapper {
-  position: sticky;
-  top: 0;
-  height: 100%;
-  border-radius: 16px;
-  overflow: hidden;
-}
-
-.places-grid {
-  height: 100%;
-  overflow-y: auto;
-  padding-right: 0.5rem;
-
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-8);
-
-  align-items: center;
-  scrollbar-width: none;
-}
-
-.places-grid::-webkit-scrollbar {
-  display: none;
-}
-
-@media (max-width: 1024px) {
-  .region {
-    height: auto;
-    grid-template-columns: 1fr;
-  }
-
-  .map-wrapper {
-    height: 55vh;
-  }
-
-  .places-grid {
-    height: auto;
-  }
-}
-
-</style>
+</LocationBlock>

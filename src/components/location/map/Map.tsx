@@ -4,27 +4,33 @@ interface MarkerData {
   lat: number;
   lng: number;
   name: string;
-  primary?: boolean;
 }
 
 interface Props {
   markers: MarkerData[];
   zoom?: number;
   activePlace?: string | null;
+  hoveredPlace?: string | null;
   onSelect?: (name: string) => void;
+  onHover?: (name: string | null) => void;
 }
 
 export default function Map({
   markers,
   zoom = 10,
   activePlace,
+  hoveredPlace,
   onSelect,
+  onHover,
 }: Props) {
   const mapRef = useRef<any>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const markerRefs = useRef<Record<string, any>>({});
+  const onSelectRef = useRef(onSelect);
+  onSelectRef.current = onSelect;
 
-  // Create map
+  /* Create map */
+
   useEffect(() => {
     if (!containerRef.current) return;
 
@@ -56,19 +62,22 @@ export default function Map({
       markers.forEach((marker) => {
         bounds.push([marker.lat, marker.lng]);
 
-        const size = marker.primary ? 42 : 30;
+        const size = 32;
 
         const icon = L.divIcon({
           className: "google-marker",
           html: markerHTML(size, false),
           iconSize: [size, size],
           iconAnchor: [size / 2, size],
+          popupAnchor: [0, -size],
         });
 
         const leafletMarker = L.marker([marker.lat, marker.lng], { icon })
           .addTo(map)
-          .bindPopup(marker.name)
-          .on("click", () => onSelect?.(marker.name));
+          .bindPopup(marker.name, { closeButton: false, autoPan: false })
+          .on("click", () => onSelectRef.current?.(marker.name))
+          .on("mouseover", function () { this.openPopup(); onHover?.(marker.name); })
+          .on("mouseout", function () { this.closePopup(); onHover?.(null); });
 
         markerRefs.current[marker.name] = leafletMarker;
       });
@@ -90,34 +99,35 @@ export default function Map({
         mapRef.current = null;
       }
     };
-  }, [markers, zoom, onSelect]);
+  }, [markers, zoom]);
 
-  // Highlight active marker
+  /* Highlight active and hovered markers */
+
   useEffect(() => {
     if (!markerRefs.current) return;
 
     import("leaflet").then((L) => {
       Object.entries(markerRefs.current).forEach(([name, marker]) => {
         const isActive = name === activePlace;
+        const isHovered = name === hoveredPlace;
+        const highlight = isActive || isHovered;
 
-        const baseSize =
-          markers.find((m) => m.name === name)?.primary ? 42 : 30;
+        const baseSize = 32;
 
-        const size = isActive ? 50 : baseSize;
+        const size = highlight ? 50 : baseSize;
 
         const icon = L.divIcon({
           className: "google-marker",
-          html: markerHTML(size, isActive),
+          html: markerHTML(size, highlight),
           iconSize: [size, size],
           iconAnchor: [size / 2, size],
+          popupAnchor: [0, -size],
         });
 
         marker.setIcon(icon);
-
-        if (isActive) marker.openPopup();
       });
     });
-  }, [activePlace, markers]);
+  }, [activePlace, hoveredPlace, markers]);
 
   return (
     <div
@@ -125,13 +135,14 @@ export default function Map({
       style={{
         width: "100%",
         height: "100%",
-        borderRadius: "16px",
+        borderRadius: "clamp(8px, 2vw, 16px)",
       }}
     />
   );
 }
 
-// Marker SVG/HTML
+/* Marker SVG/HTML rendering */
+
 function markerHTML(size: number, active: boolean) {
   const color = active ? "#FF6B5A" : "#EA4335";
   const shadow = active
@@ -143,7 +154,6 @@ function markerHTML(size: number, active: boolean) {
       position: relative;
       width: ${size}px;
       height: ${size}px;
-      transform: translate(-50%, -100%);
     ">
       <div style="
         width: 100%;

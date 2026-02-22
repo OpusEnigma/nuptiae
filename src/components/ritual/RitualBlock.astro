@@ -26,59 +26,41 @@ const sideClass = side === "right" ? "block--right" : "block--left";
 </div>
 
 <style>
-  /* ============================= */
-  /* LAYOUT */
-  /* ============================= */
-
+  /* Layout */
   .ritual-block {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-7);
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(var(--space-5), 8vw, var(--space-7));
     align-items: start;
-    margin-bottom: var(--space-7);
+    margin-bottom: clamp(var(--space-6), 8vw, var(--space-7));
   }
 
-  /* Alternance */
+  /* Alternate layout */
   .block--right {
     direction: rtl;
   }
 
-  .block--right .block-content,
-  .block--right .block-media {
+  .block--right > * {
     direction: ltr;
   }
 
-  /* ============================= */
-  /* IMAGE */
-  /* ============================= */
-
-  .block-media img {
+  /* Media */
+  .block-media :global(img) {
+    display: block;
     width: 100%;
     height: auto;
-    display: block;
   }
 
-  /* ============================= */
-  /* TEXTE */
-  /* ============================= */
-
+  /* Content */
   .block-content {
     max-width: 52ch;
-  }
-
-  /* Le texte est déjà défini globalement via p {} */
-  .block-content p {
-    margin-bottom: var(--space-3);
   }
 
   .block-content p:last-child {
     margin-bottom: 0;
   }
 
-  /* ============================= */
-  /* MOBILE */
-  /* ============================= */
-
+  /* Mobile layout */
   @media (max-width: 900px) {
     .ritual-block {
       grid-template-columns: 1fr;
@@ -92,6 +74,13 @@ const sideClass = side === "right" ? "block--right" : "block--left";
 
     .block-content {
       max-width: 100%;
+    }
+  }
+
+  /* Dark mode */
+  @media (prefers-color-scheme: dark) {
+    .ritual-block {
+      color: var(--color-text);
     }
   }
 </style>

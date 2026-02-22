@@ -1,13 +1,16 @@
 ---
 import TopGarland from "./TopGarland.astro";
-import RitualHero from "./RitualHero.astro";
-import Timeline from "./Timeline.astro";
-import Ritual from "./Ritual.astro";
-import RitualHeader from "./RitualHeader.astro";
-import RitualBlock from "./RitualBlock.astro";
-import RitualFooter from "./RitualFooter.astro";
 
-/* ===== ASSETS PAR RITUEL ===== */
+import RitualHero from "./ritual/RitualHero.astro";
+import Timeline from "./ritual/Timeline.astro";
+import Ritual from "./ritual/Ritual.astro";
+import RitualHeader from "./ritual/RitualHeader.astro";
+import RitualBlock from "./ritual/RitualBlock.astro";
+import RitualFooter from "./ritual/RitualFooter.astro";
+
+/* Assets by ritual */
+
+import hero from "../assets/rituals/hero-image.png";
 
 import khataHeader from "../assets/rituals/khata-header-image.png";
 import khata1 from "../assets/rituals/khata-image-1.png";
@@ -30,7 +33,7 @@ import haldi2 from "../assets/rituals/haldi-image-2.png";
 import haldi3 from "../assets/rituals/haldi-image-3.png";
 import haldi4 from "../assets/rituals/haldi-image-4.png";
 
-/* ===== DATA ===== */
+/* Data */
 
 const timelineItems = [
   { id: "khata", date: "20 Août", title: "Khata" },
@@ -38,19 +41,16 @@ const timelineItems = [
   { id: "haldi", date: "22 Août", title: "Haldi" },
   { id: "shaadi", date: "23 Août", title: "Shaadi" }
 ];
+
 ---
 
-
 <section id="rituals" class="rituals">
-  <div class="temple-frame">
 
     <TopGarland />
 
-    <main class="temple-content">
+    <RitualHero image={hero} title="Cérémonies"/>
 
-      <RitualHero />
-
-      <section class="ritual-content">
+    <section class="rituals-content">
         <div class="container">
 
           <Timeline items={timelineItems} />
@@ -326,83 +326,60 @@ const timelineItems = [
 
         </div>
       </section>
+    </section>
 
-    </main>
-
-  </div>
 </section>
 
 <style>
-/* ============================= */
-/* TOKENS */
-/* ============================= */
-
-.rituals {
-  --garland-h: 110px;
-  --frame-pad: var(--garland-h);
-  --content-max: 1100px;
-  --container-pad: 1.5rem;
-
-  background: #fff;
-  position: relative;
-}
-
-/* ============================= */
-/* FRAME */
-/* ============================= */
-
-.temple-frame {
-  position: relative;
-  padding-inline: var(--frame-pad);
-}
-
-/* ============================= */
-/* CONTENT */
-/* ============================= */
-
-.temple-content {
-  position: relative;
-  z-index: 1;
-  max-width: var(--content-max);
-  margin-inline: auto;
-}
-
-.container {
-  padding-inline: var(--container-pad);
-}
-
-.ritual-list {
-  margin: .8rem 0 1.2rem 1.2rem;
-  padding: 0;
-}
-
-.ritual-list li {
-  margin: .25rem 0;
-}
-
-/* ============================= */
-/* RESPONSIVE */
-/* ============================= */
-
-@media (hover: none), (pointer: coarse) {
-  .hero-card {
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    background: rgba(20,18,16,.85);
-  }
-}
-
-@media (max-width: 1024px) {
+  /* CSS tokens */
   .rituals {
-    --frame-pad: 70px;
-  }
-}
+    --garland-h: clamp(60px, 12vw, 110px);
+    --frame-pad: var(--garland-h);
 
-@media (max-width: 768px) {
-  .rituals {
-    --garland-h: 60px;
-    --frame-pad: var(--container-pad);
+    position: relative;
+    padding-inline: var(--frame-pad);
+    background: #fff;
   }
-}
 
+  /* Ritual content */
+  .rituals-content {
+    position: relative;
+    z-index: 1;
+    max-width: var(--content-max);
+    margin-inline: auto;
+  }
+
+  /* Ritual list */
+  .ritual-list {
+    margin: var(--space-2) 0 var(--space-3) var(--space-3);
+    padding: 0;
+  }
+
+  .ritual-list li {
+    margin: var(--space-1) 0;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* Responsive breakpoints */
+  @media (max-width: 768px) {
+    .rituals {
+      --frame-pad: var(--container-pad);
+    }
+  }
+
+  /* Dark mode */
+  @media (prefers-color-scheme: dark) {
+    .rituals {
+      background: var(--color-page);
+      color: var(--color-text);
+    }
+  }
 </style>

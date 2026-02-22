@@ -1,0 +1,117 @@
+---
+import MapSync from "./map/MapSync";
+import Places from "./Places.astro";
+
+const { id, title, markers, zoom = 10 } = Astro.props;
+const hasMap = markers && markers.length > 0;
+---
+
+<section id={id} class={`location-block${hasMap ? '' : ' location-block--simple'}`} data-hide-garland>
+
+  <header class="location-block-header">
+    <h2 class="location-block-title">{title}</h2>
+  </header>
+
+  {hasMap && (
+    <div class="map-wrapper">
+      <MapSync
+        client:load
+        markers={markers}
+        zoom={zoom}
+        placeSelector={`#${id} .place`}
+      />
+    </div>
+  )}
+
+  {hasMap ? (
+    <Places>
+      <slot />
+    </Places>
+  ) : (
+    <div class="location-block-content">
+      <slot />
+    </div>
+  )}
+
+</section>
+
+<style>
+  .location-block {
+    --map-w: clamp(400px, 55vw, 1100px);
+    --pad: var(--container-pad);
+
+    height: 100dvh;
+    box-sizing: border-box;
+
+    display: grid;
+    grid-template-columns: var(--map-w) 1fr;
+    grid-template-rows: auto 1fr;
+
+    padding: var(--pad);
+    gap: var(--pad);
+
+    overflow: hidden;
+  }
+
+  /* Header */
+
+  .location-block-header {
+    grid-column: 1 / -1;
+    align-self: start;
+  }
+
+  .location-block-title {
+    margin: 0;
+    font-size: clamp(2.4rem, 6vw, 4.8rem);
+    letter-spacing: -0.02em;
+  }
+
+  /* Map */
+
+  .map-wrapper {
+    position: sticky;
+    top: var(--pad);
+    height: 100%;
+    border-radius: clamp(8px, 2vw, 16px);
+    overflow: hidden;
+  }
+
+  /* Simple (no map) layout */
+  .location-block--simple {
+    grid-template-columns: 1fr;
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  .location-block-content {
+    min-width: 0;
+    height: 100%;
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+
+  /* Mobile layout */
+  @media (max-width: 1024px) {
+    .location-block {
+      height: auto;
+      grid-template-columns: 1fr;
+    }
+
+    .map-wrapper {
+      height: clamp(50vh, 60vw, 55vh);
+      top: 0;
+    }
+  }
+
+  /* Dark mode */
+  @media (prefers-color-scheme: dark) {
+    .location-block {
+      background: var(--color-page);
+      color: var(--color-text);
+    }
+
+    .location-block-title {
+      color: var(--color-muted);
+    }
+  }
+</style>
