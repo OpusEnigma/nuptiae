@@ -11,39 +11,194 @@ import hero from "../assets/location/hero-image.png";
 <section id="location" class="location">
 
   <TopGarland />
-  
+
+  <!-- Sidebar — fixed, hidden while on hero -->
+  <aside class="location-sidebar" id="location-sidebar" aria-label="Navigation sections">
+    <nav class="location-nav">
+      <a class="location-nav-dot" href="#location-hero"          data-section="location-hero"          data-label="Lieu"         aria-label="Lieu"></a>
+      <a class="location-nav-dot" href="#location-map"           data-section="location-map"           data-label="Carte"        aria-label="Carte"></a>
+      <a class="location-nav-dot" href="#location-region"        data-section="location-region"        data-label="Région"       aria-label="Région"></a>
+      <a class="location-nav-dot" href="#location-accommodation" data-section="location-accommodation" data-label="Hébergements" aria-label="Hébergements"></a>
+    </nav>
+  </aside>
+
+  <!-- Snap point 1 — Hero, full width -->
   <LocationHero image={hero} title="Lieu" />
 
+  <!-- Snap points 2-4 — blocks -->
   <LocationMap />
-
   <LocationRegion />
-
   <LocationAccommodation />
 
 </section>
 
 <style>
+  /* Lock page scroll — navigation is handled inside .location only */
+  :global(html),
+  :global(body) {
+    overflow: hidden;
+    scrollbar-width: none;
+  }
+
+  /* ---- Scroll-snap container ---- */
 
   .location {
+    --sidebar-w: clamp(40px, 5vw, 60px);
+
+    height: 100dvh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    overscroll-behavior-y: contain;
+  }
+
+  .location::-webkit-scrollbar { display: none; }
+
+  /* Every direct section child = one full-screen snap point */
+  .location > :global(section) {
+    height: 100dvh;
+    min-height: unset;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  :global(.location > section + section) { margin-top: 0 !important; }
+
+  /* ---- Sidebar — fixed, toggled by JS ---- */
+
+  .location-sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: var(--sidebar-w);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+
+  .location-sidebar.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* ---- Navigation dots ---- */
+
+  .location-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .location-nav-dot {
     position: relative;
-    background: #fff;
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow:
+      0 0 0 1.5px rgba(255, 255, 255, 0.65),
+      0 1px 4px rgba(0, 0, 0, 0.2);
+    transition:
+      background 0.25s ease,
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+    cursor: pointer;
+    text-decoration: none;
   }
 
-  .location section + section {
-    margin-top: 0;
+  .location-nav-dot.is-active {
+    background: #e9c46a;
+    transform: scale(1.5);
+    box-shadow:
+      0 0 0 2px rgba(233, 196, 106, 0.35),
+      0 2px 8px rgba(233, 196, 106, 0.45);
   }
 
-  /* Dark mode */
-  @media (prefers-color-scheme: dark) {
-    .location {
-      background: var(--color-page);
-      color: var(--color-text);
-    }
+  /* Tooltip — opens to the right */
+  .location-nav-dot::before {
+    content: attr(data-label);
+    position: absolute;
+    left: calc(100% + 12px);
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    font-family: var(--font-body);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.65);
+    color: #f0ede6;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .location-nav-dot:hover::before {
+    opacity: 1;
+  }
+
+  @media (max-width: 600px) {
+    .location-sidebar { display: none; }
   }
 </style>
 
 <script>
-  import { hideElementOnSectionVisible } from "../utils/visibility";
+  const locationEl = document.querySelector<HTMLElement>(".location");
+  const sidebar    = document.getElementById("location-sidebar") as HTMLElement | null;
+  const dots       = document.querySelectorAll<HTMLElement>(".location-nav-dot");
+  const garland    = document.querySelector<HTMLElement>(".top-garland");
 
-  hideElementOnSectionVisible(".top-garland", "[data-hide-garland]");
+  const sections = [
+    document.getElementById("location-hero"),
+    document.getElementById("location-map"),
+    document.getElementById("location-region"),
+    document.getElementById("location-accommodation"),
+  ].filter(Boolean) as HTMLElement[];
+
+  function setActive(id: string) {
+    const onHero = id === "location-hero";
+    sidebar?.classList.toggle("is-visible", !onHero);
+    garland?.classList.toggle("visible", onHero);
+    dots.forEach(d => d.classList.toggle("is-active", d.dataset.section === id));
+  }
+
+  // Dot clicks → snap to section
+  dots.forEach(dot => {
+    dot.addEventListener("click", e => {
+      e.preventDefault();
+      const id = dot.dataset.section;
+      if (id) document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+
+  // Observer (root = .location) → active dot + sidebar + garland
+  if (locationEl) {
+    const obs = new IntersectionObserver(entries => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) setActive(entry.target.id);
+      }
+    }, { root: locationEl, threshold: 0.5 });
+
+    sections.forEach(s => obs.observe(s));
+  }
+
+  // Scroll-indicator on hero → snap to first block
+  const scrollIndicator = document.querySelector<HTMLElement>("#location-hero .scroll-indicator");
+  if (scrollIndicator) {
+    scrollIndicator.style.cursor = "pointer";
+    scrollIndicator.addEventListener("click", () => {
+      document.getElementById("location-map")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
 </script>

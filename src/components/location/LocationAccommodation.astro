@@ -60,21 +60,6 @@ import LocationBlock from "./LocationBlock.astro";
 </LocationBlock>
 
 <style>
-  /* ---- Tropical background on the section ---- */
-
-  :global(#location-accommodation) {
-    background:
-      radial-gradient(ellipse at 70% 20%, rgba(42, 157, 143, 0.35) 0%, transparent 55%),
-      radial-gradient(ellipse at 20% 80%, rgba(233, 196, 106, 0.2) 0%, transparent 50%),
-      linear-gradient(155deg, #0a2e38 0%, #0d4a5a 35%, #0e6b6b 65%, #145c5a 100%);
-    color: #f0ede6;
-  }
-
-  :global(#location-accommodation .location-block-title) {
-    color: #e9c46a;
-    text-shadow: 0 2px 24px rgba(233, 196, 106, 0.25);
-  }
-
   /* Disable parent scroll — only results column scrolls */
   :global(#location-accommodation .location-block-content) {
     overflow: hidden;
@@ -124,18 +109,17 @@ import LocationBlock from "./LocationBlock.astro";
     font-size: clamp(9px, 1.1vw, 10px);
     text-transform: uppercase;
     letter-spacing: 0.18em;
-    color: #e9c46a;
-    opacity: 0.7;
+    color: var(--color-muted);
   }
 
   .accom-input {
     appearance: none;
     -webkit-appearance: none;
-    background: rgba(255, 255, 255, 0.07);
-    border: 1px solid rgba(233, 196, 106, 0.2);
+    background: var(--color-bg);
+    border: 1px solid #d0ccc6;
     border-radius: 10px;
     padding: var(--space-2) var(--space-3);
-    color: #f0ede6;
+    color: var(--color-text);
     font: inherit;
     font-size: clamp(0.875rem, 1.4vw, 1rem);
     transition: border-color 0.2s ease, background 0.2s ease;
@@ -143,12 +127,12 @@ import LocationBlock from "./LocationBlock.astro";
 
   .accom-input:focus {
     outline: none;
-    border-color: rgba(233, 196, 106, 0.7);
-    background: rgba(255, 255, 255, 0.11);
+    border-color: #b5873a;
+    background: #fff;
   }
 
   .accom-input::-webkit-calendar-picker-indicator {
-    filter: invert(1) opacity(0.5);
+    opacity: 0.5;
     cursor: pointer;
   }
 
@@ -166,8 +150,8 @@ import LocationBlock from "./LocationBlock.astro";
     gap: var(--space-3);
     padding: var(--space-3) var(--space-4);
     border-radius: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid #d0ccc6;
+    background: var(--color-bg);
     cursor: pointer;
     transition:
       border-color 0.2s ease,
@@ -188,7 +172,7 @@ import LocationBlock from "./LocationBlock.astro";
     width: 15px;
     height: 15px;
     border-radius: 50%;
-    border: 2px solid rgba(255, 255, 255, 0.25);
+    border: 2px solid #c0bbb4;
     transition:
       border-color 0.2s ease,
       background 0.2s ease,
@@ -196,20 +180,20 @@ import LocationBlock from "./LocationBlock.astro";
   }
 
   .accom-zone-btn:has(input:checked)::before {
-    border-color: #e9c46a;
-    background: #e9c46a;
-    box-shadow: 0 0 0 4px rgba(233, 196, 106, 0.2);
+    border-color: #b5873a;
+    background: #b5873a;
+    box-shadow: 0 0 0 4px rgba(181, 135, 58, 0.15);
   }
 
   .accom-zone-btn:has(input:checked) {
-    border-color: rgba(233, 196, 106, 0.45);
-    background: rgba(233, 196, 106, 0.08);
+    border-color: rgba(181, 135, 58, 0.5);
+    background: rgba(181, 135, 58, 0.06);
     transform: translateX(5px);
   }
 
   .accom-zone-btn:hover:not(:has(input:checked)) {
-    border-color: rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.07);
+    border-color: #b0aaa4;
+    background: #efefef;
   }
 
   .accom-zone-body {
@@ -221,13 +205,13 @@ import LocationBlock from "./LocationBlock.astro";
   .accom-zone-name {
     font-size: clamp(0.875rem, 1.4vw, 1rem);
     font-weight: 500;
-    color: #f0ede6;
+    color: var(--color-text);
   }
 
   .accom-zone-note {
     font-style: normal;
     font-size: clamp(9px, 1.1vw, 10px);
-    color: rgba(233, 196, 106, 0.6);
+    color: var(--color-muted);
     letter-spacing: 0.07em;
   }
 
@@ -239,10 +223,20 @@ import LocationBlock from "./LocationBlock.astro";
     display: flex;
     flex-direction: column;
     gap: var(--space-6);
-    padding: var(--space-6) 0 var(--space-6) clamp(var(--space-5), 3vw, var(--space-8));
-    border-left: 1px solid rgba(233, 196, 106, 0.15);
-    scrollbar-width: thin;
-    scrollbar-color: rgba(233, 196, 106, 0.25) transparent;
+    padding: var(--space-6) var(--space-3) var(--space-6) clamp(var(--space-5), 3vw, var(--space-8));
+    border-left: 1px solid #e0dbd4;
+    scrollbar-width: none;
+  }
+
+  .accom-results::-webkit-scrollbar {
+    display: none;
+  }
+
+  .accom-results::after {
+    content: "";
+    display: block;
+    flex-shrink: 0;
+    height: var(--space-6);
   }
 
   /* ---- Result items (injected by JS) ---- */
@@ -250,7 +244,16 @@ import LocationBlock from "./LocationBlock.astro";
   :global(.accom-result-city) {
     display: flex;
     flex-direction: column;
-    gap: var(--space-3);
+  }
+
+  :global(.accom-result-city-header) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid #e0dbd4;
+    cursor: pointer;
+    user-select: none;
   }
 
   :global(.accom-result-city-name) {
@@ -258,9 +261,34 @@ import LocationBlock from "./LocationBlock.astro";
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.16em;
-    color: #e9c46a;
-    padding-bottom: var(--space-2);
-    border-bottom: 1px solid rgba(233, 196, 106, 0.18);
+    color: var(--color-muted);
+  }
+
+  :global(.accom-result-city-chevron) {
+    font-size: 10px;
+    color: var(--color-muted);
+    transition: transform 0.25s ease;
+    line-height: 1;
+  }
+
+  :global(.accom-result-city[data-open="true"] .accom-result-city-chevron) {
+    transform: rotate(180deg);
+  }
+
+  :global(.accom-result-city-body) {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease, padding 0.3s ease;
+    padding-top: 0;
+  }
+
+  :global(.accom-result-city[data-open="true"] .accom-result-city-body) {
+    grid-template-rows: 1fr;
+    padding-top: var(--space-3);
+  }
+
+  :global(.accom-result-city-body-inner) {
+    overflow: hidden;
   }
 
   :global(.accom-result-links) {
@@ -275,15 +303,13 @@ import LocationBlock from "./LocationBlock.astro";
     justify-content: space-between;
     padding: var(--space-4) var(--space-5);
     border-radius: 16px;
-    border: 1px solid rgba(233, 196, 106, 0.25);
-    background: rgba(255, 255, 255, 0.04);
-    color: #f0ede6;
+    border: 1px solid #d0ccc6;
+    background: var(--color-bg);
+    color: var(--color-text);
     text-decoration: none;
     font-size: clamp(1rem, 1.8vw, 1.15rem);
     font-weight: 400;
     letter-spacing: 0.01em;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
     transition:
       border-color 0.25s ease,
       color 0.25s ease,
@@ -293,27 +319,27 @@ import LocationBlock from "./LocationBlock.astro";
   }
 
   :global(.accom-result-link:hover) {
-    border-color: rgba(233, 196, 106, 0.65);
-    color: #e9c46a;
-    background: rgba(233, 196, 106, 0.07);
+    border-color: #b5873a;
+    color: #8a6020;
+    background: rgba(181, 135, 58, 0.06);
     transform: translateX(6px);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
   }
 
   :global(.accom-result-link:focus-visible) {
-    outline: 2px solid rgba(233, 196, 106, 0.6);
+    outline: 2px solid rgba(181, 135, 58, 0.6);
     outline-offset: 3px;
   }
 
   :global(.accom-result-arrow) {
     flex-shrink: 0;
-    color: rgba(233, 196, 106, 0.4);
+    color: #c0bbb4;
     font-size: 1.1em;
     transition: color 0.2s ease, transform 0.2s ease;
   }
 
   :global(.accom-result-link:hover .accom-result-arrow) {
-    color: #e9c46a;
+    color: #b5873a;
     transform: translateX(4px);
   }
 
@@ -333,7 +359,7 @@ import LocationBlock from "./LocationBlock.astro";
     .accom-results {
       padding: var(--space-6) 0 0 0;
       border-left: none;
-      border-top: 1px solid rgba(233, 196, 106, 0.15);
+      border-top: 1px solid #e0dbd4;
       height: auto;
       max-height: 60vh;
     }
@@ -342,19 +368,11 @@ import LocationBlock from "./LocationBlock.astro";
 
 <script>
   const BBOX: Record<string, { sw_lat: string; sw_lng: string; ne_lat: string; ne_lng: string }> = {
-    mariage:   { sw_lat: "-20.325", sw_lng: "57.44",  ne_lat: "-20.245", ne_lng: "57.535" },
-    flicenflac:{ sw_lat: "-20.310", sw_lng: "57.347", ne_lat: "-20.260", ne_lng: "57.397" },
-    tamarin:   { sw_lat: "-20.350", sw_lng: "57.345", ne_lat: "-20.300", ne_lng: "57.395" },
-    albion:    { sw_lat: "-20.254", sw_lng: "57.384", ne_lat: "-20.204", ne_lng: "57.434" },
-    portlouis: { sw_lat: "-20.185", sw_lng: "57.476", ne_lat: "-20.135", ne_lng: "57.526" },
-  };
-
-  const ABRITEL_KEYWORD: Record<string, string> = {
-    mariage:   "mauritius",
-    flicenflac:"flic-en-flac",
-    tamarin:   "tamarin",
-    albion:    "albion",
-    portlouis: "port-louis",
+    mariage:   { sw_lat: "-20.325522", sw_lng: "57.443378",  ne_lat: "-20.244440", ne_lng: "57.529916" },
+    flicenflac:{ sw_lat: "-20.325541", sw_lng: "57.328731", ne_lat: "-20.244459", ne_lng: "57.415269" },
+    tamarin:   { sw_lat: "-20.365541", sw_lng: "57.326731", ne_lat: "-20.284459", ne_lng: "57.413269" },
+    albion:    { sw_lat: "-20.269541", sw_lng: "57.365731", ne_lat: "-20.188459", ne_lng: "57.452269" },
+    portlouis: { sw_lat: "-20.200541", sw_lng: "57.457731", ne_lat: "-20.119459", ne_lng: "57.544269" },
   };
 
   type Bbox = { sw_lat: string; sw_lng: string; ne_lat: string; ne_lng: string };
@@ -376,14 +394,23 @@ import LocationBlock from "./LocationBlock.astro";
   }
 
   function hometogoUrl(adults: string, checkin: string, checkout: string, bbox: Bbox) {
-    const bboxStr = `${bbox.sw_lng},${bbox.sw_lat},${bbox.ne_lng},${bbox.ne_lat}`;
-    const p = new URLSearchParams({ checkin, checkout, adults, bbox: bboxStr });
-    return `https://www.hometogo.com/search/mauritius/?${p.toString()}`;
+    const duration = Math.round(
+      (new Date(checkout).getTime() - new Date(checkin).getTime()) / (1000 * 60 * 60 * 24)
+    );
+    const bounds = `${bbox.ne_lat},${bbox.sw_lng};${bbox.sw_lat},${bbox.ne_lng}`;
+    const p = new URLSearchParams({ adults, arrival: checkin, duration: String(duration), bounds });
+    return `https://www.hometogo.fr/search/559ef37bd9b45?${p.toString()}`;
   }
 
-  function abritelUrl(adults: string, checkin: string, checkout: string, bbox: Bbox, keyword: string) {
-    const bboxStr = `${bbox.sw_lng},${bbox.sw_lat},${bbox.ne_lng},${bbox.ne_lat}`;
-    return `https://www.abritel.fr/search/keywords:${keyword}/arrival:${checkin}/departure:${checkout}/minSleeps:${adults}?bbox=${bboxStr}`;
+  function mauritiusVillaUrl(adults: string, checkin: string, checkout: string) {
+    const bedrooms = Math.ceil(Number(adults) / 2);
+    return `https://www.mauritius-villa.com/fr/search/${bedrooms}-bedroom-villas-west-mauritius?from=${checkin}&to=${checkout}`;
+  }
+
+  function vacationRenterUrl(adults: string, checkin: string, checkout: string, bbox: Bbox) {
+    const coordinates = `${bbox.sw_lat}_${bbox.sw_lng}_${bbox.ne_lat}_${bbox.ne_lng}`;
+    const p = new URLSearchParams({ checkin, checkout, nm: adults, coordinates, currency: "EUR" });
+    return `https://www.vacationrenter.com/fr-fr/search/Maurice?${p.toString()}`;
   }
 
   function makeLink(label: string, href: string) {
@@ -405,21 +432,62 @@ import LocationBlock from "./LocationBlock.astro";
     return a;
   }
 
-  function makeZoneGroup(cityName: string, entries: Array<{ label: string; href: string }>) {
+  function makeZoneGroup(cityName: string, entries: Array<{ label: string; href: string }>, collapsible = false, defaultOpen = true) {
     const city = document.createElement("div");
     city.className = "accom-result-city";
 
-    const heading = document.createElement("span");
-    heading.className = "accom-result-city-name";
-    heading.textContent = cityName;
-    city.appendChild(heading);
+    if (collapsible) {
+      city.dataset.open = defaultOpen ? "true" : "false";
 
-    const links = document.createElement("div");
-    links.className = "accom-result-links";
-    for (const { label, href } of entries) {
-      links.appendChild(makeLink(label, href));
+      const header = document.createElement("div");
+      header.className = "accom-result-city-header";
+
+      const heading = document.createElement("span");
+      heading.className = "accom-result-city-name";
+      heading.textContent = cityName;
+
+      const chevron = document.createElement("span");
+      chevron.className = "accom-result-city-chevron";
+      chevron.textContent = "▼";
+
+      header.appendChild(heading);
+      header.appendChild(chevron);
+      header.addEventListener("click", () => {
+        city.dataset.open = city.dataset.open === "true" ? "false" : "true";
+      });
+      city.appendChild(header);
+
+      const body = document.createElement("div");
+      body.className = "accom-result-city-body";
+      const inner = document.createElement("div");
+      inner.className = "accom-result-city-body-inner";
+
+      const links = document.createElement("div");
+      links.className = "accom-result-links";
+      for (const { label, href } of entries) {
+        links.appendChild(makeLink(label, href));
+      }
+      inner.appendChild(links);
+      body.appendChild(inner);
+      city.appendChild(body);
+    } else {
+      const header = document.createElement("div");
+      header.className = "accom-result-city-header";
+      const heading = document.createElement("span");
+      heading.className = "accom-result-city-name";
+      heading.textContent = cityName;
+      header.appendChild(heading);
+      city.appendChild(header);
+
+      const links = document.createElement("div");
+      links.className = "accom-result-links";
+      links.style.paddingTop = "var(--space-3)";
+      for (const { label, href } of entries) {
+        links.appendChild(makeLink(label, href));
+      }
+      city.appendChild(links);
     }
-    city.appendChild(links);
+
     return city;
   }
 
@@ -438,19 +506,22 @@ import LocationBlock from "./LocationBlock.astro";
     const zones: Array<[string, string]> = zone === "mariage"
       ? [["mariage", "Vacoas-Phoenix"]]
       : [
-          ["albion",     "Albion"],
+          ["albion",     "La Preneuse & Albion"],
           ["portlouis",  "Port-Louis"],
-          ["flicenflac", "Flic-en-Flac"],
-          ["tamarin",    "Tamarin"],
+          ["flicenflac", "Flic-en-Flac & Wolmar"],
+          ["tamarin",    "Tamarin & Rivière Noire"],
         ];
 
-    for (const [key, cityName] of zones) {
+    const isCollapsible = zone !== "mariage";
+    for (let i = 0; i < zones.length; i++) {
+      const [key, cityName] = zones[i];
       const bbox = BBOX[key];
       result.appendChild(makeZoneGroup(cityName, [
-        { label: "Airbnb",   href: airbnbBbox(adults, checkin, checkout, bbox) },
-        { label: "HomeToGo", href: hometogoUrl(adults, checkin, checkout, bbox) },
-        { label: "Abritel",  href: abritelUrl(adults, checkin, checkout, bbox, ABRITEL_KEYWORD[key]) },
-      ]));
+        { label: "Airbnb",           href: airbnbBbox(adults, checkin, checkout, bbox) },
+        { label: "HomeToGo",         href: hometogoUrl(adults, checkin, checkout, bbox) },
+        { label: "VacationRenter",   href: vacationRenterUrl(adults, checkin, checkout, bbox) },
+        { label: "Mauritius Villa",  href: mauritiusVillaUrl(adults, checkin, checkout) },
+      ], isCollapsible, i === 0));
     }
   }
 
