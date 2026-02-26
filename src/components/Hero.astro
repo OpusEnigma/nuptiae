@@ -1,6 +1,6 @@
 ---
 import { getImage } from "astro:assets";
-import { getRitualPath, getLocationPath, getRegionPath } from "../utils/paths";
+import { getRitualPath, getLocationPath, getRegionPath, getSeasonPath } from "../utils/paths";
 import HeroCard from "./HeroCard.astro";
 
 import heroImage from "../assets/hero-image.png";
@@ -63,6 +63,13 @@ const hero = await getImage({
         { label: "Région",        href: `${getLocationPath()}#location-region` },
         { label: "Hébergements",  href: `${getLocationPath()}#location-accommodation` },
       ]}
+    />
+
+    <HeroCard
+      href={getSeasonPath()}
+      eyebrow="Découvrir →"
+      title="La saison"
+      offset="0px"
     />
   </div>
 </section>
@@ -161,15 +168,16 @@ const hero = await getImage({
     pointer-events: none;
   }
 
-  /* Mobile small */
-  @media (max-width: 480px) {
+  /* Mobile & tablet */
+  @media (max-width: 900px) {
     .hero {
-      height: auto;
+      height: 100svh;
       min-height: 100svh;
-      padding: var(--space-3) 0 var(--space-6);
+      padding: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
+      overflow: hidden;
       background:
         linear-gradient(to bottom,
           #0b0b0d 0%,
@@ -183,57 +191,42 @@ const hero = await getImage({
       display: none;
     }
 
+    /* Hero image — fixed at top, does not scroll */
+    .hero-fg {
+      flex-shrink: 0;
+      height: auto;
+      width: 100%;
+      display: grid;
+      place-items: center;
+      padding-top: var(--space-3);
+    }
+
     .hero-fg img {
       width: 92vw;
       max-height: none;
       border-radius: var(--space-4);
     }
 
+    /* Cards — same width as image, scrollable */
     .hero-cards {
       position: relative;
       inset: auto;
       transform: none;
-      width: 100%;
-      margin-top: var(--space-3);
-      align-items: center;
-    }
-  }
-
-  /* Mobile large & tablet */
-  @media (min-width: 481px) and (max-width: 900px) {
-    .hero {
-      height: auto;
-      min-height: 100svh;
-      padding: var(--space-3) 0 var(--space-6);
+      width: 92vw;
+      flex: 1;
+      overflow-x: hidden;
+      overflow-y: auto;
+      scrollbar-width: none;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      background:
-        linear-gradient(to bottom,
-          #0b0b0d 0%,
-          #1a1410 40%,
-          #22160f 100%);
+      align-items: stretch;
+      gap: var(--space-4);
+      padding: var(--space-4) 0 var(--space-6);
+      pointer-events: auto;
     }
 
-    .hero-bg,
-    .hero::before,
-    .hero::after {
+    .hero-cards::-webkit-scrollbar {
       display: none;
-    }
-
-    .hero-fg img {
-      width: 92vw;
-      max-height: none;
-      border-radius: var(--space-4);
-    }
-
-    .hero-cards {
-      position: relative;
-      inset: auto;
-      transform: none;
-      width: 100%;
-      margin-top: var(--space-3);
-      align-items: center;
     }
   }
 </style>

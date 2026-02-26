@@ -1,0 +1,177 @@
+---
+import TopGarland from "./TopGarland.astro";
+import SeasonHero from "./season/SeasonHero.astro";
+
+import hero from "../assets/season/hero-image.png";
+---
+
+<section id="season" class="season">
+
+  <TopGarland />
+
+  <!-- Sidebar — fixed, hidden while on hero -->
+  <aside class="season-sidebar" id="season-sidebar" aria-label="Navigation sections">
+    <nav class="season-nav">
+      <a class="season-nav-dot" href="#season-hero" data-section="season-hero" data-label="Saison" aria-label="Saison"></a>
+    </nav>
+  </aside>
+
+  <!-- Snap point 1 — Hero, full width -->
+  <SeasonHero image={hero} title="La Saison"/>
+
+</section>
+
+<style>
+  :global(html),
+  :global(body) {
+    overflow: hidden;
+    scrollbar-width: none;
+  }
+
+  /* ---- Scroll-snap container ---- */
+
+  .season {
+    --sidebar-w: clamp(40px, 5vw, 60px);
+
+    height: 100dvh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    overscroll-behavior-y: contain;
+  }
+
+  .season::-webkit-scrollbar { display: none; }
+
+  .season > :global(section) {
+    height: 100dvh;
+    min-height: unset;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  :global(.season > section + section) { margin-top: 0 !important; }
+
+  /* ---- Sidebar ---- */
+
+  .season-sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: var(--sidebar-w);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+
+  .season-sidebar.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* ---- Navigation dots ---- */
+
+  .season-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .season-nav-dot {
+    position: relative;
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow:
+      0 0 0 1.5px rgba(255, 255, 255, 0.65),
+      0 1px 4px rgba(0, 0, 0, 0.2);
+    transition:
+      background 0.25s ease,
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .season-nav-dot.is-active {
+    background: #e9c46a;
+    transform: scale(1.5);
+    box-shadow:
+      0 0 0 2px rgba(233, 196, 106, 0.35),
+      0 2px 8px rgba(233, 196, 106, 0.45);
+  }
+
+  /* Tooltip — opens to the right */
+  .season-nav-dot::before {
+    content: attr(data-label);
+    position: absolute;
+    left: calc(100% + 12px);
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    font-family: var(--font-body);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.65);
+    color: #f0ede6;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .season-nav-dot:hover::before {
+    opacity: 1;
+  }
+
+  @media (max-width: 600px) {
+    .season-sidebar { display: none; }
+  }
+</style>
+
+<script>
+  const seasonEl  = document.querySelector<HTMLElement>(".season");
+  const sidebar   = document.getElementById("season-sidebar") as HTMLElement | null;
+  const dots      = document.querySelectorAll<HTMLElement>(".season-nav-dot");
+  const garland   = document.querySelector<HTMLElement>(".top-garland");
+
+  const sections = [
+    document.getElementById("season-hero"),
+  ].filter(Boolean) as HTMLElement[];
+
+  function setActive(id: string) {
+    const onHero = id === "season-hero";
+    sidebar?.classList.toggle("is-visible", !onHero);
+    garland?.classList.toggle("visible", onHero);
+    dots.forEach(d => d.classList.toggle("is-active", d.dataset.section === id));
+  }
+
+  dots.forEach(dot => {
+    dot.addEventListener("click", e => {
+      e.preventDefault();
+      const id = dot.dataset.section;
+      if (id) document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+
+  if (seasonEl) {
+    const obs = new IntersectionObserver(entries => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) setActive(entry.target.id);
+      }
+    }, { root: seasonEl, threshold: 0.5 });
+
+    sections.forEach(s => obs.observe(s));
+  }
+</script>

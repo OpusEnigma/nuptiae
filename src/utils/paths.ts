@@ -1,6 +1,6 @@
 /* URL path construction utility */
 
-const basePath = import.meta.env.PUBLIC_BASE_PATH || "/";
+const basePath = import.meta.env.BASE_URL;
 
 export function getBasePath(): string {
   return basePath;
@@ -26,6 +26,10 @@ export function getLocationPath(): string {
 
 export function getRegionPath(): string {
   return getPath("/region");
+}
+
+export function getSeasonPath(): string {
+  return getPath("/season");
 }
 
 export function getHomePath(): string {

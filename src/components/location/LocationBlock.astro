@@ -93,14 +93,29 @@ const hasMap = markers && markers.length > 0;
 
   /* Mobile layout */
   @media (max-width: 1024px) {
-    .location-block {
+    /* Map blocks scroll naturally (content taller than viewport) */
+    .location-block:not(.location-block--simple) {
       height: auto;
       grid-template-columns: 1fr;
+    }
+
+    /* Simple blocks (no map) must stay full-height for scroll-snap */
+    .location-block--simple {
+      grid-template-columns: 1fr;
+      display: flex;
+      flex-direction: column;
     }
 
     .map-wrapper {
       height: clamp(50vh, 60vw, 55vh);
       top: 0;
+    }
+  }
+
+  /* Mobile portrait — reduce map height */
+  @media (max-width: 1024px) and (orientation: portrait) {
+    .map-wrapper {
+      height: clamp(220px, 45vw, 320px);
     }
   }
 

@@ -159,15 +159,20 @@ const { href, eyebrow, title, offset = "0px", subcards = [] } = Astro.props;
     }
   }
 
-  @media (max-width: 480px) {
-    .hero-card {
-      width: min(92vw, 320px);
+  @media (max-width: 900px) {
+    .hero-card-group {
+      width: 100%;
     }
-  }
 
-  @media (min-width: 481px) and (max-width: 900px) {
     .hero-card {
-      width: min(92vw, 420px);
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .hero-subcards {
+      width: 100%;
+      box-sizing: border-box;
+      overflow: hidden;
     }
   }
 

@@ -60,7 +60,7 @@ import LocationBlock from "./LocationBlock.astro";
 </LocationBlock>
 
 <style>
-  /* Disable parent scroll — only results column scrolls */
+  /* On desktop: disable parent scroll — only results column scrolls */
   :global(#location-accommodation .location-block-content) {
     overflow: hidden;
   }
@@ -346,22 +346,101 @@ import LocationBlock from "./LocationBlock.astro";
   /* ---- Mobile ---- */
 
   @media (max-width: 900px) {
+    /* 1. Force the LocationBlock section to fill the 100dvh snap section */
+    :global(#location-accommodation.location-block) {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    :global(#location-accommodation .location-block-header) {
+      flex-shrink: 0;
+    }
+
+    /* 2. Content div fills remaining space, scrolls internally */
+    :global(#location-accommodation .location-block-content) {
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* 3. accom-layout fills content, flex-column */
     .accom-layout {
-      grid-template-columns: 1fr;
-      height: auto;
-      gap: var(--space-8);
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      overflow: hidden;
     }
 
     .accom-sidebar {
+      flex-shrink: 0;
       height: auto;
+      align-items: flex-start;
+      padding-right: 0;
     }
 
+    /* Fields in a row */
+    .accom-fields {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+    }
+
+    .accom-field {
+      flex: 1 1 calc(33% - var(--space-2));
+      min-width: 90px;
+    }
+
+    .accom-label {
+      font-size: 9px;
+    }
+
+    .accom-input {
+      font-size: 0.875rem;
+      padding: var(--space-2);
+    }
+
+    /* Zone buttons: no horizontal shift */
+    .accom-zone-btn:has(input:checked) {
+      transform: none;
+    }
+
+    .accom-zone-name {
+      font-size: 0.9rem;
+    }
+
+    .accom-zone-note {
+      font-size: 9px;
+    }
+
+    /* 4. Results fill remaining space and scroll internally */
     .accom-results {
-      padding: var(--space-6) 0 0 0;
+      flex: 1;
+      min-height: 0;
+      height: auto;
+      overflow-y: auto;
+      padding: var(--space-3) 0 0 0;
       border-left: none;
       border-top: 1px solid #e0dbd4;
-      height: auto;
-      max-height: 60vh;
+      gap: var(--space-4);
+    }
+
+    :global(.accom-result-city-name) {
+      font-size: 10px;
+    }
+
+    :global(.accom-result-link) {
+      font-size: 0.95rem;
+      padding: var(--space-3) var(--space-4);
+    }
+
+    :global(.accom-result-link:hover) {
+      transform: none;
     }
   }
 </style>
