@@ -346,28 +346,7 @@ import LocationBlock from "./LocationBlock.astro";
   /* ---- Mobile ---- */
 
   @media (max-width: 900px) {
-    /* 1. Force the LocationBlock section to fill the 100dvh snap section */
-    :global(#location-accommodation.location-block) {
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    :global(#location-accommodation .location-block-header) {
-      flex-shrink: 0;
-    }
-
-    /* 2. Content div fills remaining space, scrolls internally */
-    :global(#location-accommodation .location-block-content) {
-      flex: 1;
-      min-height: 0;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* 3. accom-layout fills content, flex-column */
+    /* accom-layout fills the location-block-content flex space */
     .accom-layout {
       flex: 1;
       min-height: 0;

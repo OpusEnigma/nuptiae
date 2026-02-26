@@ -104,6 +104,18 @@ const hasMap = markers && markers.length > 0;
       grid-template-columns: 1fr;
       display: flex;
       flex-direction: column;
+      overflow: hidden;
+    }
+
+    .location-block--simple .location-block-header {
+      flex-shrink: 0;
+    }
+
+    .location-block--simple .location-block-content {
+      flex: 1;
+      min-height: 0;
+      height: auto;
+      overflow: hidden;
     }
 
     .map-wrapper {
