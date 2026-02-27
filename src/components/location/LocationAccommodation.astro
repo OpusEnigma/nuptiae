@@ -346,7 +346,18 @@ import LocationBlock from "./LocationBlock.astro";
   /* ---- Mobile ---- */
 
   @media (max-width: 900px) {
-    /* accom-layout fills the location-block-content flex space */
+    /* location-block--simple keeps height:100dvh from LocationBlock base CSS.
+       We just need to wire up the inner flex chain. */
+
+    /* 1. Content div fills the grid 1fr row, scrolls internally */
+    :global(#location-accommodation .location-block-content) {
+      min-height: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* 2. accom-layout fills content, flex-column */
     .accom-layout {
       flex: 1;
       min-height: 0;

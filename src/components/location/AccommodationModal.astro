@@ -1,0 +1,345 @@
+---
+---
+
+<div id="accom-modal" class="accom-modal" aria-modal="true" role="dialog" aria-hidden="true">
+  <div class="accom-modal-backdrop"></div>
+  <div class="accom-modal-box">
+
+    <div class="accom-modal-head">
+      <span class="accom-modal-zone" id="accom-modal-zone"></span>
+      <button class="accom-modal-close" id="accom-modal-close" aria-label="Fermer">✕</button>
+    </div>
+
+    <form class="accom-modal-form" id="accom-modal-form" autocomplete="off">
+      <div class="accom-modal-fields">
+
+        <label class="accom-modal-field">
+          <span class="accom-modal-label">Adultes</span>
+          <input class="accom-modal-input" type="number" name="adults" min="1" max="30" value="8" />
+        </label>
+
+        <label class="accom-modal-field">
+          <span class="accom-modal-label">Arrivée</span>
+          <input class="accom-modal-input" type="date" name="checkin" value="2026-08-18" />
+        </label>
+
+        <label class="accom-modal-field">
+          <span class="accom-modal-label">Départ</span>
+          <input class="accom-modal-input" type="date" name="checkout" value="2026-08-25" />
+        </label>
+
+      </div>
+    </form>
+
+    <div class="accom-modal-results" id="accom-modal-results"></div>
+
+  </div>
+</div>
+
+<style>
+  /* ---- Backdrop + container ---- */
+
+  .accom-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-4);
+    box-sizing: border-box;
+  }
+
+  .accom-modal.is-open {
+    display: flex;
+  }
+
+  .accom-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    cursor: pointer;
+  }
+
+  /* ---- Box ---- */
+
+  .accom-modal-box {
+    position: relative;
+    z-index: 1;
+    background: var(--color-bg, #faf8f4);
+    border-radius: 20px;
+    padding: var(--space-6) var(--space-6) var(--space-5);
+    width: 100%;
+    max-width: 480px;
+    max-height: 85dvh;
+    overflow-y: auto;
+    scrollbar-width: none;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.18);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    animation: modal-in 0.25s ease;
+  }
+
+  .accom-modal-box::-webkit-scrollbar { display: none; }
+
+  @keyframes modal-in {
+    from { opacity: 0; transform: translateY(12px) scale(0.97); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  /* ---- Header ---- */
+
+  .accom-modal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .accom-modal-zone {
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    font-weight: 600;
+    color: var(--color-text);
+    letter-spacing: -0.01em;
+  }
+
+  .accom-modal-close {
+    appearance: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-muted);
+    font-size: 1rem;
+    line-height: 1;
+    padding: var(--space-1) var(--space-2);
+    border-radius: 6px;
+    transition: color 0.2s, background 0.2s;
+  }
+
+  .accom-modal-close:hover {
+    color: var(--color-text);
+    background: rgba(0, 0, 0, 0.06);
+  }
+
+  /* ---- Form ---- */
+
+  .accom-modal-fields {
+    display: flex;
+    gap: var(--space-3);
+  }
+
+  .accom-modal-field {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .accom-modal-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--color-muted);
+  }
+
+  .accom-modal-input {
+    appearance: none;
+    -webkit-appearance: none;
+    background: var(--color-bg);
+    border: 1px solid #d0ccc6;
+    border-radius: 10px;
+    padding: var(--space-2) var(--space-2);
+    color: var(--color-text);
+    font: inherit;
+    font-size: 0.875rem;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
+  }
+
+  .accom-modal-input:focus {
+    outline: none;
+    border-color: #b5873a;
+  }
+
+  .accom-modal-input::-webkit-calendar-picker-indicator {
+    opacity: 0.5;
+    cursor: pointer;
+  }
+
+  /* ---- Results ---- */
+
+  .accom-modal-results {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  :global(.accom-modal-link) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-4) var(--space-5);
+    border-radius: 14px;
+    border: 1px solid #d0ccc6;
+    background: var(--color-bg);
+    color: var(--color-text);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 400;
+    transition: border-color 0.2s, color 0.2s, background 0.2s, transform 0.2s;
+  }
+
+  :global(.accom-modal-link:hover) {
+    border-color: #b5873a;
+    color: #8a6020;
+    background: rgba(181, 135, 58, 0.06);
+    transform: translateX(4px);
+  }
+
+  :global(.accom-modal-arrow) {
+    color: #c0bbb4;
+    flex-shrink: 0;
+    transition: color 0.2s, transform 0.2s;
+  }
+
+  :global(.accom-modal-link:hover .accom-modal-arrow) {
+    color: #b5873a;
+    transform: translateX(3px);
+  }
+
+  /* ---- Mobile ---- */
+
+  @media (max-width: 600px) {
+    .accom-modal-box {
+      padding: var(--space-5) var(--space-4) var(--space-4);
+    }
+
+    .accom-modal-fields {
+      flex-wrap: wrap;
+    }
+
+    .accom-modal-field {
+      flex: 1 1 calc(50% - var(--space-3));
+      min-width: 90px;
+    }
+  }
+</style>
+
+<script>
+  const BBOX: Record<string, { sw_lat: string; sw_lng: string; ne_lat: string; ne_lng: string }> = {
+    mariage:    { sw_lat: "-20.325522", sw_lng: "57.443378", ne_lat: "-20.244440", ne_lng: "57.529916" },
+    flicenflac: { sw_lat: "-20.325541", sw_lng: "57.328731", ne_lat: "-20.244459", ne_lng: "57.415269" },
+    tamarin:    { sw_lat: "-20.365541", sw_lng: "57.326731", ne_lat: "-20.284459", ne_lng: "57.413269" },
+    albion:     { sw_lat: "-20.269541", sw_lng: "57.365731", ne_lat: "-20.188459", ne_lng: "57.452269" },
+    portlouis:  { sw_lat: "-20.200541", sw_lng: "57.457731", ne_lat: "-20.119459", ne_lng: "57.544269" },
+  };
+
+  type Bbox = { sw_lat: string; sw_lng: string; ne_lat: string; ne_lng: string };
+
+  function airbnbUrl(adults: string, checkin: string, checkout: string, bbox: Bbox) {
+    const p = new URLSearchParams({
+      "refinement_paths[]": "/homes", adults, checkin, checkout,
+      search_by_map: "true", zoom: "13", ...bbox,
+      location_search: "NEARBY", source: "structured_search_input_header", search_type: "unknown",
+    });
+    return `https://fr.airbnb.com/s/homes?${p}`;
+  }
+
+  function hometogoUrl(adults: string, checkin: string, checkout: string, bbox: Bbox) {
+    const duration = Math.round(
+      (new Date(checkout).getTime() - new Date(checkin).getTime()) / 86400000
+    );
+    const bounds = `${bbox.ne_lat},${bbox.sw_lng};${bbox.sw_lat},${bbox.ne_lng}`;
+    const p = new URLSearchParams({ adults, arrival: checkin, duration: String(duration), bounds });
+    return `https://www.hometogo.fr/search/559ef37bd9b45?${p}`;
+  }
+
+  function mauritiusVillaUrl(adults: string, checkin: string, checkout: string) {
+    const bedrooms = Math.ceil(Number(adults) / 2);
+    return `https://www.mauritius-villa.com/fr/search/${bedrooms}-bedroom-villas-west-mauritius?from=${checkin}&to=${checkout}`;
+  }
+
+  function vacationRenterUrl(adults: string, checkin: string, checkout: string, bbox: Bbox) {
+    const coordinates = `${bbox.sw_lat}_${bbox.sw_lng}_${bbox.ne_lat}_${bbox.ne_lng}`;
+    const p = new URLSearchParams({ checkin, checkout, nm: adults, coordinates, currency: "EUR" });
+    return `https://www.vacationrenter.com/fr-fr/search/Maurice?${p}`;
+  }
+
+  function makeLink(label: string, href: string) {
+    const a = document.createElement("a");
+    a.className = "accom-modal-link";
+    a.href = href;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    const name = document.createElement("span");
+    name.textContent = label;
+    const arrow = document.createElement("span");
+    arrow.className = "accom-modal-arrow";
+    arrow.textContent = "→";
+    a.appendChild(name);
+    a.appendChild(arrow);
+    return a;
+  }
+
+  // ---- Modal state ----
+
+  let currentBboxKey = "mariage";
+
+  const modal   = document.getElementById("accom-modal") as HTMLElement;
+  const form    = document.getElementById("accom-modal-form") as HTMLFormElement;
+  const results = document.getElementById("accom-modal-results") as HTMLElement;
+  const zoneEl  = document.getElementById("accom-modal-zone") as HTMLElement;
+  const closeBtn = document.getElementById("accom-modal-close") as HTMLButtonElement;
+  const backdrop = modal?.querySelector(".accom-modal-backdrop") as HTMLElement;
+
+  function renderLinks() {
+    if (!form || !results) return;
+    const data     = new FormData(form);
+    const adults   = String(data.get("adults") ?? "8");
+    const checkin  = String(data.get("checkin") ?? "2026-08-18");
+    const checkout = String(data.get("checkout") ?? "2026-08-25");
+    const bbox     = BBOX[currentBboxKey];
+
+    results.innerHTML = "";
+    results.appendChild(makeLink("Airbnb",          airbnbUrl(adults, checkin, checkout, bbox)));
+    results.appendChild(makeLink("HomeToGo",        hometogoUrl(adults, checkin, checkout, bbox)));
+    results.appendChild(makeLink("VacationRenter",  vacationRenterUrl(adults, checkin, checkout, bbox)));
+    results.appendChild(makeLink("Mauritius Villa", mauritiusVillaUrl(adults, checkin, checkout)));
+  }
+
+  function openModal(bboxKey: string, zoneName: string) {
+    currentBboxKey = bboxKey;
+    if (zoneEl) zoneEl.textContent = zoneName;
+    modal?.classList.add("is-open");
+    modal?.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+    renderLinks();
+  }
+
+  function closeModal() {
+    modal?.classList.remove("is-open");
+    modal?.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
+
+  closeBtn?.addEventListener("click", closeModal);
+  backdrop?.addEventListener("click", closeModal);
+  form?.addEventListener("input", renderLinks);
+
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape") closeModal();
+  });
+
+  // Listen for "Loger ici" button clicks anywhere in the document
+  document.addEventListener("click", e => {
+    const btn = (e.target as HTMLElement).closest<HTMLElement>("[data-bbox-key]");
+    if (btn) {
+      e.preventDefault();
+      e.stopPropagation();
+      openModal(btn.dataset.bboxKey!, btn.dataset.zoneName ?? btn.dataset.bboxKey!);
+    }
+  });
+</script>

@@ -3,7 +3,6 @@ import TopGarland from "./TopGarland.astro";
 import LocationHero from "./location/LocationHero.astro";
 import LocationMap from "./location/LocationMap.astro";
 import LocationRegion from "./location/LocationRegion.astro";
-import LocationAccommodation from "./location/LocationAccommodation.astro";
 
 import hero from "../assets/location/hero-image.png";
 ---
@@ -18,7 +17,6 @@ import hero from "../assets/location/hero-image.png";
       <a class="location-nav-dot" href="#location-hero"          data-section="location-hero"          data-label="Lieu"         aria-label="Lieu"></a>
       <a class="location-nav-dot" href="#location-map"           data-section="location-map"           data-label="Carte"        aria-label="Carte"></a>
       <a class="location-nav-dot" href="#location-region"        data-section="location-region"        data-label="Région"       aria-label="Région"></a>
-      <a class="location-nav-dot" href="#location-accommodation" data-section="location-accommodation" data-label="Hébergements" aria-label="Hébergements"></a>
     </nav>
   </aside>
 
@@ -28,7 +26,6 @@ import hero from "../assets/location/hero-image.png";
   <!-- Snap points 2-4 — blocks -->
   <LocationMap />
   <LocationRegion />
-  <LocationAccommodation />
 
 </section>
 
@@ -148,6 +145,13 @@ import hero from "../assets/location/hero-image.png";
     opacity: 1;
   }
 
+  @media (max-width: 1024px) {
+    /* Map sections are height:auto — allow overflow so position:sticky works */
+    .location > :global(section:not(.location-block--simple)) {
+      overflow: visible;
+    }
+  }
+
   @media (max-width: 600px) {
     .location-sidebar { display: none; }
   }
@@ -163,7 +167,6 @@ import hero from "../assets/location/hero-image.png";
     document.getElementById("location-hero"),
     document.getElementById("location-map"),
     document.getElementById("location-region"),
-    document.getElementById("location-accommodation"),
   ].filter(Boolean) as HTMLElement[];
 
   function setActive(id: string) {
@@ -186,7 +189,14 @@ import hero from "../assets/location/hero-image.png";
   if (locationEl) {
     const obs = new IntersectionObserver(entries => {
       for (const entry of entries) {
-        if (entry.isIntersecting) setActive(entry.target.id);
+        if (entry.isIntersecting) {
+          setActive(entry.target.id);
+        } else if (entry.target.id === "location-hero") {
+          // Hero exited without another section reaching threshold
+          // (happens on mobile with tall auto-height sections)
+          garland?.classList.remove("visible");
+          sidebar?.classList.add("is-visible");
+        }
       }
     }, { root: locationEl, threshold: 0.5 });
 
