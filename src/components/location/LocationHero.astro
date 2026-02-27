@@ -70,7 +70,7 @@ if (!title) {
 
   .location-hero-intro {
     font-size: var(--fs-body-lg);
-    line-height: var(--lh-loose);
+    line-height: var(--lh-normal);
     max-width: 65ch;
     margin: 0 auto;
   }
@@ -108,13 +108,8 @@ if (!title) {
 
   /* Dark mode */
   @media (prefers-color-scheme: dark) {
-    .location-hero {
-      background: linear-gradient(135deg, var(--color-page) 0%, rgba(26, 26, 26, 0.8) 100%);
-      color: var(--color-text);
-    }
-
     .scroll-indicator {
-      opacity: 0.5;
+      opacity: 0.4;
     }
   }
 </style>

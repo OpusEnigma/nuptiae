@@ -48,7 +48,7 @@ const hasMap = markers && markers.length > 0;
     grid-template-rows: auto 1fr;
 
     padding: var(--pad);
-    padding-left: 4rem;
+    padding-left: clamp(2.5rem, 5vw, 4rem);
     gap: var(--pad);
 
     overflow: hidden;
@@ -101,6 +101,7 @@ const hasMap = markers && markers.length > 0;
 
     .location-block {
       grid-template-columns: 1fr;
+      padding-left: var(--pad);
     }
 
     .map-wrapper {
