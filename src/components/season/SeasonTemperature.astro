@@ -1,0 +1,297 @@
+---
+import SeasonBlock from "./SeasonBlock.astro";
+
+const { id } = Astro.props;
+
+const rows = [
+  { year: "2021", vacT: "16.8–22.9", flicT: "18.9–25.1" },
+  { year: "2022", vacT: "17.2–23.4", flicT: "19.1–25.6" },
+  { year: "2023", vacT: "17.0–23.1", flicT: "19.0–25.3" },
+  { year: "2024", vacT: "16.6–22.7", flicT: "18.7–24.9" },
+  { year: "2025", vacT: "17.1–23.3", flicT: "19.2–25.5" },
+];
+
+const avg = { vacT: "16.9–23.0", flicT: "19.0–25.3" };
+
+const refRows = [
+  { ville: "Lille",       vacT: "14–23", vacMois: "juillet",        flicT: "18–25", flicMois: "juillet chaud"  },
+  { ville: "Paris",       vacT: "15–24", vacMois: "juin-juillet",    flicT: "17–26", flicMois: "juillet-août"  },
+  { ville: "Lyon",        vacT: "14–24", vacMois: "mai-juin",       flicT: "18–28", flicMois: "juin-juillet"  },
+  { ville: "La Rochelle", vacT: "16–24", vacMois: "juillet",        flicT: "18–26", flicMois: "juillet-août"  },
+];
+---
+
+<SeasonBlock id={id} title="Températures">
+
+  <div class="meteo-wrapper">
+
+    <div class="meteo-scroll">
+      <table class="meteo-table">
+        <thead>
+          <tr>
+            <th class="col-year"></th>
+            <th class="col-group">
+              <span class="col-group-name">Vacoas (°C)</span>
+              <span class="col-group-sub">Plateau central</span>
+            </th>
+            <th class="col-group">
+              <span class="col-group-name">Flic-en-Flac (°C)</span>
+              <span class="col-group-sub">Côte ouest</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map(r => (
+            <tr>
+              <td class="td-year">{r.year}</td>
+              <td class="td-temp">{r.vacT}</td>
+              <td class="td-temp">{r.flicT}</td>
+            </tr>
+          ))}
+          <tr class="avg-row">
+            <td class="td-year">Moy.</td>
+            <td class="td-temp">{avg.vacT}</td>
+            <td class="td-temp">{avg.flicT}</td>
+          </tr>
+          <tr class="ref-sep">
+            <td colspan="3" class="ref-sep-label">Équivalents en France métropolitaine</td>
+          </tr>
+          {refRows.map(r => (
+            <tr class="ref-row">
+              <td class="td-city">{r.ville}</td>
+              <td class="td-temp">{r.vacT} <span class="td-period">({r.vacMois})</span></td>
+              <td class="td-temp">{r.flicT} <span class="td-period">({r.flicMois})</span></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="meteo-analysis">
+      <p>Pour un voyage à Maurice entre août et mi-septembre, le choix de la région influence fortement le ressenti thermique.</p>
+      <p>Le <strong>plateau central</strong> (Vacoas et régions voisines) offre un climat comparable à un été tempéré d'Europe du Nord ou de façade atlantique : doux en journée, frais le soir. C'est une atmosphère idéale pour la randonnée, la nature et les activités extérieures sans chaleur intense.</p>
+      <p>La <strong>côte ouest</strong> (Flic-en-Flac) propose au contraire des conditions proches d'un été français chaud : températures élevées mais confortables, mer chaude et fort ensoleillement. C'est la zone la plus favorable au balnéaire durant l'hiver austral.</p>
+      <p>En pratique, l'hiver mauricien permet donc aux visiteurs européens de retrouver des sensations estivales familières, avec deux variantes :</p>
+      <ul>
+        <li>été doux et ventilé sur le plateau,</li>
+        <li>été chaud et ensoleillé sur la côte ouest.</li>
+      </ul>
+      <p>Cette diversité climatique sur une petite île constitue un atout majeur : en moins d'une heure de route, il est possible de passer d'une ambiance tempérée fraîche à un climat balnéaire chaud, offrant aux touristes une grande variété d'expériences météorologiques pendant leur séjour.</p>
+    </div>
+
+  </div>
+
+</SeasonBlock>
+
+<style>
+  .meteo-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    height: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Analysis */
+
+  .meteo-analysis {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    scrollbar-width: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .meteo-analysis::-webkit-scrollbar {
+    display: none;
+  }
+
+  .meteo-analysis p {
+    margin: 0;
+    font-size: var(--fs-body);
+    line-height: var(--lh-normal);
+    color: var(--color-text);
+  }
+
+  .meteo-analysis ul {
+    margin: 0;
+    padding-left: 1.4em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25em;
+  }
+
+  .meteo-analysis li {
+    font-size: var(--fs-body);
+    line-height: var(--lh-normal);
+    color: var(--color-text);
+  }
+
+  /* Tables grid — removed, single table now */
+
+  /* Table wrapper */
+
+  .meteo-scroll {
+    flex-shrink: 0;
+    overflow: visible;
+    border-radius: clamp(10px, 1.5vw, 16px);
+    border: 1px solid #e0dbd4;
+  }
+
+  /* Table */
+
+  .meteo-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--fs-small);
+    line-height: var(--lh-tight);
+    background: var(--color-page);
+  }
+
+  /* Group headers */
+
+  thead tr:first-child th {
+    padding: var(--space-1) var(--space-2);
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+    letter-spacing: -0.01em;
+    text-align: left;
+    border-bottom: 1px solid #e0dbd4;
+  }
+
+  thead tr:first-child th.col-year {
+    width: 8rem;
+    border-right: 1px solid #e0dbd4;
+  }
+
+  thead tr:first-child th.col-group {
+    text-align: center;
+    padding-bottom: var(--space-2);
+  }
+
+  thead tr:first-child th.col-group + th.col-group {
+    border-left: 1px solid #e0dbd4;
+  }
+
+  .col-group-name {
+    display: block;
+    font-family: var(--font-display);
+    font-size: clamp(0.78rem, 1.2vw, 0.9rem);
+  }
+
+  .col-group-sub {
+    display: block;
+    font-family: var(--font-body);
+    font-size: clamp(0.65rem, 1vw, 0.72rem);
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    margin-top: 1px;
+  }
+
+  /* Body rows */
+
+  tbody tr {
+    border-bottom: 1px solid #f0ede8;
+    transition: background 0.15s ease;
+  }
+
+  tbody tr:hover {
+    background: rgba(181, 135, 58, 0.04);
+  }
+
+  tbody tr:last-child {
+    border-bottom: none;
+  }
+
+  td {
+    padding: var(--space-1) var(--space-2);
+    text-align: right;
+    color: var(--color-text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .td-year {
+    text-align: left;
+    font-weight: 500;
+    color: var(--color-muted);
+    font-size: var(--fs-small);
+    letter-spacing: 0.08em;
+    border-right: 1px solid #e0dbd4;
+  }
+
+  .td-temp {
+    font-weight: 500;
+  }
+
+  /* Average row */
+
+  .avg-row {
+    border-top: 2px solid #d0ccc6;
+    background: rgba(181, 135, 58, 0.06);
+  }
+
+  .avg-row td {
+    font-weight: 600;
+    padding-top: var(--space-2);
+    padding-bottom: var(--space-2);
+  }
+
+  .avg-row .td-year {
+    color: #b5873a;
+    font-family: var(--font-body);
+    font-size: var(--fs-small);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .avg-row .td-temp {
+    color: var(--color-text);
+  }
+
+  /* Reference separator */
+
+  .ref-sep {
+    border-top: 2px solid #d0ccc6;
+    background: rgba(181, 135, 58, 0.03);
+  }
+
+  .ref-sep-label {
+    padding: var(--space-1) var(--space-2);
+    font-size: clamp(0.62rem, 0.9vw, 0.7rem);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    text-align: left;
+  }
+
+  /* Reference rows */
+
+  .ref-row td {
+    opacity: 0.85;
+  }
+
+  .td-period {
+    font-size: clamp(0.62rem, 0.9vw, 0.7rem);
+    color: var(--color-muted);
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  /* Reference comparison tables */
+
+  .td-city {
+    text-align: left;
+    font-weight: 500;
+    white-space: nowrap;
+    color: var(--color-text);
+    border-right: 1px solid #e0dbd4;
+    padding: var(--space-1) var(--space-2);
+    font-size: var(--fs-small);
+  }
+</style>

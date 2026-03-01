@@ -1,6 +1,11 @@
 ---
 import TopGarland from "./TopGarland.astro";
 import SeasonHero from "./season/SeasonHero.astro";
+import SeasonTemperature from "./season/SeasonTemperature.astro";
+import SeasonPrecipitation from "./season/SeasonPrecipitation.astro";
+import SeasonWind from "./season/SeasonWind.astro";
+import SeasonHumidity from "./season/SeasonHumidity.astro";
+import SeasonSources from "./season/SeasonSources.astro";
 
 import hero from "../assets/season/hero-image.png";
 ---
@@ -12,12 +17,32 @@ import hero from "../assets/season/hero-image.png";
   <!-- Sidebar — fixed, hidden while on hero -->
   <aside class="season-sidebar" id="season-sidebar" aria-label="Navigation sections">
     <nav class="season-nav">
-      <a class="season-nav-dot" href="#season-hero" data-section="season-hero" data-label="Saison" aria-label="Saison"></a>
+      <a class="season-nav-dot" href="#season-hero"  data-section="season-hero"  data-label="Saison"  aria-label="Saison"></a>
+      <a class="season-nav-dot" href="#season-temperature" data-section="season-temperature" data-label="Températures"   aria-label="Températures"></a>
+      <a class="season-nav-dot" href="#season-precipitation" data-section="season-precipitation" data-label="Précipitations" aria-label="Précipitations"></a>
+      <a class="season-nav-dot" href="#season-vent" data-section="season-vent" data-label="Vent" aria-label="Vent"></a>
+      <a class="season-nav-dot" href="#season-humidity" data-section="season-humidity" data-label="Humidité" aria-label="Humidité"></a>
+      <a class="season-nav-dot" href="#season-sources" data-section="season-sources" data-label="Sources" aria-label="Sources"></a>
     </nav>
   </aside>
 
   <!-- Snap point 1 — Hero, full width -->
-  <SeasonHero image={hero} title="La Saison"/>
+  <SeasonHero id="season-hero" image={hero} title="La Saison"/>
+
+  <!-- Snap point 2 — Températures -->
+  <SeasonTemperature id="season-temperature" />
+
+  <!-- Snap point 3 — Précipitations -->
+  <SeasonPrecipitation id="season-precipitation" />
+
+  <!-- Snap point 4 — Vent -->
+  <SeasonWind id="season-vent" />
+
+  <!-- Snap point 5 — Humidité -->
+  <SeasonHumidity id="season-humidity" />
+
+  <!-- Snap point 6 — Sources -->
+  <SeasonSources id="season-sources" />
 
 </section>
 
@@ -148,6 +173,11 @@ import hero from "../assets/season/hero-image.png";
 
   const sections = [
     document.getElementById("season-hero"),
+    document.getElementById("season-temperature"),
+    document.getElementById("season-precipitation"),
+    document.getElementById("season-vent"),
+    document.getElementById("season-humidity"),
+    document.getElementById("season-sources"),
   ].filter(Boolean) as HTMLElement[];
 
   function setActive(id: string) {
@@ -168,7 +198,12 @@ import hero from "../assets/season/hero-image.png";
   if (seasonEl) {
     const obs = new IntersectionObserver(entries => {
       for (const entry of entries) {
-        if (entry.isIntersecting) setActive(entry.target.id);
+        if (entry.isIntersecting) {
+          setActive(entry.target.id);
+        } else if (entry.target.id === "season-hero") {
+          garland?.classList.remove("visible");
+          sidebar?.classList.add("is-visible");
+        }
       }
     }, { root: seasonEl, threshold: 0.5 });
 

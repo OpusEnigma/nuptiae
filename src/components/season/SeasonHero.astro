@@ -1,10 +1,10 @@
 ---
 import { Image } from "astro:assets";
 
-const { image, title } = Astro.props;
+const { id, image, title } = Astro.props;
 ---
 
-<section id="season-hero" class="season-hero">
+<section id={id} class="season-hero">
   <div class="season-hero-inner">
 
     {image && (
@@ -65,7 +65,7 @@ const { image, title } = Astro.props;
 
   .season-hero-intro {
     font-size: var(--fs-body-lg);
-    line-height: var(--lh-loose);
+    line-height: var(--lh-normal);
     max-width: 65ch;
     margin: 0 auto;
   }

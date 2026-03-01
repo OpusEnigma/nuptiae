@@ -1,0 +1,218 @@
+---
+import SeasonBlock from "./SeasonBlock.astro";
+
+const { id } = Astro.props;
+---
+
+<SeasonBlock id={id} title="Sources">
+
+  <div class="src-wrapper">
+    <div class="src-grid">
+
+      <!-- Meteoblue -->
+      <div class="src-section">
+        <p class="src-section-title">Meteoblue</p>
+        <p class="src-desc">Archives climatiques horaires et quotidiennes — température min/max, précipitations cumulées, vent moyen, humidité relative.
+        Extraction par lieu et par année sur la période 1&nbsp;août&nbsp;→&nbsp;15&nbsp;septembre.</p>
+        <ul class="src-links">
+          <li>
+            <a href="https://www.meteoblue.com/en/weather/historyclimate/weatherarchive/vacoas_mauritius_933945" target="_blank" rel="noopener">Vacoas</a>
+            <span class="src-note">plateau central</span>
+          </li>
+          <li>
+            <a href="https://www.meteoblue.com/en/weather/historyclimate/weatherarchive/flic-en-flac_mauritius_934517" target="_blank" rel="noopener">Flic-en-Flac</a>
+            <span class="src-note">côte ouest</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- MMS -->
+      <div class="src-section">
+        <p class="src-section-title">Mauritius Meteorological Services</p>
+        <p class="src-desc">Validation par stations réelles nationales — cohérence plateau vs côte ouest pour :
+température (~−2&nbsp;°C), précipitations (~×2), vent (plus fort plateau), humidité (plus élevée plateau).
+Contexte climatique : saison fraîche et relativement sèche août–septembre.</p>
+        <ul class="src-links">
+          <li>
+            <a href="https://metservice.intnet.mu/climate-services/climate-info-and-data.php" target="_blank" rel="noopener">Portail données climatiques</a>
+            <span class="src-note">stations : Vacoas · Mare-aux-Vacoas · Albion · Rivière-Noire</span>
+          </li>
+          <li>
+            <a href="https://metservice.intnet.mu/climate-services/climate-of-mauritius.php" target="_blank" rel="noopener">Normales climatologiques Maurice</a>
+            <span class="src-note">orographie plateau · régime d'alizés · contrastes régionaux</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- France -->
+      <div class="src-section">
+        <p class="src-section-title">Correspondances françaises</p>
+        <p class="src-desc">Normales climatologiques Météo-France / NOAA / Meteostat pour les équivalences mensuelles de :
+température, précipitations, vent moyen et humidité relative.</p>
+        <p class="src-desc src-desc--label">Stations :</p>
+        <ul class="src-links">
+          <li>Lille-Lesquin</li>
+          <li>Paris-Montsouris</li>
+          <li>Lyon-Bron</li>
+          <li>La Rochelle</li>
+        </ul>
+      </div>
+
+      <!-- Méthodologie -->
+      <div class="src-section src-section--method">
+        <p class="src-section-title">Méthodologie</p>
+        <ol class="src-method">
+          <li>Extraction Meteoblue par paramètre (T°, pluie, vent, humidité) et par lieu (1&nbsp;août&nbsp;→&nbsp;15&nbsp;sept)</li>
+          <li>Calcul des moyennes période :
+            <ul class="src-method-sub">
+              <li>T° min/max</li>
+              <li>pluie cumulée</li>
+              <li>vent moyen</li>
+              <li>humidité relative moyenne</li>
+            </ul>
+          </li>
+          <li>Vérification de cohérence avec stations MMS (plateau vs côte)</li>
+          <li>Arrondi climatologique — écart typique ≤&nbsp;±0,5&nbsp;°C · ±5&nbsp;mm · ±2&nbsp;km/h · ±3&nbsp;%</li>
+        </ol>
+        <p class="src-reliability">
+          Données historiques réelles (modèle assimilé) — cohérence stations nationales —
+          niveau <strong>climatologique robuste</strong> (non officiel publié).
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+</SeasonBlock>
+
+<style>
+  .src-wrapper {
+    height: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Grid */
+
+  .src-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-5);
+    align-items: start;
+  }
+
+  /* Section */
+
+  .src-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .src-section-title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--color-text);
+    padding-bottom: var(--space-2);
+    border-bottom: 2px solid #e0dbd4;
+  }
+
+  .src-desc {
+    margin: 0;
+    font-size: var(--fs-small);
+    line-height: var(--lh-normal);
+    color: var(--color-muted);
+  }
+
+  /* Links */
+
+  .src-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .src-links li {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .src-links a {
+    font-size: var(--fs-small);
+    color: var(--color-text);
+    text-decoration: underline;
+    text-decoration-color: rgba(0,0,0,0.2);
+    text-underline-offset: 2px;
+    transition: text-decoration-color 0.15s;
+  }
+
+  .src-links a:hover {
+    text-decoration-color: var(--color-text);
+  }
+
+  .src-links li:not(:has(a)) {
+    font-size: var(--fs-small);
+    color: var(--color-text);
+  }
+
+  .src-note {
+    font-size: clamp(0.62rem, 0.9vw, 0.7rem);
+    color: var(--color-muted);
+    font-style: italic;
+  }
+
+  .src-desc--label {
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  /* Methodology */
+
+  .src-method {
+    margin: 0;
+    padding-left: 1.2em;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .src-method li {
+    font-size: var(--fs-small);
+    line-height: var(--lh-normal);
+    color: var(--color-text);
+  }
+
+  .src-method-sub {
+    list-style: disc;
+    margin: var(--space-1) 0 0 0;
+    padding-left: 1.2em;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .src-method-sub li {
+    font-size: var(--fs-small);
+    color: var(--color-muted);
+  }
+
+  .src-reliability {
+    margin: 0;
+    padding-top: var(--space-3);
+    border-top: 1px solid #e0dbd4;
+    font-size: var(--fs-small);
+    line-height: var(--lh-normal);
+    color: var(--color-muted);
+  }
+
+  .src-reliability strong {
+    color: var(--color-text);
+    font-weight: 600;
+  }
+</style>
