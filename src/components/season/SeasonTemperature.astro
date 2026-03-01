@@ -67,16 +67,14 @@ const refRows = [
       </table>
     </div>
 
-    <div class="meteo-analysis">
-      <p>Pour un voyage à Maurice entre août et mi-septembre, le choix de la région influence fortement le ressenti thermique.</p>
-      <p>Le <strong>plateau central</strong> (Vacoas et régions voisines) offre un climat comparable à un été tempéré d'Europe du Nord ou de façade atlantique : doux en journée, frais le soir. C'est une atmosphère idéale pour la randonnée, la nature et les activités extérieures sans chaleur intense.</p>
-      <p>La <strong>côte ouest</strong> (Flic-en-Flac) propose au contraire des conditions proches d'un été français chaud : températures élevées mais confortables, mer chaude et fort ensoleillement. C'est la zone la plus favorable au balnéaire durant l'hiver austral.</p>
-      <p>En pratique, l'hiver mauricien permet donc aux visiteurs européens de retrouver des sensations estivales familières, avec deux variantes :</p>
-      <ul>
-        <li>été doux et ventilé sur le plateau,</li>
-        <li>été chaud et ensoleillé sur la côte ouest.</li>
-      </ul>
-      <p>Cette diversité climatique sur une petite île constitue un atout majeur : en moins d'une heure de route, il est possible de passer d'une ambiance tempérée fraîche à un climat balnéaire chaud, offrant aux touristes une grande variété d'expériences météorologiques pendant leur séjour.</p>
+    <div class="analysis">
+      <div class="text-columns">
+        <p>Pour un voyage à Maurice entre août et mi-septembre, le choix de la région influence fortement le ressenti thermique.</p>
+        <p>Le <strong>plateau central</strong> (Vacoas et régions voisines) offre un climat comparable à un été tempéré d'Europe du Nord ou de façade atlantique : doux en journée, frais le soir. C'est une atmosphère idéale pour la randonnée, la nature et les activités extérieures sans chaleur intense.</p>
+        <p>La <strong>côte ouest</strong> (Flic-en-Flac) propose au contraire des conditions proches d'un été français chaud : températures élevées mais confortables, mer chaude et fort ensoleillement. C'est la zone la plus favorable au balnéaire durant l'hiver austral.</p>
+        <p>En pratique, l'hiver mauricien permet donc aux visiteurs européens de retrouver des sensations estivales familières, avec deux variantes : été doux et ventilé sur le plateau, été chaud et ensoleillé sur la côte ouest.</p>
+        <p>Cette diversité climatique sur une petite île constitue un atout majeur : en moins d'une heure de route, il est possible de passer d'une ambiance tempérée fraîche à un climat balnéaire chaud, offrant aux touristes une grande variété d'expériences météorologiques pendant leur séjour.</p>
+      </div>
     </div>
 
   </div>
@@ -94,39 +92,32 @@ const refRows = [
 
   /* Analysis */
 
-  .meteo-analysis {
-    flex: 1;
-    min-height: 0;
-    overflow-y: auto;
-    scrollbar-width: none;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
+  .analysis {
+    padding-top: clamp(20px, 3vh, 28px);
+    border-top: 1px solid #e6e2dc;
   }
 
-  .meteo-analysis::-webkit-scrollbar {
-    display: none;
+  .text-columns {
+    column-count: 2;
+    column-gap: clamp(32px, 5vw, 56px);
+    line-height: 1.7;
   }
 
-  .meteo-analysis p {
-    margin: 0;
+  .text-columns p {
+    margin: 0 0 1.1em;
     font-size: var(--fs-body);
-    line-height: var(--lh-normal);
     color: var(--color-text);
+    break-inside: avoid;
   }
 
-  .meteo-analysis ul {
-    margin: 0;
-    padding-left: 1.4em;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25em;
+  .text-columns p:last-child {
+    margin-bottom: 0;
   }
 
-  .meteo-analysis li {
-    font-size: var(--fs-body);
-    line-height: var(--lh-normal);
-    color: var(--color-text);
+  @media (max-width: 900px) {
+    .text-columns {
+      column-count: 1;
+    }
   }
 
   /* Tables grid — removed, single table now */
@@ -140,12 +131,19 @@ const refRows = [
     border: 1px solid #e0dbd4;
   }
 
+  @media (max-width: 768px) {
+    .meteo-scroll {
+      overflow-x: auto;
+      border-radius: clamp(8px, 2vw, 12px);
+    }
+  }
+
   /* Table */
 
   .meteo-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: var(--fs-small);
+    font-size: clamp(0.72rem, 1.1vw, 0.82rem);
     line-height: var(--lh-tight);
     background: var(--color-page);
   }
@@ -209,7 +207,7 @@ const refRows = [
   }
 
   td {
-    padding: var(--space-1) var(--space-2);
+    padding: 6px var(--space-2);
     text-align: right;
     color: var(--color-text);
     font-variant-numeric: tabular-nums;

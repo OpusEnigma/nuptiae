@@ -67,16 +67,13 @@ const refRows = [
       </table>
     </div>
 
-    <div class="meteo-analysis">
-      <p>Entre août et mi-septembre, l'humidité contribue fortement au ressenti climatique à Maurice, au-delà de la seule température.</p>
-      <p>Le plateau central (Vacoas et régions voisines) présente une atmosphère humide comparable à l'automne ou à l'hiver en Europe occidentale. L'air y est plus chargé en humidité, avec davantage de nuages et une sensation plus fraîche et parfois légèrement moite, surtout avec le vent. Cette ambiance favorise la végétation luxuriante et les paysages verts caractéristiques du centre de l'île.</p>
-      <p>La côte ouest (Flic-en-Flac) offre au contraire une humidité modérée proche d'un été européen : air plus sec, ciel plus dégagé et sensation plus chaude et lumineuse. Les conditions y sont particulièrement agréables pour la plage et les activités extérieures, avec un confort thermique élevé.</p>
-      <p>Pour les voyageurs, cela signifie que l'hiver mauricien combine deux ambiances :</p>
-      <ul>
-        <li>plateau frais et humide,</li>
-        <li>côte ouest chaude et sèche.</li>
-      </ul>
-      <p>La côte ouest apparaît ainsi comme la zone la plus confortable pour un séjour balnéaire en hiver austral, tandis que le plateau central conserve un climat plus tonique et humide, idéal pour les paysages et les activités nature.</p>
+    <div class="analysis">
+      <div class="text-columns">
+        <p>Entre août et mi-septembre, l'humidité contribue fortement au ressenti climatique à Maurice, au-delà de la seule température.</p>
+        <p>Le <strong>plateau central</strong> (Vacoas et régions voisines) présente une atmosphère humide comparable à l'automne ou à l'hiver en Europe occidentale. L'air y est plus chargé en humidité, avec davantage de nuages et une sensation plus fraîche et parfois légèrement moite, surtout avec le vent. Cette ambiance favorise la végétation luxuriante et les paysages verts caractéristiques du centre de l'île.</p>
+        <p>La <strong>côte ouest</strong> (Flic-en-Flac) offre au contraire une humidité modérée proche d'un été européen : air plus sec, ciel plus dégagé et sensation plus chaude et lumineuse. Les conditions y sont particulièrement agréables pour la plage et les activités extérieures, avec un confort thermique élevé.</p>
+        <p>En pratique, l'hiver mauricien combine deux ambiances distinctes : plateau frais et humide, idéal pour la nature et les paysages verts ; côte ouest chaude et sèche, parfaite pour un séjour balnéaire confortable.</p>
+      </div>
     </div>
 
   </div>
@@ -94,39 +91,32 @@ const refRows = [
 
   /* Analysis */
 
-  .meteo-analysis {
-    flex: 1;
-    min-height: 0;
-    overflow-y: auto;
-    scrollbar-width: none;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
+  .analysis {
+    padding-top: clamp(20px, 3vh, 28px);
+    border-top: 1px solid #e6e2dc;
   }
 
-  .meteo-analysis::-webkit-scrollbar {
-    display: none;
+  .text-columns {
+    column-count: 2;
+    column-gap: clamp(32px, 5vw, 56px);
+    line-height: 1.7;
   }
 
-  .meteo-analysis p {
-    margin: 0;
+  .text-columns p {
+    margin: 0 0 1.1em;
     font-size: var(--fs-body);
-    line-height: var(--lh-normal);
     color: var(--color-text);
+    break-inside: avoid;
   }
 
-  .meteo-analysis ul {
-    margin: 0;
-    padding-left: 1.4em;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25em;
+  .text-columns p:last-child {
+    margin-bottom: 0;
   }
 
-  .meteo-analysis li {
-    font-size: var(--fs-body);
-    line-height: var(--lh-normal);
-    color: var(--color-text);
+  @media (max-width: 900px) {
+    .text-columns {
+      column-count: 1;
+    }
   }
 
   /* Table wrapper */
@@ -138,12 +128,19 @@ const refRows = [
     border: 1px solid #e0dbd4;
   }
 
+  @media (max-width: 768px) {
+    .meteo-scroll {
+      overflow-x: auto;
+      border-radius: clamp(8px, 2vw, 12px);
+    }
+  }
+
   /* Table */
 
   .meteo-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: var(--fs-small);
+    font-size: clamp(0.72rem, 1.1vw, 0.82rem);
     line-height: var(--lh-tight);
     background: var(--color-page);
   }
@@ -207,7 +204,7 @@ const refRows = [
   }
 
   td {
-    padding: var(--space-1) var(--space-2);
+    padding: 6px var(--space-2);
     text-align: right;
     color: var(--color-text);
     font-variant-numeric: tabular-nums;

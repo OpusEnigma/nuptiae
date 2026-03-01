@@ -34,6 +34,11 @@ const { id, title } = Astro.props;
 
   .season-block-header {
     align-self: start;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--color-page);
+    padding-bottom: var(--space-2);
   }
 
   .season-block-title {
@@ -55,6 +60,27 @@ const { id, title } = Astro.props;
   @media (max-width: 1024px) {
     .season-block {
       padding-left: var(--pad);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .season-block {
+      height: 100dvh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      scrollbar-width: none;
+      gap: var(--space-2);
+      padding-top: var(--space-3);
+      padding-bottom: var(--space-3);
+    }
+    .season-block::-webkit-scrollbar {
+      display: none;
+    }
+    .season-block-title {
+      font-size: clamp(1.8rem, 7vw, 2.6rem);
+    }
+    .season-block-content {
+      overflow: visible;
     }
   }
 

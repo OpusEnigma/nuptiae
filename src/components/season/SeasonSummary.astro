@@ -1,0 +1,329 @@
+---
+import { Image } from "astro:assets";
+import SeasonBlock from "./SeasonBlock.astro";
+
+import vacoas from "../../assets/season/vacoas-image.png";
+import flicenflac from "../../assets/season/flicenflac-image.png";
+
+const { id } = Astro.props;
+
+const locations = [
+  {
+    emoji: "🌿",
+    name: "Vacoas",
+    subtitle: "Plateau central",
+    profileEmoji: "☁️",
+    profile: [
+      { icon: "🌡️", value: "16.9–23 °C", label: "doux à frais" },
+      { icon: "🌧️", value: "78 mm",       label: "humide modéré" },
+      { icon: "🌬️", value: "28 km/h",     label: "venteux" },
+      { icon: "💧", value: "83 %",         label: "très humide" },
+    ],
+    equiv: "été doux + automne humide + printemps venteux",
+    ressentiEmoji: "🌦️",
+    ressenti: ["air frais et humide", "nuages fréquents", "vent sensible", "végétation luxuriante"],
+    idealEmoji: "🎒",
+    ideal: ["randonnée", "nature / cascades", "paysages verts", "climat tempéré"],
+  },
+  {
+    emoji: "🏖️",
+    name: "Flic-en-Flac",
+    subtitle: "Côte ouest",
+    profileEmoji: "☀️",
+    profile: [
+      { icon: "🌡️", value: "19.0–25.3 °C", label: "chaud doux" },
+      { icon: "🌧️", value: "34 mm",          label: "sec" },
+      { icon: "🌬️", value: "19 km/h",        label: "modéré" },
+      { icon: "💧", value: "73 %",            label: "humidité confortable" },
+    ],
+    equiv: "été chaud sec",
+    ressentiEmoji: "🌴",
+    ressenti: ["ensoleillé", "air plus sec", "vent faible", "mer chaude"],
+    idealEmoji: "🏄",
+    ideal: ["plage", "baignade", "snorkeling", "détente"],
+  },
+];
+---
+
+<SeasonBlock id={id} title="Synthèse">
+
+  <div class="summary-wrapper">
+    {locations.map(loc => (
+      <div class="summary-card">
+
+        <div class="card-header">
+          <span class="card-emoji">{loc.emoji}</span>
+          <div>
+            <p class="card-name">{loc.name}</p>
+            <p class="card-subtitle">{loc.subtitle}</p>
+          </div>
+        </div>
+
+        {loc.name === "Vacoas" && (
+          <div class="card-image">
+            <Image src={vacoas} alt="Vacoas — plateau central" />
+          </div>
+        )}
+
+        {loc.name === "Flic-en-Flac" && (
+          <div class="card-image">
+            <Image src={flicenflac} alt="Flic-en-Flac — côte ouest" />
+          </div>
+        )}
+
+        <div class="card-body">
+
+          <div class="card-section">
+            <p class="section-label">{loc.profileEmoji} Profil climatique</p>
+            <ul class="profile-list">
+              {loc.profile.map(p => (
+                <li class="profile-row">
+                  <span class="profile-icon">{p.icon}</span>
+                  <span class="profile-value">{p.value}</span>
+                  <span class="profile-arrow">→</span>
+                  <span class="profile-label">{p.label}</span>
+                </li>
+              ))}
+            </ul>
+            <p class="equiv-row">
+              <span class="equiv-arrow">➡️</span>
+              <span class="equiv-text">Équivalent Europe : <em>{loc.equiv}</em></span>
+            </p>
+          </div>
+
+          <div class="card-cols">
+
+            <div class="card-section">
+              <p class="section-label">{loc.ressentiEmoji} Ressenti</p>
+              <ul class="tag-list">
+                {loc.ressenti.map(r => <li class="tag">{r}</li>)}
+              </ul>
+            </div>
+
+            <div class="card-section">
+              <p class="section-label">{loc.idealEmoji} Idéal pour</p>
+              <ul class="tag-list">
+                {loc.ideal.map(i => <li class="tag">{i}</li>)}
+              </ul>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    ))}
+  </div>
+
+</SeasonBlock>
+
+<style>
+  .summary-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-5);
+    height: 100%;
+    box-sizing: border-box;
+    align-items: start;
+  }
+
+  /* Card */
+
+  .summary-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  /* Header */
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding-bottom: var(--space-3);
+    border-bottom: 2px solid #e0dbd4;
+  }
+
+  .card-emoji {
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    line-height: 1;
+  }
+
+  .card-name {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 2vw, 1.6rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+  }
+
+  .card-subtitle {
+    margin: 0;
+    font-size: var(--fs-small);
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  /* Image */
+
+  .card-image {
+    border-radius: clamp(8px, 1.2vw, 14px);
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .card-image img {
+    width: 100%;
+    height: clamp(100px, 25vh, 250px);
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Body */
+
+  .card-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3) var(--space-4);
+    align-items: start;
+  }
+
+  /* Section */
+
+  .card-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .section-label {
+    margin: 0;
+    font-size: var(--fs-small);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  /* Profile list */
+
+  .profile-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .profile-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4em;
+    font-size: var(--fs-small);
+    line-height: var(--lh-tight);
+  }
+
+  .profile-icon {
+    width: 1.4em;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .profile-value {
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-text);
+    min-width: 8em;
+  }
+
+  .profile-arrow {
+    color: var(--color-muted);
+    flex-shrink: 0;
+  }
+
+  .profile-label {
+    color: var(--color-muted);
+    font-style: italic;
+  }
+
+  /* Equiv */
+
+  .equiv-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4em;
+    margin: var(--space-1) 0 0;
+    font-size: var(--fs-small);
+    color: var(--color-text);
+  }
+
+  .equiv-arrow {
+    flex-shrink: 0;
+  }
+
+  .equiv-text em {
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  /* Two-col layout for ressenti + idéal */
+
+  .card-cols {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+
+  /* Tag list */
+
+  .tag-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .tag {
+    display: inline-flex;
+    font-size: var(--fs-small);
+    color: var(--color-text);
+    background: rgba(181, 135, 58, 0.07);
+    border: 1px solid rgba(181, 135, 58, 0.2);
+    border-radius: 6px;
+    padding: 3px 8px;
+    width: fit-content;
+  }
+
+  @media (max-width: 900px) {
+    .summary-wrapper {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+    .card-body {
+      grid-template-columns: 1fr 1fr;
+    }
+    .card-image img {
+      height: clamp(100px, 18vw, 160px);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .summary-wrapper {
+      gap: var(--space-3);
+    }
+    .card-body {
+      grid-template-columns: 1fr;
+    }
+    .card-image img {
+      height: 120px;
+    }
+  }
+</style>

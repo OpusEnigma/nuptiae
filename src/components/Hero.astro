@@ -45,7 +45,6 @@ const hero = await getImage({
       href={getRitualPath()}
       eyebrow="Découvrir →"
       title="Les cérémonies"
-      offset="48px"
       subcards={[
         { label: "Khata", href: `${getRitualPath()}#khata` },
         { label: "Geet Gawai",  href: `${getRitualPath()}#geet` },
@@ -57,11 +56,8 @@ const hero = await getImage({
       href={getLocationPath()}
       eyebrow="Explorer →"
       title="Le lieu"
-      offset="24px"
       subcards={[
-        { label: "Carte",         href: `${getLocationPath()}#location-map` },
         { label: "Région",        href: `${getLocationPath()}#location-region` },
-        { label: "Hébergements",  href: `${getLocationPath()}#location-accommodation` },
       ]}
     />
 
@@ -69,7 +65,12 @@ const hero = await getImage({
       href={getSeasonPath()}
       eyebrow="Découvrir →"
       title="La saison"
-      offset="0px"
+      subcards={[
+        { label: "Températures", href: `${getSeasonPath()}#season-temperature` },
+        { label: "Précipitations", href: `${getSeasonPath()}#season-precipitation` },
+        { label: "Vent", href: `${getSeasonPath()}#season-wind` },
+        { label: "Humidité", href: `${getSeasonPath()}#season-humidity` },
+      ]}
     />
   </div>
 </section>

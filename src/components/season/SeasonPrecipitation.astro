@@ -1,8 +1,6 @@
 ---
 import SeasonBlock from "./SeasonBlock.astro";
 
-const { id } = Astro.props;
-
 const rows = [
   { year: "2021", vacR: 68,  flicR: 32 },
   { year: "2022", vacR: 74,  flicR: 28 },
@@ -21,7 +19,7 @@ const refRows = [
 ];
 ---
 
-<SeasonBlock id={id} title="Précipitations">
+<SeasonBlock id="season-precipitation" title="Précipitations">
 
   <div class="meteo-wrapper">
 
@@ -67,11 +65,13 @@ const refRows = [
       </table>
     </div>
 
-    <div class="meteo-analysis">
-      <p>Pour un séjour à Maurice entre août et mi-septembre, les conditions de pluie varient sensiblement selon la région.</p>
-      <p>Le plateau central (Vacoas et environs) présente un climat comparable à un mois humide d'Europe tempérée : averses possibles, nuages fréquents et atmosphère plus verte. Les pluies y sont toutefois généralement brèves et rarement continues, mais peuvent réduire l'ensoleillement.</p>
-      <p>La côte ouest (Flic-en-Flac) offre au contraire des conditions proches d'un été sec européen : faibles cumuls de pluie, ciel plus dégagé et ensoleillement élevé. C'est la zone la plus favorable pour les activités balnéaires durant l'hiver austral, avec une probabilité de pluie faible.</p>
-      <p>En pratique, les voyageurs recherchant le soleil et la plage privilégieront la côte ouest, tandis que ceux intéressés par la nature luxuriante et les paysages du centre de l'île accepteront un risque de pluie plus élevé. La saison reste globalement propice au tourisme sur toute l'île, avec l'avantage d'une côte ouest particulièrement sèche et lumineuse.</p>
+    <div class="analysis">
+      <div class="text-columns">
+        <p>Pour un séjour à Maurice entre août et mi-septembre, les conditions de pluie varient sensiblement selon la région.</p>
+        <p>Le <strong>plateau central</strong> (Vacoas et environs) présente un climat comparable à un mois humide d'Europe tempérée : averses possibles, nuages fréquents et atmosphère plus verte. Les pluies y sont toutefois généralement brèves et rarement continues, mais peuvent réduire l'ensoleillement.</p>
+        <p>La <strong>côte ouest</strong> (Flic-en-Flac) offre au contraire des conditions proches d'un été sec européen : faibles cumuls de pluie, ciel plus dégagé et ensoleillement élevé. C'est la zone la plus favorable pour les activités balnéaires durant l'hiver austral, avec une probabilité de pluie faible.</p>
+        <p>En pratique, les voyageurs recherchant le soleil et la plage privilégieront la côte ouest, tandis que ceux intéressés par la nature luxuriante et les paysages du centre de l'île accepteront un risque de pluie plus élevé. La saison reste globalement propice au tourisme sur toute l'île, avec l'avantage d'une côte ouest particulièrement sèche et lumineuse.</p>
+      </div>
     </div>
 
   </div>
@@ -89,39 +89,32 @@ const refRows = [
 
   /* Analysis */
 
-  .meteo-analysis {
-    flex: 1;
-    min-height: 0;
-    overflow-y: auto;
-    scrollbar-width: none;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
+  .analysis {
+    padding-top: clamp(20px, 3vh, 28px);
+    border-top: 1px solid #e6e2dc;
   }
 
-  .meteo-analysis::-webkit-scrollbar {
-    display: none;
+  .text-columns {
+    column-count: 2;
+    column-gap: clamp(32px, 5vw, 56px);
+    line-height: 1.7;
   }
 
-  .meteo-analysis p {
-    margin: 0;
+  .text-columns p {
+    margin: 0 0 1.1em;
     font-size: var(--fs-body);
-    line-height: var(--lh-normal);
     color: var(--color-text);
+    break-inside: avoid;
   }
 
-  .meteo-analysis ul {
-    margin: 0;
-    padding-left: 1.4em;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25em;
+  .text-columns p:last-child {
+    margin-bottom: 0;
   }
 
-  .meteo-analysis li {
-    font-size: var(--fs-body);
-    line-height: var(--lh-normal);
-    color: var(--color-text);
+  @media (max-width: 900px) {
+    .text-columns {
+      column-count: 1;
+    }
   }
 
   /* Table wrapper */
@@ -133,12 +126,19 @@ const refRows = [
     border: 1px solid #e0dbd4;
   }
 
+  @media (max-width: 768px) {
+    .meteo-scroll {
+      overflow-x: auto;
+      border-radius: clamp(8px, 2vw, 12px);
+    }
+  }
+
   /* Table */
 
   .meteo-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: var(--fs-small);
+    font-size: clamp(0.72rem, 1.1vw, 0.82rem);
     line-height: var(--lh-tight);
     background: var(--color-page);
   }
@@ -202,7 +202,7 @@ const refRows = [
   }
 
   td {
-    padding: var(--space-1) var(--space-2);
+    padding: 6px var(--space-2);
     text-align: right;
     color: var(--color-text);
     font-variant-numeric: tabular-nums;
